@@ -8,6 +8,7 @@
 */
 
 ##################### System #########################
+date_default_timezone_set('America/Los_Angeles');
 define("SYSNAME","***");
 define("SYSURL","http://your_webui_server_ip_or_dns/");
 define("SYSMAIL","***");
