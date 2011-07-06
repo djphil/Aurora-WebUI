@@ -40,14 +40,15 @@ require_once("settings/mysql.php");
 require_once("check.php");
 require_once("languages/translator.php");
 require_once("templates/templates.php");
-if ($_GET[page] != '') {
-    $_SESSION[page] = $_GET[page];
+if (isset($_GET['page']) && $_GET['page'] != '') {
+    $_SESSION['page'] = $_GET['page'];
 } else {
-    $_SESSION[page] = 'home';
+    $_SESSION['page'] = 'home';
 }
 
 //LOGIN AUTHENTIFICATION
-if ($_POST[Submit] == $webui_login) {
+if(isset($_POST['Submit'])){
+if ($_POST['Submit'] == $webui_login) {
 
     $found = array();
     $found[0] = json_encode(array('Method' => 'Login', 'WebPassword' => md5(WIREDUX_PASSWORD),
@@ -100,6 +101,7 @@ if ($_POST[Submit] == $webui_admin_login) {
 		</script>";
     }
   } // LOGIN END
+}
 
   $DbLink->query("SELECT id,
                          displayTopPanelSlider, 
