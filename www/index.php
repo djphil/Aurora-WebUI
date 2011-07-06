@@ -8,10 +8,7 @@
  */
 
 // Page Load Time 
-$time = microtime(); 
-$time = explode(" ", $time); 
-$time = $time[1] + $time[0]; 
-$start = $time;  
+$start = microtime(true);
 
 //Use gzip if it is supported
 if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
