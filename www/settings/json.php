@@ -1,7 +1,7 @@
 <?php
 
-include("config.php");
-include("databaseinfo.php");
+require_once("config.php");
+require_once("databaseinfo.php");
 
 function do_post_request($found) {
     $params = array('http' => array(

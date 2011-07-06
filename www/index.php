@@ -33,14 +33,13 @@ else if(!empty($_COOKIE['lang']))
 	echo "<html lang=".$_COOKIE['lang']." class=\"no-js\">";
 }
 
-include("settings/config.php");
-include("settings/databaseinfo.php");
-include("settings/json.php");
-include("settings/mysql.php");
-include("check.php");
-include("languages/translator.php");
-include("templates/templates.php");
-
+require_once("settings/config.php");
+require_once("settings/databaseinfo.php");
+require_once("settings/json.php");
+require_once("settings/mysql.php");
+require_once("check.php");
+require_once("languages/translator.php");
+require_once("templates/templates.php");
 if ($_GET[page] != '') {
     $_SESSION[page] = $_GET[page];
 } else {
