@@ -59,17 +59,17 @@ if ($_POST['Submit'] == $webui_login) {
     $UUIDC = $recieved->{'UUID'};
 
     if ($recieved->{'Verified'} == "true") {
-        $_SESSION[USERID] = $UUIDC;
-        $_SESSION[NAME] = $_POST[logname];
-        $_SESSION[FIRSTNAME] = $recieved->{'FirstName'};
-        $_SESSION[LASTNAME] = $recieved->{'LastName'};
+        $_SESSION['USERID'] = $UUIDC;
+        $_SESSION['NAME'] = $_POST['logname'];
+        $_SESSION['FIRSTNAME'] = $recieved->{'FirstName'};
+        $_SESSION['LASTNAME'] = $recieved->{'LastName'};
 
         $found[0] = json_encode(array('Method' => 'SetWebLoginKey', 'WebPassword' => md5(WIREDUX_PASSWORD),
                                  'PrincipalID' => $UUIDC));
         $do_post_request = do_post_request($found);
         $recieved = json_decode($do_post_request);
         $WEBLOGINKEY = $recieved->{'WebLoginKey'};
-        $_SESSION[WEBLOGINKEY] = $WEBLOGINKEY;
+        $_SESSION['WEBLOGINKEY'] = $WEBLOGINKEY;
     } else {
         echo "<script language='javascript'>
 		<!--
@@ -90,9 +90,9 @@ if ($_POST[Submit] == $webui_admin_login) {
     $UUIDC = $recieved->{'UUID'};
     if ($recieved->{'Verified'} == "true") {
         //Set both the admin and user ids
-        $_SESSION[ADMINID] = $UUIDC;
-        $_SESSION[USERID] = $UUIDC;
-        $_SESSION[NAME] = $_POST[logname];
+        $_SESSION['ADMINID'] = $UUIDC;
+        $_SESSION['USERID'] = $UUIDC;
+        $_SESSION['NAME'] = $_POST['logname'];
     } else {
         echo "<script language='javascript'>
 		<!--
@@ -577,13 +577,13 @@ $(document).ready(function(){
 <?php if($displayWelcomeMessage) { ?>
   <div id="welcomeText">
     <?php
-      if($_SESSION[NAME] != "") {
+      if(isset($_SESSION['NAME']) && $_SESSION['NAME'] != "") {
         echo $webui_welcome_back." ";
-        echo $_SESSION[NAME];
+        echo $_SESSION['NAME'];
         if($allowWebLogin == 'true')
         {
           echo " ";
-          echo "<a href=\"secondlife:///app/login?first_name=$_SESSION[FIRSTNAME]&last_name=$_SESSION[LASTNAME]&location=last&grid=$gridNickName&web_login_key=$_SESSION[WEBLOGINKEY]\">$webui_login</a>";
+          echo '<a href=\"secondlife:///app/login?first_name=',$_SESSION['FIRSTNAME'],'&last_name=',$_SESSION['LASTNAME'],'&location=last&grid=',$gridNickName,'&web_login_key=',$_SESSION['WEBLOGINKEY'],'\">',$webui_login,'</a>';
         }
       }
       else {
