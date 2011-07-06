@@ -33,7 +33,16 @@ class DB
 	{
 		if($this->Link_ID == 0)
 		{
-			$this->Link_ID = mysql_connect($this->Host, $this->User, $this->Password);
+			try{
+				$this->Link_ID = mysql_connect($this->Host, $this->User, $this->Password);
+			}catch(ErrorException $e){
+				if(strpos($e->getMessage(), 'mysql_connect(): Access denied for user \'') === 0){
+					$this->halt('Cannot connect to database, access denied');
+				}else{
+					$this->halt('Unknown error occurred when trying to connect to the MySQL server');
+//					$this->halt($e->getMessage());
+				}
+			}
 			if (!$this->Link_ID)
 			{
 				$this->halt("Link_ID == false, connect failed");
