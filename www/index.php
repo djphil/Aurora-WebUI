@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Copyright (c) 2007 - 2011 Contributors, http://opensimulator.org/, http://aurora-sim.org/
  * See CONTRIBUTORS for a full list of copyright holders.
@@ -148,10 +148,10 @@ if ($_POST[Submit] == $webui_admin_login) {
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="templates/no_js.css" type="text/css" />
-  <link rel="stylesheet" href="<? echo $template_css ?>" type="text/css" />
+  <link rel="stylesheet" href="<?php echo $template_css ?>" type="text/css" />
 
   <link rel="shortcut icon" href="<?=$favicon_image?>" />
-  <title><? echo $webui_welcome; ?> <?= SYSNAME ?></title>
+  <title><?php echo $webui_welcome; ?> <?php echo SYSNAME ?></title>
   <script src="javascripts/modernizr-1.7.min.js" type="text/javascript"></script>
   <script src="javascripts/global.js" type="text/javascript"></script>
   <script src="javascripts/droppanel/dropdown.js" type="text/javascript"></script>
@@ -165,52 +165,52 @@ if ($_POST[Submit] == $webui_admin_login) {
   <script type="text/javascript" src="javascripts/calendar-2.2.js"></script>
 
 <?php if($displayMegaMenu) { ?>
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/black.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/grey.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/blue.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/green.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/light_blue.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/orange.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/red.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/skins/white.css" rel="stylesheet" type="text/css" />
-<link href="<?= SYSURL ?>templates/jec-styled.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/black.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/green.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/light_blue.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/orange.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/red.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/skins/white.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>templates/jec-styled.css" rel="stylesheet" type="text/css" />
 
 <?php if($template == 'default')  { ?>
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/megamenu_default.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/megamenu_default.css" rel="stylesheet" type="text/css" />
 <?php } ?>
 
 <?php if($template == 'white')  { ?>
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/megamenu_white.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/megamenu_white.css" rel="stylesheet" type="text/css" />
 <?php } ?>
 
 <?php if($template == 'astra')  { ?>
-<link href="<?= SYSURL ?>sites/menus/megamenu/css/megamenu_astra.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL ?>sites/menus/megamenu/css/megamenu_astra.css" rel="stylesheet" type="text/css" />
 <?php } ?>
 
-<script type='text/javascript' src='<?= SYSURL ?>sites/menus/megamenu/javascripts/jquery.hoverIntent.minified.js'></script>
+<script type='text/javascript' src='<?php echo SYSURL ?>sites/menus/megamenu/javascripts/jquery.hoverIntent.minified.js'></script>
 
 <?php if($MegaMenuVersion == '1.2')  { ?>
-  <script type='text/javascript' src='<?= SYSURL ?>sites/menus/megamenu/javascripts/jquery.dcmegamenu.1.2.js'></script>
+  <script type='text/javascript' src='<?php echo SYSURL ?>sites/menus/megamenu/javascripts/jquery.dcmegamenu.1.2.js'></script>
 <?php } ?>
 
 <?php if($MegaMenuVersion == '1.3.2')  { ?>
-  <script type='text/javascript' src='<?= SYSURL ?>sites/menus/megamenu/javascripts/jquery.dcmegamenu.1.3.2.js'></script>
+  <script type='text/javascript' src='<?php echo SYSURL ?>sites/menus/megamenu/javascripts/jquery.dcmegamenu.1.3.2.js'></script>
 <?php } ?>
 
 
 <script type="text/javascript">
 $(document).ready(function($){
 	$('#mega-menu-1').dcMegaMenu({
-		rowItems: '<?= $MegaMenuRowItems; ?>',
-		speed: '<?= $MegaMenuSpeed; ?>',
-		effect: '<?= $MegaMenuEffect; ?>',
-		event: '<?= $MegaMenuEvent; ?>'
+		rowItems: '<?php echo $MegaMenuRowItems; ?>',
+		speed: '<?php echo $MegaMenuSpeed; ?>',
+		effect: '<?php echo $MegaMenuEffect; ?>',
+		event: '<?php echo $MegaMenuEvent; ?>'
 	});
 	$('#mega-menu-2').dcMegaMenu({
-		rowItems: '<?= $MegaMenuRowItems; ?>',
-		speed: '<?= $MegaMenuSpeed; ?>',
-		effect: '<?= $MegaMenuEffect; ?>',
-		event: '<?= $MegaMenuEvent; ?>'
+		rowItems: '<?php echo $MegaMenuRowItems; ?>',
+		speed: '<?php echo $MegaMenuSpeed; ?>',
+		effect: '<?php echo $MegaMenuEffect; ?>',
+		event: '<?php echo $MegaMenuEvent; ?>'
 	});
 	$('#mega-menu-3').dcMegaMenu({
 		rowItems: '3',
@@ -282,7 +282,7 @@ $(function(){Header.addFade("#headerimages");});
 
 
 <?php if($displayRoundedCorner)  { ?>
-<script type="text/javascript" src="<?= SYSURL ?>javascripts/jquery/jquery.corner.js?v2.11"></script>
+<script type="text/javascript" src="<?php echo SYSURL ?>javascripts/jquery/jquery.corner.js?v2.11"></script>
 <script type="text/javascript">
 // http://jquery.malsup.com/corner/
 // Add more class here ...
@@ -340,178 +340,178 @@ $('#island_info_part1, #island_info_part2, #island_info_part3, #island_info_part
 <script type="text/javascript">
 $(document).ready(function(){
   $("#annonce1").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
                 
 	$("#annonce2").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep2 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep2 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep2 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep2 ?>'}, 800);
   });
 
 	$("#annonce3").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep3 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep3 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep3 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep3 ?>'}, 800);
   });
                 
 	$("#annonce4").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep4 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep4 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep4 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep4 ?>'}, 800);
   });
 
 	$("#annonce5").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep5 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep5 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep5 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep5 ?>'}, 800);
   });
 
 	$("#annonce6").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep6 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep6 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep6 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep6 ?>'}, 800);
   });
 
 	$("#annonce7").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep7 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep7 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep7 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep7 ?>'}, 800);
   });
 
 	$("#annonce10").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep10 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep10 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep10 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep10 ?>'}, 800);
   });
 
 
   $("#step1").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
                 
 	$("#step2").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep2 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep2 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep2 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep2 ?>'}, 800);
   });
 
 	$("#step3").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep3 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep3 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep3 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep3 ?>'}, 800);
   });
    
 
   $("#info1").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
                 
 	$("#info2").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep2 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep2 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep2 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep2 ?>'}, 800);
   });
 
 	$("#info3").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep3 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep3 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep3 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep3 ?>'}, 800);
   });
                 
 	$("#aide1").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep4 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep4 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep4 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep4 ?>'}, 800);
   });
 
 	$("#aide2").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep5 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep5 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep5 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep5 ?>'}, 800);
   });
 
 	$("#aide3").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep6 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep6 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep6 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep6 ?>'}, 800);
   });
   
 	$("#mega-menu-1 a").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepMegaMenu1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepMegaMenu1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepMegaMenu1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepMegaMenu1 ?>'}, 800);
   });
   
 	$("#register_bouton, #login_bouton, #forgot_pass_bouton, #adminlogin_button").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
   });
   
 	$(".adminsettings_bouton").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepAdminSettingBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepAdminSettingBouton1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepAdminSettingBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepAdminSettingBouton1 ?>'}, 800);
   });
   
 	$("#create_news_button, #edit_news_item_button").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
   });
 
   /* Page Downloads */
   	$("#download1, #download2, #download3").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
 
   	$("#download1 a, #download2 a, #download3 a").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
   });
   
   /* Page News */
 	$(".news_time, .news_title, .news_content").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
   
   /* Grid Status Module */
 	$("#gridstatus1, #gridstatus2, #gridstatus3, #gridstatus4, #gridstatus5").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
 
   /* AddGrid Page */
 	$("#addgrid01, #addgrid02, #addgrid03, #addgrid04, #addgrid05, #addgrid06, #addgrid07, #addgrid08, #addgrid09, #addgrid10").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStep1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStep1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStep1 ?>'}, 800);
   });
 
   	$("#addgrid h3 a").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
   });  
   
   /* Stardust Module */
 	$("#island_input_button1, #island_input_button2, #island_input_button3, #island_input_button4, #island_input_button5, #get_it_now_button").hover(function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
-    $(this).stop().animate({ backgroundColor: '<?= $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
+    $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
   });
 
 }); 
@@ -519,7 +519,7 @@ $(document).ready(function(){
 <?php } ?>
 
 
-<? if($displayFontSizer) { ?> 
+<?php if($displayFontSizer) { ?> 
 <script src="javascripts/jquery/jquery.cookie.js" type="text/javascript"></script>
 <script src="javascripts/jquery/jquery.fontscale.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -538,12 +538,12 @@ $(document).ready(function(){
 
 <div class="absolute">
   <!-- Top Panel Slider -->
-  <? if($displayTopPanelSlider) {include("sites/modules/slidepanel.php");} ?>
+  <?php if($displayTopPanelSlider) {include("sites/modules/slidepanel.php");} ?>
 </div>
 
 <div class="maintenance">
   <!-- If we are supposed to only display the maintenance page currently, do so now -->
-  <? if($displayMaintenancePage) {include("sites/main/maintenance.php"); return;} ?>
+  <?php if($displayMaintenancePage) {include("sites/main/maintenance.php"); return;} ?>
 
   <!--[if lt IE 8]>
     <div id="alert"><p>Hummm, You should upgrade your copy of Internet Explorer.</p></div>
@@ -558,7 +558,7 @@ $(document).ready(function(){
     ?> -->
     <!-- </div>-->
 
-<? if($displayLanguageSelector) {
+<?php if($displayLanguageSelector) {
       echo('<div id="translator">');
       include("languages/translator_page.php");
       echo('</div>');}
@@ -597,7 +597,7 @@ $(document).ready(function(){
 <div id="container">
     <div id="header">
         <div id="headerimages">
-            <a href="<?= SYSURL ?>"><h1><? SYSNAME ?></h1></a>
+            <a href="<?php echo SYSURL ?>"><h1><? SYSNAME ?></h1></a>
         </div>
         <!-- <div id="gridstatus"><?php // include("sites/gridstatus.php"); ?></div> -->
         <div id="home_content_right"><? include("sites/modules/slideshow.php"); ?></div>		
