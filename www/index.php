@@ -151,7 +151,7 @@ if ($_POST[Submit] == $webui_admin_login) {
   <link rel="stylesheet" href="templates/no_js.css" type="text/css" />
   <link rel="stylesheet" href="<?php echo $template_css ?>" type="text/css" />
 
-  <link rel="shortcut icon" href="<?=$favicon_image?>" />
+  <link rel="shortcut icon" href="<?php echo $favicon_image?>" />
   <title><?php echo $webui_welcome; ?> <?php echo SYSNAME ?></title>
   <script src="javascripts/modernizr-1.7.min.js" type="text/javascript"></script>
   <script src="javascripts/global.js" type="text/javascript"></script>
