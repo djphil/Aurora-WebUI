@@ -18,9 +18,9 @@ $ORDERBY=" ORDER by locY ASC";
       <TABLE width=100% height="100" border=0 cellPadding=0 cellSpacing=0>
         <TBODY>
         <TR>          
-          <td class=gridbox_tl><img height=5 width=5 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt=""></td>
-          <td class=gridbox_t><img height=5 width=5 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt=""></td>
-          <td class=gridbox_tr><img height=5 width=5 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt=""></td>
+          <td class=gridbox_tl><img height=5 width=5 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt=""></td>
+          <td class=gridbox_t><img height=5 width=5 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt=""></td>
+          <td class=gridbox_tr><img height=5 width=5 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt=""></td>
         </TR>
         <TR>
           <TD class=gridbox_l></TD>
@@ -48,7 +48,7 @@ $ORDERBY=" ORDER by locY ASC";
 			</TABLE>
       
       <DIV id=GREX style="MARGIN: 1px 0px 0px">
-        <IMG height=1 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" width=1>
+        <IMG height=1 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" width=1>
       </DIV>
             
 			<div style=" border:hidden; color:#ffffff; padding:0px; width:300px; height:160px; overflow:auto; ">

@@ -69,10 +69,10 @@
 
 
 
-<link href="<?= SYSURL ?>sites/menus/css/defaultmegamenu.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo SYSURL; ?>sites/menus/css/defaultmegamenu.css" rel="stylesheet" type="text/css" />
 
-<script type='text/javascript' src='<?= SYSURL ?>sites/menus/js/jquery.hoverIntent.minified.js'></script>
-<script type='text/javascript' src='<?= SYSURL ?>sites/menus/js/jquery.dcmegamenu.1.2.js'></script>
+<script type='text/javascript' src='<?php echo SYSURL; ?>sites/menus/js/jquery.hoverIntent.minified.js'></script>
+<script type='text/javascript' src='<?php echo SYSURL; ?>sites/menus/js/jquery.dcmegamenu.1.2.js'></script>
 
 <script type="text/javascript">
 $(document).ready(function($){

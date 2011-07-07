@@ -152,7 +152,7 @@ if ($sitemax == 0) {
         
             <td>
                 <div>
-                    <a style="cursor:pointer" onClick="window.open('<?= SYSURL ?>app/agent/?name=<?= $Name ?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=400')">
+                    <a style="cursor:pointer" onClick="window.open('<?php echo SYSURL; ?>app/agent/?name=<?= $Name ?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=400')">
                         <p><? echo $webui_see_profile ?></p>
                     </a>
                 </div>

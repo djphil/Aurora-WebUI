@@ -68,9 +68,9 @@ list($REGIONSCOUNT) = $DbLink->next_record();
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="<?= SYSURL ?><?=$template_css?>" type="text/css" rel="stylesheet">
-<script src="<?= SYSURL ?>loginscreen/javascripts/resize.js" type="text/javascript"></script>
-<script src="<?= SYSURL ?><?if($picturesByTime){ echo "loginscreen/javascripts/timeimageswitch.js"; } else { echo "loginscreen/javascripts/randomimageswitch.js"; }; ?>" type="text/javascript"></script>
+<link href="<?php echo SYSURL; ?><?=$template_css?>" type="text/css" rel="stylesheet">
+<script src="<?php echo SYSURL; ?>loginscreen/javascripts/resize.js" type="text/javascript"></script>
+<script src="<?php echo SYSURL; ?><?if($picturesByTime){ echo "loginscreen/javascripts/timeimageswitch.js"; } else { echo "loginscreen/javascripts/randomimageswitch.js"; }; ?>" type="text/javascript"></script>
 
 <? include("../languages/translator.php"); ?>
 <title><?=SYSNAME?>: <? echo $webui_login_screen ?></title>
@@ -86,7 +86,7 @@ bgImgRotate();
 <body class="webui">
 
 <div id=top_image>
-    <img src="<?= SYSURL ?>loginscreen/images/logo.png" alt="<?=SYSNAME?>" title="<?=SYSNAME?>" />
+    <img src="<?php echo SYSURL; ?>loginscreen/images/logo.png" alt="<?=SYSNAME?>" title="<?=SYSNAME?>" />
 </div>
 
 <div id=bottom_left>
@@ -105,7 +105,7 @@ bgImgRotate();
     <? } ?>
 </div>
 
-<img id=mainImage src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt="" title="" />
+<img id=mainImage src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt="" title="" />
 
 <? if($showNewsBar) { ?>
 <div id=bottom>

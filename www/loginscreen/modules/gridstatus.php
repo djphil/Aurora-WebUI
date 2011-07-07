@@ -5,9 +5,9 @@
                     <TABLE cellSpacing=0 cellPadding=0 width=300 border=0>
                         <TBODY>
                             <tr>
-                              <td class=gridbox_tl><img height=5 width=5 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt="" /></td>
-                              <td class=gridbox_t><img height=5 width=5 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt="" /></td>
-                              <td class=gridbox_tr><img height=5 width=5 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" alt="" /></td>
+                              <td class=gridbox_tl><img height=5 width=5 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt="" /></td>
+                              <td class=gridbox_t><img height=5 width=5 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt="" /></td>
+                              <td class=gridbox_tr><img height=5 width=5 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" alt="" /></td>
                             </tr>
                             <TR>
                                 <TD class=gridbox_l></TD>
@@ -28,7 +28,7 @@
                                     </TABLE>
 
                                     <DIV id=GREX style="MARGIN: 1px 0px 0px">
-                                        <IMG height=1 src="<?= SYSURL ?>loginscreen/images/icons/spacer.gif" width=1>
+                                        <IMG height=1 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" width=1>
                                     </DIV>
 
                                     <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
@@ -46,7 +46,7 @@
                                                 <TD class=gridtext vAlign=top noWrap align=right width="1%"><?= $LASTMONTHONLINE ?></TD>
                                             </TR>
                                             <TR class=even>
-                                                <TD class=gridtext vAlign=top noWrap align=left><STRONG><a href="<?= SYSURL ?>index.php?page=onlineusers" target="_blank"><? echo $webui_online_now; ?></a>:</STRONG></TD>
+                                                <TD class=gridtext vAlign=top noWrap align=left><STRONG><a href="<?php echo SYSURL; ?>index.php?page=onlineusers" target="_blank"><? echo $webui_online_now; ?></a>:</STRONG></TD>
                                                 <TD class=gridtext vAlign=top noWrap align=right width="1%"><STRONG><?= $NOWONLINE ?></STRONG></TD>
                                             </TR>
                                         </TBODY>

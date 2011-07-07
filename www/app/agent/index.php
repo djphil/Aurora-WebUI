@@ -75,13 +75,13 @@ if ($_GET[name]) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="<?= SYSURL ?><? echo $template_css ?>" type="text/css" />
-    <link rel="icon" href="<?= SYSURL ?><?=$favicon_image?>" />
+    <link rel="stylesheet" href="<?php echo SYSURL; ?><? echo $template_css ?>" type="text/css" />
+    <link rel="icon" href="<?php echo SYSURL; ?><?=$favicon_image?>" />
     <title><?= SYSNAME ?>: <? echo $webui_users_profile; ?> <? echo $userName ?></title>
     
 <?php if($displayRoundedCorner)  { ?>
-<script src="<?= SYSURL ?>javascripts/jquery/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="<?= SYSURL ?>javascripts/jquery/jquery.corner.js?v2.11"></script>
+<script src="<?php echo SYSURL; ?>javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.corner.js?v2.11"></script>
 <script type="text/javascript">
 	  $("#profil_picture").corner("15px");
 		$('#container_popup, #content_popup').corner();

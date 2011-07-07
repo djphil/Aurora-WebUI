@@ -598,7 +598,7 @@ $(document).ready(function(){
             <a href="<?php echo SYSURL ?>"><h1><? SYSNAME ?></h1></a>
         </div>
         <!-- <div id="gridstatus"><?php // include("sites/gridstatus.php"); ?></div> -->
-        <div id="home_content_right"><? include("sites/modules/slideshow.php"); ?></div>		
+        <div id="home_content_right"><?php include("sites/modules/slideshow.php"); ?></div>		
     </div><!-- fin de #header -->
 
     <!-- <div id="menubar"><? // include("sites/menubar.php"); ?></div> -->

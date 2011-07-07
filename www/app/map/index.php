@@ -141,7 +141,7 @@ function setZoom(size) {
   var a = mapInstance.getViewportBounds();
   var x = (a.xMin + a.xMax) / 2;
   var y = (a.yMin + a.yMax) / 2;
-  window.location.href="<?= SYSURL ?>app/map/?zoom="+size+"&startx="+x+"&starty="+y;
+  window.location.href="<?php echo SYSURL; ?>app/map/?zoom="+size+"&startx="+x+"&starty="+y;
 }
 
 function wheel(event){

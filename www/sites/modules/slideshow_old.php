@@ -44,27 +44,27 @@ function gallery() {
 
 <div id="gallery_slideshow">
   <a href="#" class="show">
-    <img src="<?= SYSURL ?>images/gallery/login1.jpg"
+    <img src="<?php echo SYSURL; ?>images/gallery/login1.jpg"
          title="" alt="<?= SYSNAME ?>"  rel="<h3><?= SYSNAME ?></h3>
          <? echo $webui_slideshow_comment01; ?>"/>
   </a>
   <a href="#">
-    <img src="<?= SYSURL ?>images/gallery/login2.jpg"
+    <img src="<?php echo SYSURL; ?>images/gallery/login2.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
          <? echo $webui_slideshow_comment02; ?>"/>
   </a>
   <a href="#">
-    <img src="<?= SYSURL ?>images/gallery/login3.jpg"
+    <img src="<?php echo SYSURL; ?>images/gallery/login3.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
          <? echo $webui_slideshow_comment03; ?>"/>
   </a>
   <a href="#">
-    <img src="<?= SYSURL ?>images/gallery/login4.jpg"
+    <img src="<?php echo SYSURL; ?>images/gallery/login4.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
          <? echo $webui_slideshow_comment04; ?>"/>
   </a>
   <a href="#">
-    <img src="<?= SYSURL ?>images/gallery/login5.jpg"
+    <img src="<?php echo SYSURL; ?>images/gallery/login5.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
          <? echo $webui_slideshow_comment01; ?>"/>
   </a>
