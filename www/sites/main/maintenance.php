@@ -1,9 +1,9 @@
 <div id="content">
-    <h2><?= SYSNAME ?>: <? echo $webui_maint_title ?></h2>
+    <h2><?php echo SYSNAME ?>: <?php echo $webui_maint_title ?></h2>
     <div id="alert">
-        <p><? echo $webui_maint_text ?></p>
+        <p><?php echo $webui_maint_text ?></p>
     </div>
     <div align="center">
-        <img src="<?= SYSURL ?><?=$notfound_image?>" alt="<? echo $webui_maint_title ?>" title="<? echo $webui_maint_title ?>" /><br />
+        <img src="<?php echo SYSURL,$notfound_image?>" alt="<?php echo $webui_maint_title ?>" title="<?php echo $webui_maint_title ?>" /><br />
     </div>
 </div>
