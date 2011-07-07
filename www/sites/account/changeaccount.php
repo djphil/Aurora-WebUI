@@ -209,11 +209,11 @@ if ($_SESSION[USERID] == "") {
 <div id="content">
     <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
     <div id="ContentHeaderCenter"></div>
-    <div id="ContentHeaderRight"><h5><? echo $webui_change_account; ?></h5></div> 
+    <div id="ContentHeaderRight"><h5><?php echo $webui_change_account; ?></h5></div> 
   <div id="changeaccount">
 
         <div id="info">
-            <p><? echo $webui_change_account_info ?></p>
+            <p><?php echo $webui_change_account_info ?></p>
         </div>
         
         <!-- Change Start Region -->         
@@ -222,19 +222,19 @@ if ($_SESSION[USERID] == "") {
             <tr>
                 <td colspan="2">
                     <div align="center">
-                        <strong><? echo $webui_change_home_region ?> </strong>
+                        <strong><?php echo $webui_change_home_region ?> </strong>
                     </div>
                 </td>
             </tr>
             
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
-                    <td class="odd" width="50%"><? echo $webui_old_region ?>: </td>
+                    <td class="odd" width="50%"><?php echo $webui_old_region ?>: </td>
                     <td class="odd"><?= $oldregionname ?></td>
                 </tr>
             
                 <tr>
-                    <td class="even"><? echo $webui_home_region ?>:  </td>
+                    <td class="even"><?php echo $webui_home_region ?>:  </td>
                     <td class="even">
                         <select wide="25" name="region">
                             <?
@@ -250,7 +250,7 @@ if ($_SESSION[USERID] == "") {
                     <td class="odd"></td>
                 
                     <td class="odd">
-                        <input type="submit" name="Submit1" value="<? echo $webui_submit ?>">
+                        <input type="submit" name="Submit1" value="<?php echo $webui_submit ?>">
                    </td>
                 </tr>
             </form>
@@ -265,7 +265,7 @@ if ($_SESSION[USERID] == "") {
             <tr>
                 <td colspan="2">
                     <div align="center">
-                        <strong><? echo $webui_change_password; ?></strong>
+                        <strong><?php echo $webui_change_password; ?></strong>
                     </div>
                 </td>
             </tr>
@@ -280,23 +280,23 @@ if ($_SESSION[USERID] == "") {
                   
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
-                    <td class="odd" width="50%"><? echo $webui_old_password; ?>:</td>
+                    <td class="odd" width="50%"><?php echo $webui_old_password; ?>:</td>
                     <td class="odd"><input type="password" name="passold"></td>
                 </tr>
                 
                 <tr>
-                    <td class="even"><? echo $webui_new_password; ?>:</td>
+                    <td class="even"><?php echo $webui_new_password; ?>:</td>
                     <td class="even"><input type="password" name="passnew"></td>
                 </tr>
                 
                 <tr>
-                    <td class="odd"><? echo $webui_confirm_password; ?>:</td>
+                    <td class="odd"><?php echo $webui_confirm_password; ?>:</td>
                     <td class="odd"><input type="password" name="passvalid"></td>
                 </tr>
                 
                 <tr>
                     <td class="even"></td>
-                    <td class="even"><input type="submit" name="Submit2" value="<? echo $webui_submit; ?>"></td>
+                    <td class="even"><input type="submit" name="Submit2" value="<?php echo $webui_submit; ?>"></td>
                 </tr>
             </form>
         </table>
@@ -306,7 +306,7 @@ if ($_SESSION[USERID] == "") {
         <!-- Change Email --> 
         <table>
             <tr>
-                <td colspan="2"><div align="center"><strong><? echo $webui_change_email; ?></strong></div></td>
+                <td colspan="2"><div align="center"><strong><?php echo $webui_change_email; ?></strong></div></td>
             </tr>
                             
             <? if ($ERRORS2) { ?>
@@ -319,19 +319,19 @@ if ($_SESSION[USERID] == "") {
                             
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
-                    <td class="odd" width="50%"><? echo $webui_old_email ?>:</td>
+                    <td class="odd" width="50%"><?php echo $webui_old_email ?>:</td>
                     <td class="odd"><input type="text" size="40" value="<?= $oldemail ?>" name="emailold"></td>
                 </tr>
                 
                 
                 <tr>
-                    <td class="even"><? echo $webui_new_email; ?>:</td>
+                    <td class="even"><?php echo $webui_new_email; ?>:</td>
                     <td class="even"><input type="text" size="40" name="emailnew"></td>
                 </tr>
                 
                 <tr>
                     <td class="odd"></td>
-                    <td class="odd"><input type="submit" name="Submit3" value="<? echo $webui_submit; ?>"></td>
+                    <td class="odd"><input type="submit" name="Submit3" value="<?php echo $webui_submit; ?>"></td>
                 </tr>
             </form>
         </table>
@@ -343,7 +343,7 @@ if ($_SESSION[USERID] == "") {
             <tr>
                 <td colspan="2">
                     <div align="center">
-                        <strong><? echo $webui_change_name; ?> </strong>
+                        <strong><?php echo $webui_change_name; ?> </strong>
                     </div>
                 </td>
             </tr>
@@ -358,13 +358,13 @@ if ($_SESSION[USERID] == "") {
                             
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
-                    <td class="odd" width="50%"><? echo $webui_avatar_name; ?>:</td>
-                    <td class="odd"><input type="text" size="40" name="nameNew" value ="<? echo $Name; ?>"></td>
+                    <td class="odd" width="50%"><?php echo $webui_avatar_name; ?>:</td>
+                    <td class="odd"><input type="text" size="40" name="nameNew" value ="<?php echo $Name; ?>"></td>
                 </tr>
                                 
                 <tr>
                     <td class="odd"></td>
-                    <td class="odd"><input type="submit" name="Submit4" value="<? echo $webui_submit; ?>"></td>
+                    <td class="odd"><input type="submit" name="Submit4" value="<?php echo $webui_submit; ?>"></td>
                 </tr>
             </form>
         </table>
@@ -376,7 +376,7 @@ if ($_SESSION[USERID] == "") {
             <tr>
                 <td colspan="2">
                     <div align="center">
-                        <strong><? echo $webui_purge_apparence; ?></strong>
+                        <strong><?php echo $webui_purge_apparence; ?></strong>
                     </div>
                 </td>
             </tr>
@@ -393,7 +393,7 @@ if ($_SESSION[USERID] == "") {
                 <tr>
                     <td class="odd">
                         <div align="center">
-                            <input type="submit" name="purge" value="<? echo $webui_purge_apparence_bouton; ?>">
+                            <input type="submit" name="purge" value="<?php echo $webui_purge_apparence_bouton; ?>">
                         </div>
                     </td>
                 </tr>

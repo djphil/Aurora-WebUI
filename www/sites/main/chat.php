@@ -1,10 +1,10 @@
 <div id="content">   
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_chat; ?></h5></div>  
+  <div id="ContentHeaderRight"><h5><?php echo $webui_chat; ?></h5></div>  
 
   <div id="info">
-    <p><? echo $webui_chat_info; ?> Basic IRC chat help <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html" target="_blank">here</a>.</p>
+    <p><?php echo $webui_chat_info; ?> Basic IRC chat help <a href="http://www.ircbeginner.com/ircinfo/ircc-commands.html" target="_blank">here</a>.</p>
   </div>
   
   <div class="clear"></div>

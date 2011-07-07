@@ -73,7 +73,7 @@ list($REGIONSCOUNT) = $DbLink->next_record();
 <script src="<?php echo SYSURL; ?><?if($picturesByTime){ echo "loginscreen/javascripts/timeimageswitch.js"; } else { echo "loginscreen/javascripts/randomimageswitch.js"; }; ?>" type="text/javascript"></script>
 
 <? include("../languages/translator.php"); ?>
-<title><?=SYSNAME?>: <? echo $webui_login_screen ?></title>
+<title><?=SYSNAME?>: <?php echo $webui_login_screen ?></title>
 
 <SCRIPT>
 $(document).ready(function(){

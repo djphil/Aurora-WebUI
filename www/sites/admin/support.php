@@ -42,9 +42,9 @@ else
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_support; ?></h5></div> 
+  <div id="ContentHeaderRight"><h5><?php echo $webui_support; ?></h5></div> 
   <div id="support">
-  <div id="info"><p><? echo $webui_support_info; ?></p></div>
+  <div id="info"><p><?php echo $webui_support_info; ?></p></div>
        
 	<?=$_POST["method"]?>
 	<table width="100%">
@@ -60,7 +60,7 @@ else
 			</td>
 		</tr>
 		<?$w=0;foreach($recieved->{'abusereports'} as $ar) {$w++;?>
-		<tr class="<? echo ($odd = $w%2 )? "odd":"even" ?>" onclick="rowClicked('<?=$ar->{'Number'}?>', '<? echo ($odd = $w%2 )? "odd":"even" ?>');">
+		<tr class="<?php echo ($odd = $w%2 )? "odd":"even" ?>" onclick="rowClicked('<?=$ar->{'Number'}?>', '<?php echo ($odd = $w%2 )? "odd":"even" ?>');">
 			<td><?=$ar->{'ReporterName'}?></td>
 			<td><?=$ar->{'Category'}?></td>
 			<td><?=$ar->{'AbuseSummary'}?></td>
@@ -74,7 +74,7 @@ else
 								
 								<a href="<?=$ar->{'AbuseLocation'}?>">TP</a>
 								<input type="Submit" value="Mark Complete" name="method" />
-								<input type="button" value="X" onclick="rowClicked('<?=$ar->{'Number'}?>', '<? echo ($odd = $w%2 )? "odd":"even" ?>');" />
+								<input type="button" value="X" onclick="rowClicked('<?=$ar->{'Number'}?>', '<?php echo ($odd = $w%2 )? "odd":"even" ?>');" />
 								<input type="hidden" name="Number" value="<?=$ar->{'Number'}?>" />
 							</td>
 						</tr>

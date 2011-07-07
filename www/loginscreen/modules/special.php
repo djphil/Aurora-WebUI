@@ -14,11 +14,11 @@
           <TD class=black_content>
 			    <div id="special">
 			       <center>
-                <p><? echo $webui_special_info; ?></p>
-                <p><? echo $webui_special_visit; ?>
+                <p><?php echo $webui_special_info; ?></p>
+                <p><?php echo $webui_special_visit; ?>
                 <a href =<?=SYSURL?> target="_blank">
-                <? echo $webui_special_website; ?></a> 
-                <? echo $webui_special_moreinfo; ?></p>
+                <?php echo $webui_special_website; ?></a> 
+                <?php echo $webui_special_moreinfo; ?></p>
             </center>
 			    </div>
 		      </TD>

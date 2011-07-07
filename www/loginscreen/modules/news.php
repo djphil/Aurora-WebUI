@@ -10,7 +10,7 @@
           <td class=gridbox_l></td>
           
           <td class=black_content vAlign=top align=left>
-              <strong><?=SYSNAME?>: <? echo $webui_news; ?></strong>
+              <strong><?=SYSNAME?>: <?php echo $webui_news; ?></strong>
               <div id=GREX style="MARGIN: 5px 0px 0px">
                   <img height=1 src="<?php echo SYSURL; ?>loginscreen/images/icons/spacer.gif" width=1>
               </div>
@@ -42,7 +42,7 @@
 
                   <tr <? if(($w % 2)){echo"class=even";}else{echo"class=odd";}?>>
                       <td class=boxnotext vAlign=top>
-                         <? echo $webui_no_news; ?>
+                         <?php echo $webui_no_news; ?>
                       </td>
 
                       <td class=boxnotext vAlign=top noWrap width="1%">

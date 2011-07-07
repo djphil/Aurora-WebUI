@@ -1,9 +1,9 @@
 <div id="content">
     <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
     <div id="ContentHeaderCenter"></div>
-    <div id="ContentHeaderRight"><h5><? echo $webui_people_search; ?></h5></div>
+    <div id="ContentHeaderRight"><h5><?php echo $webui_people_search; ?></h5></div>
     <div id="searchpeople">
-    <div id="info"><p><? echo $webui_people_search_info; ?></p></div>
+    <div id="info"><p><?php echo $webui_people_search_info; ?></p></div>
 <p>
 <?
   $DbLink2 = new DB;

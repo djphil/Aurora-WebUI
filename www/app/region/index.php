@@ -134,9 +134,9 @@ while (list($RegionNameX, $locX1, $locY1) = $DbLink->next_record()) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="<?php echo SYSURL; ?><? echo $template_css ?>" type="text/css" />
+  <link rel="stylesheet" href="<?php echo SYSURL; ?><?php echo $template_css ?>" type="text/css" />
   <link rel="icon" href="<?php echo SYSURL; ?><?= $favicon_image ?>" />
-  <title><?= SYSNAME ?>: <? echo $webui_region_information; ?></title>
+  <title><?= SYSNAME ?>: <?php echo $webui_region_information; ?></title>
 
 <?php if($displayRoundedCorner)  { ?>
 <script src="<?php echo SYSURL; ?>javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -153,7 +153,7 @@ while (list($RegionNameX, $locX1, $locY1) = $DbLink->next_record()) {
 <body class="webui">
 <div id="container_popup">
 <div id="content_popup">
-  <h2><?= SYSNAME ?>: <? echo $webui_region_information; ?></h2>
+  <h2><?= SYSNAME ?>: <?php echo $webui_region_information; ?></h2>
   
   <div id="regioninfo">
   <!--  <div id="info"><p><? // echo $webui_regioninfo ?></p></div> -->
@@ -183,25 +183,25 @@ while (list($RegionNameX, $locX1, $locY1) = $DbLink->next_record()) {
     </div>
 
     <div id="region_picture">
-      <img src="<? echo $source; ?>" alt="<?= $RegionName ?>" title="<?= $RegionName ?>" />
+      <img src="<?php echo $source; ?>" alt="<?= $RegionName ?>" title="<?= $RegionName ?>" />
     </div>
 
     <div id="regiondetails">
       <table>
         <tr>
-          <td><? echo $webui_region_name; ?>: <?= $RegionName ?></td>
+          <td><?php echo $webui_region_name; ?>: <?= $RegionName ?></td>
         </tr>
       
         <tr>
-          <td><? echo $webui_region_type; ?>: <?= $regionType ?></td>
+          <td><?php echo $webui_region_type; ?>: <?= $regionType ?></td>
         </tr>
       
         <tr>
-          <td><? echo $webui_location; ?> X: <?= $locX ?> Y: <?= $locY ?></td>
+          <td><?php echo $webui_location; ?> X: <?= $locX ?> Y: <?= $locY ?></td>
         </tr>
       
         <tr>
-          <td><? echo $webui_owner; ?>: <a href="<?php echo SYSURL; ?>app/agent/?name=<?= $firstN ?> <?= $lastN ?>"><?= $firstN ?> <?= $lastN ?></a></td>
+          <td><?php echo $webui_owner; ?>: <a href="<?php echo SYSURL; ?>app/agent/?name=<?= $firstN ?> <?= $lastN ?>"><?= $firstN ?> <?= $lastN ?></a></td>
         </tr>
       </table>
     </div>

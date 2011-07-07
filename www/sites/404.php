@@ -1,10 +1,10 @@
 <div id="content">
-    <h2><?= SYSNAME ?>: <? echo $webui_404_title ?></h2>
+    <h2><?= SYSNAME ?>: <?php echo $webui_404_title ?></h2>
     <div id="alert">
-        <p><? echo $webui_404_text ?></p>
+        <p><?php echo $webui_404_text ?></p>
     </div>
     <div align="center">
-        <img src="<?php echo SYSURL; ?><?=$notfound_image?>" alt="<? echo $webui_404_title ?>" title="<? echo $webui_404_title ?>" /><br />
-        <a href="<?php echo SYSURL; ?>"><? echo $webui_404_gohome ?></a>
+        <img src="<?php echo SYSURL; ?><?=$notfound_image?>" alt="<?php echo $webui_404_title ?>" title="<?php echo $webui_404_title ?>" /><br />
+        <a href="<?php echo SYSURL; ?>"><?php echo $webui_404_gohome ?></a>
     </div>
 </div>

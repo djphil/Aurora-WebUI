@@ -28,10 +28,10 @@ window.location.href=\"index.php?page=home\";
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_admin_edit_news; ?></h5></div>
+  <div id="ContentHeaderRight"><h5><?php echo $webui_admin_edit_news; ?></h5></div>
 
   <div id="createnews">
-    <div id="info"><p><? echo $webui_admin_edit_news_info ?></p></div>
+    <div id="info"><p><?php echo $webui_admin_edit_news_info ?></p></div>
 
     <?
       $DbLink = new DB;
@@ -51,7 +51,7 @@ window.location.href=\"index.php?page=home\";
 
       <table width="90%" align="center" cellpadding="2" cellspacing="3">
         <tr>
-          <td><font color="#FFFFFF"><b> <? echo $webui_admin_news_title; ?>:<br />
+          <td><font color="#FFFFFF"><b> <?php echo $webui_admin_news_title; ?>:<br />
             <input name="title" value="<?= $title ?>" style="width:100%" type="text" maxlength="255" /></b></font>
           </td>
         </tr>
@@ -68,7 +68,7 @@ window.location.href=\"index.php?page=home\";
       <div align="center">
         <!-- <input type="submit" name="Submit" value="<? // echo $webui_admin_edit_news; ?>" /> -->
         <button id="edit_news_item_button" type="Submit" name="Submit">
-        <? echo $webui_admin_edit_news; ?></button>
+        <?php echo $webui_admin_edit_news; ?></button>
       </div>
     </form>
   </div>

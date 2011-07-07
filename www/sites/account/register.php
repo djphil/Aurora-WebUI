@@ -144,14 +144,14 @@ function displayDefaultAvatars()
     
     <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
     <div id="ContentHeaderCenter"></div>
-    <div id="ContentHeaderRight"><h5><? echo $webui_register; ?></h5></div>
+    <div id="ContentHeaderRight"><h5><?php echo $webui_register; ?></h5></div>
       
     <div id="register">
         <form ACTION="index.php?page=register" METHOD="POST" onsubmit="if (!validate(this)) return false;">
             <table>
                 <tr><td class="error" colspan="2" align="center" id="error_message"><?=$_SESSION[ERROR];?><?=$_GET[ERROR]?></td></tr>
                 <tr>
-                    <td class="even" width="52%"><span id="accountfirst_label"><? echo $webui_avatar_first_name ?>*</span></td>
+                    <td class="even" width="52%"><span id="accountfirst_label"><?php echo $webui_avatar_first_name ?>*</span></td>
                     <td class="even">
                         <div class="roundedinput">
                           <input minlength="3" id="register_input" require="true" label="accountfirst_label" name="accountfirst" type="text" size="25" maxlength="15" value="<?= $_SESSION[ACCFIRST] ?>">
@@ -159,14 +159,14 @@ function displayDefaultAvatars()
                     </td>
                 </tr>
                 <tr>
-                    <td class="odd"><span id="accountlast_label"><? echo $webui_avatar_last_name; ?>*</span></td>
+                    <td class="odd"><span id="accountlast_label"><?php echo $webui_avatar_last_name; ?>*</span></td>
                     <td class="odd">
                       <?=printLastNames()?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="even"><span id="wordpass_label"><? echo $webui_password ?>*</span></td>
+                    <td class="even"><span id="wordpass_label"><?php echo $webui_password ?>*</span></td>
                     <td class="even">
                         <div class="roundedinput">
                           <input minlength="6" compare="wordpass2" require="true" label="wordpass_label" id="register_input" name="wordpass" type="password" size="25" maxlength="15">
@@ -175,7 +175,7 @@ function displayDefaultAvatars()
                 </tr>
 
                 <tr>
-                    <td class="odd"><span id="wordpass2_label"><? echo $webui_confirm ?> <? echo $webui_password ?>*</span></td>
+                    <td class="odd"><span id="wordpass2_label"><?php echo $webui_confirm ?> <?php echo $webui_password ?>*</span></td>
                     <td class="odd">
                       <div class="roundedinput">
                         <input minlength="6" require="true" label="wordpass2_label" id="register_input" name="wordpass2" type="password" size="25" maxlength="15">
@@ -186,7 +186,7 @@ function displayDefaultAvatars()
                 <? if ($REGIOCHECK == "0") { ?>
                 
                 <tr>
-                    <td class="even"><span id="startregion_label"><? echo $webui_start_region ?>*</span></td>
+                    <td class="even"><span id="startregion_label"><?php echo $webui_start_region ?>*</span></td>
                     <td class="even">
                         <? displayRegions();	?>
                     </td>
@@ -194,7 +194,7 @@ function displayDefaultAvatars()
                 
                 <? } if ($ADRESSCHECK == "1") { ?>
 				<tr>
-					<td class="odd"><span id="firstname_label"><? echo $webui_first_name ?>*</span></td>
+					<td class="odd"><span id="firstname_label"><?php echo $webui_first_name ?>*</span></td>
 					<td class="odd">
 						<div class="roundedinput">
               <input require="true" label="firstname_label" id="register_input" name="firstname" type="text" size="25" maxlength="15" value="<?= $_SESSION[NAMEF] ?>">
@@ -203,7 +203,7 @@ function displayDefaultAvatars()
 				</tr>
 
 				<tr>
-					<td class="even"><span id="lastname_label"><? echo $webui_last_name ?>*</span></td>
+					<td class="even"><span id="lastname_label"><?php echo $webui_last_name ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
               <input require="true" label="lastname_label" id="register_input" name="lastname" type="text" size="25" maxlength="15" value="<?= $_SESSION[NAMEL] ?>">
@@ -212,7 +212,7 @@ function displayDefaultAvatars()
 				</tr>
 
 				<tr>
-					<td class="odd"><span id="adress_label"><? echo $webui_address ?>*</span></td>
+					<td class="odd"><span id="adress_label"><?php echo $webui_address ?>*</span></td>
 					<td class="odd">
 						<div class="roundedinput">
               <input require="true" label="adress_label" id="register_input" name="adress" type="text" size="50" maxlength="50" value="<?= $_SESSION[ADRESS] ?>">
@@ -221,7 +221,7 @@ function displayDefaultAvatars()
 				</tr>
 
 				<tr>
-					<td class="even"><span id="zip_label"><? echo $webui_zip_code ?>*</span></td>
+					<td class="even"><span id="zip_label"><?php echo $webui_zip_code ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
               <input require="true" label="zip_label" id="register_input" name="zip" type="text" size="25" maxlength="15" value="<?= $_SESSION[ZIP] ?>">
@@ -229,7 +229,7 @@ function displayDefaultAvatars()
 					</td>
 				</tr>
 				<tr>
-					<td class="odd"><span id="city_label"><? echo $webui_city ?>*</span></td>
+					<td class="odd"><span id="city_label"><?php echo $webui_city ?>*</span></td>
 					<td class="odd">
 						<div class="roundedinput">
               <input require="true" label="city_label" id="register_input" name="city" type="text" size="25" maxlength="15" value="<?= $_SESSION[CITY] ?>">
@@ -237,13 +237,13 @@ function displayDefaultAvatars()
 					</td>
 				</tr>
 				<tr>
-					<td class="even"><span id="country_label"><? echo $webui_country ?>*</span></td>
+					<td class="even"><span id="country_label"><?php echo $webui_country ?>*</span></td>
 					<td class="even">
 						<? displayCountry(); ?>
                     </td>
                 </tr>
                 <tr>
-                    <td class="odd"><span id="dob_label"><? echo $webui_date_of_birth ?>*</span></td>
+                    <td class="odd"><span id="dob_label"><?php echo $webui_date_of_birth ?>*</span></td>
                     <td class="odd">
                         <? displayDOB(); ?>
                     </td>
@@ -252,7 +252,7 @@ function displayDefaultAvatars()
                 <? }else if ($FORCEAGE == "1"){ ?>
                 
                 <tr>
-                    <td class="odd"><span id="dob_label"><? echo $webui_date_of_birth ?>*</span></td>
+                    <td class="odd"><span id="dob_label"><?php echo $webui_date_of_birth ?>*</span></td>
                     <td class="odd">
                         <? displayDOB(); ?>
                     </td>
@@ -261,7 +261,7 @@ function displayDefaultAvatars()
                 <? } ?>
                 
 				<tr>
-					<td class="odd"><span id="email_label"><? echo $webui_email ?>*</span></td>
+					<td class="odd"><span id="email_label"><?php echo $webui_email ?>*</span></td>
 					<td class="odd">
           	<div class="roundedinput">
               <input compare="emaic" require="true" label="email_label" id="register_input" name="email" type="text" size="40" maxlength="40" value="<?= $_SESSION[EMAIL] ?>">
@@ -269,7 +269,7 @@ function displayDefaultAvatars()
           </td>
 				</tr>
 				<tr>
-					<td class="even"><span id="emaic_label"><? echo $webui_confirm ?> <? echo $webui_email ?>*</span></td>
+					<td class="even"><span id="emaic_label"><?php echo $webui_confirm ?> <?php echo $webui_email ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
               <input require="true" label="emaic_label" id="register_input" name="emaic" type="text" size="40" maxlength="40" value="<?= $_SESSION[EMAIC] ?>" >
@@ -309,7 +309,7 @@ function displayDefaultAvatars()
           <td class="even">
             <div class="center">
               <input type="hidden" name="action" value="check">
-              <button id="register_bouton" name="submit" type="submit"><? echo $webui_create_new_account ?></button>
+              <button id="register_bouton" name="submit" type="submit"><?php echo $webui_create_new_account ?></button>
               <!-- <input id="register_bouton" name="submit" TYPE="submit" value='<? //echo $webui_create_new_account ?>'> -->
             </div>
           </td>
@@ -554,12 +554,12 @@ function displayDefaultAvatars()
 				// insert code end
 ?>
 <div id="content">
-<h2><? echo $webui_successfully; ?></h2>
+<h2><?php echo $webui_successfully; ?></h2>
   <div id="info">
-  	<p><? echo $webui_successfully_info; ?></p><br />
-    <p><?= SYSNAME ?> <? echo $webui_avatar_first_name ?>: <b><?= $_SESSION[ACCFIRST] ?></b></p><br />
-    <p><?= SYSNAME ?> <? echo $webui_avatar_last_name ?>:  <b><?= $_SESSION[ACCLAST] ?></b></p><br />
-    <p><?= SYSNAME ?> <? echo $webui_email ?>: <?= $_SESSION[EMAIL] ?></b></p><br />
+  	<p><?php echo $webui_successfully_info; ?></p><br />
+    <p><?= SYSNAME ?> <?php echo $webui_avatar_first_name ?>: <b><?= $_SESSION[ACCFIRST] ?></b></p><br />
+    <p><?= SYSNAME ?> <?php echo $webui_avatar_last_name ?>:  <b><?= $_SESSION[ACCLAST] ?></b></p><br />
+    <p><?= SYSNAME ?> <?php echo $webui_email ?>: <?= $_SESSION[EMAIL] ?></b></p><br />
 	</div>
 </div>
 
@@ -587,10 +587,10 @@ else { ?>
 
 <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
 <div id="ContentHeaderCenter"></div>
-<div id="ContentHeaderRight"><h5><? echo $webui_register; ?></h5></div> 
+<div id="ContentHeaderRight"><h5><?php echo $webui_register; ?></h5></div> 
 
   <div id="alert">
-    <p><? echo $webui_registrations_disabled; ?></p>
+    <p><?php echo $webui_registrations_disabled; ?></p>
   </div>
 </div>
 

@@ -220,9 +220,9 @@
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_admin_options; ?></h5></div>
+  <div id="ContentHeaderRight"><h5><?php echo $webui_admin_options; ?></h5></div>
   <div id="adminsettings">
-  <div id="info"><p><? echo $webui_admin_options_info; ?></p></div>
+  <div id="info"><p><?php echo $webui_admin_options_info; ?></p></div>
   
   <table>
     <form id="form" name="form" method="post" action="index.php?page=adminmodules">
@@ -230,34 +230,34 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_TopPanelSlider; ?>
+          <?php echo $webui_admin_options_TopPanelSlider; ?>
         </td>
         
         <td class="odd">
           <? if ($displayTopPanelSlider == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_TopPanelSlider_desactive; ?>" 
-               title="<? echo $webui_admin_options_TopPanelSlider_desactive; ?>">
+               alt="<?php echo $webui_admin_options_TopPanelSlider_desactive; ?>" 
+               title="<?php echo $webui_admin_options_TopPanelSlider_desactive; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_TopPanelSlider_desactive; ?>
+          <?php echo $webui_admin_options_TopPanelSlider_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayTopPanelSlider" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayTopPanelSlider" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_TopPanelSlider_active; ?>" 
-               title="<? echo $webui_admin_options_TopPanelSlider_active; ?>">
+               alt="<?php echo $webui_admin_options_TopPanelSlider_active; ?>" 
+               title="<?php echo $webui_admin_options_TopPanelSlider_active; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_TopPanelSlider_active; ?>
+          <?php echo $webui_admin_options_TopPanelSlider_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayTopPanelSlider" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayTopPanelSlider" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -266,34 +266,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_TemplateSelector; ?>
+          <?php echo $webui_admin_options_TemplateSelector; ?>
         </td>
         
         <td class="even">
           <? if ($displayTemplateSelector == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_TemplateSelector_desactive; ?>" 
-               title="<? echo $webui_admin_options_TemplateSelector_desactive; ?>">
+               alt="<?php echo $webui_admin_options_TemplateSelector_desactive; ?>" 
+               title="<?php echo $webui_admin_options_TemplateSelector_desactive; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_TemplateSelector_desactive; ?>
+          <?php echo $webui_admin_options_TemplateSelector_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton"  type="submit" name="displayTemplateSelector" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton"  type="submit" name="displayTemplateSelector" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_TemplateSelector_active; ?>" 
-               title="<? echo $webui_admin_options_TemplateSelector_active; ?>">
+               alt="<?php echo $webui_admin_options_TemplateSelector_active; ?>" 
+               title="<?php echo $webui_admin_options_TemplateSelector_active; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_TemplateSelector_active; ?>
+          <?php echo $webui_admin_options_TemplateSelector_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton"  type="submit" name="displayTemplateSelector" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton"  type="submit" name="displayTemplateSelector" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -302,34 +302,34 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_StyleSwitcher; ?>
+          <?php echo $webui_admin_options_StyleSwitcher; ?>
         </td>
         
         <td class="odd">
           <? if ($displayStyleSwitcher == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_StyleSwitcher_desactive; ?>" 
-               title="<? echo $webui_admin_options_StyleSwitcher_desactive; ?>">
+               alt="<?php echo $webui_admin_options_StyleSwitcher_desactive; ?>" 
+               title="<?php echo $webui_admin_options_StyleSwitcher_desactive; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_StyleSwitcher_desactive; ?>
+          <?php echo $webui_admin_options_StyleSwitcher_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayStyleSwitcher" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayStyleSwitcher" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_StyleSwitcher_active; ?>" 
-               title="<? echo $webui_admin_options_StyleSwitcher_active; ?>">            
+               alt="<?php echo $webui_admin_options_StyleSwitcher_active; ?>" 
+               title="<?php echo $webui_admin_options_StyleSwitcher_active; ?>">            
 
         <td class="odd">
-          <? echo $webui_admin_options_StyleSwitcher_active; ?>
+          <?php echo $webui_admin_options_StyleSwitcher_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayStyleSwitcher" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayStyleSwitcher" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -338,34 +338,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_StyleSizer; ?>
+          <?php echo $webui_admin_options_StyleSizer; ?>
         </td>
         
         <td class="even">
           <? if ($displayStyleSizer == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_StyleSizer_desactive; ?>" 
-               title="<? echo $webui_admin_options_StyleSizer_desactive; ?>">
+               alt="<?php echo $webui_admin_options_StyleSizer_desactive; ?>" 
+               title="<?php echo $webui_admin_options_StyleSizer_desactive; ?>">
                          
         <td class="even">
-          <? echo $webui_admin_options_StyleSizer_desactive; ?>
+          <?php echo $webui_admin_options_StyleSizer_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayStyleSizer" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayStyleSizer" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_StyleSizer_active; ?>" 
-               title="<? echo $webui_admin_options_StyleSizer_active; ?>">           
+               alt="<?php echo $webui_admin_options_StyleSizer_active; ?>" 
+               title="<?php echo $webui_admin_options_StyleSizer_active; ?>">           
 
         <td class="even">
-          <? echo $webui_admin_options_StyleSizer_active; ?>
+          <?php echo $webui_admin_options_StyleSizer_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayStyleSizer" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayStyleSizer" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -374,33 +374,33 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_FontSizer; ?>
+          <?php echo $webui_admin_options_FontSizer; ?>
         </td>
         
         <td class="odd">
           <? if ($displayFontSizer == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_FontSizer_desactive; ?>" 
-               title="<? echo $webui_admin_options_FontSizer_desactive; ?>">
+               alt="<?php echo $webui_admin_options_FontSizer_desactive; ?>" 
+               title="<?php echo $webui_admin_options_FontSizer_desactive; ?>">
         <td class="odd">
-          <? echo $webui_admin_options_FontSizer_desactive; ?>
+          <?php echo $webui_admin_options_FontSizer_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayFontSizer" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayFontSizer" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
         
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_FontSizer_active; ?>" 
-               title="<? echo $webui_admin_options_FontSizer_active; ?>"> 
+               alt="<?php echo $webui_admin_options_FontSizer_active; ?>" 
+               title="<?php echo $webui_admin_options_FontSizer_active; ?>"> 
 
         <td class="odd">
-          <? echo $webui_admin_options_FontSizer_active; ?>
+          <?php echo $webui_admin_options_FontSizer_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayFontSizer" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayFontSizer" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -409,34 +409,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_LanguageSelector; ?>
+          <?php echo $webui_admin_options_LanguageSelector; ?>
         </td>
         
         <td class="even">
           <? if ($displayLanguageSelector == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_LanguageSelector_desactive; ?>" 
-               title="<? echo $webui_admin_options_LanguageSelector_desactive; ?>">
+               alt="<?php echo $webui_admin_options_LanguageSelector_desactive; ?>" 
+               title="<?php echo $webui_admin_options_LanguageSelector_desactive; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_LanguageSelector_desactive; ?>
+          <?php echo $webui_admin_options_LanguageSelector_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayLanguageSelector" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayLanguageSelector" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_LanguageSelector_active; ?>" 
-               title="<? echo $webui_admin_options_LanguageSelector_active; ?>">
+               alt="<?php echo $webui_admin_options_LanguageSelector_active; ?>" 
+               title="<?php echo $webui_admin_options_LanguageSelector_active; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_LanguageSelector_active; ?>
+          <?php echo $webui_admin_options_LanguageSelector_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayLanguageSelector" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayLanguageSelector" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -445,34 +445,34 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_ScrollingText; ?>
+          <?php echo $webui_admin_options_ScrollingText; ?>
         </td>
         
         <td class="odd">
           <? if ($displayScrollingText == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_ScrollingText_desactive; ?>" 
-               title="<? echo $webui_admin_options_ScrollingText_desactive; ?>">
+               alt="<?php echo $webui_admin_options_ScrollingText_desactive; ?>" 
+               title="<?php echo $webui_admin_options_ScrollingText_desactive; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_ScrollingText_desactive; ?>
+          <?php echo $webui_admin_options_ScrollingText_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayScrollingText" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayScrollingText" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_ScrollingText_active; ?>" 
-               title="<? echo $webui_admin_options_ScrollingText_active; ?>">
+               alt="<?php echo $webui_admin_options_ScrollingText_active; ?>" 
+               title="<?php echo $webui_admin_options_ScrollingText_active; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_ScrollingText_active; ?>
+          <?php echo $webui_admin_options_ScrollingText_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayScrollingText" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayScrollingText" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -481,34 +481,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_WelcomeMessage; ?>
+          <?php echo $webui_admin_options_WelcomeMessage; ?>
         </td>
         
         <td class="even">
           <? if ($displayWelcomeMessage == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_WelcomeMessage_desactive; ?>" 
-               title="<? echo $webui_admin_options_WelcomeMessage_desactive; ?>">
+               alt="<?php echo $webui_admin_options_WelcomeMessage_desactive; ?>" 
+               title="<?php echo $webui_admin_options_WelcomeMessage_desactive; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_WelcomeMessage_desactive; ?>
+          <?php echo $webui_admin_options_WelcomeMessage_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayWelcomeMessage" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayWelcomeMessage" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_WelcomeMessage_active; ?>" 
-               title="<? echo $webui_admin_options_WelcomeMessage_active; ?>">
+               alt="<?php echo $webui_admin_options_WelcomeMessage_active; ?>" 
+               title="<?php echo $webui_admin_options_WelcomeMessage_active; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_WelcomeMessage_active; ?>
+          <?php echo $webui_admin_options_WelcomeMessage_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayWelcomeMessage" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayWelcomeMessage" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -517,34 +517,34 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_Logo; ?>
+          <?php echo $webui_admin_options_Logo; ?>
         </td>
         
         <td class="odd">
           <? if ($displayLogo == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_Logo_desactive; ?>" 
-               title="<? echo $webui_admin_options_Logo_desactive; ?>">
+               alt="<?php echo $webui_admin_options_Logo_desactive; ?>" 
+               title="<?php echo $webui_admin_options_Logo_desactive; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_Logo_desactive; ?>
+          <?php echo $webui_admin_options_Logo_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayLogo" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayLogo" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_Logo_active; ?>" 
-               title="<? echo $webui_admin_options_Logo_active; ?>">
+               alt="<?php echo $webui_admin_options_Logo_active; ?>" 
+               title="<?php echo $webui_admin_options_Logo_active; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_Logo_active; ?>
+          <?php echo $webui_admin_options_Logo_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayLogo" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayLogo" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -553,34 +553,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_LogoEffect; ?>
+          <?php echo $webui_admin_options_LogoEffect; ?>
         </td>
         
         <td class="even">
           <? if ($displayLogoEffect == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_LogoEffect_desactive; ?>" 
-               title="<? echo $webui_admin_options_LogoEffect_desactive; ?>">
+               alt="<?php echo $webui_admin_options_LogoEffect_desactive; ?>" 
+               title="<?php echo $webui_admin_options_LogoEffect_desactive; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_LogoEffect_desactive; ?>
+          <?php echo $webui_admin_options_LogoEffect_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayLogoEffect" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayLogoEffect" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_LogoEffect_active; ?>" 
-               title="<? echo $webui_admin_options_LogoEffect_active; ?>">
+               alt="<?php echo $webui_admin_options_LogoEffect_active; ?>" 
+               title="<?php echo $webui_admin_options_LogoEffect_active; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_LogoEffect_active; ?>
+          <?php echo $webui_admin_options_LogoEffect_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayLogoEffect" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayLogoEffect" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -589,34 +589,34 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_SlideShow; ?>
+          <?php echo $webui_admin_options_SlideShow; ?>
         </td>
         
         <td class="odd">
           <? if ($displaySlideShow == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_SlideShow_desactive; ?>" 
-               title="<? echo $webui_admin_options_SlideShow_desactive; ?>">
+               alt="<?php echo $webui_admin_options_SlideShow_desactive; ?>" 
+               title="<?php echo $webui_admin_options_SlideShow_desactive; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_SlideShow_desactive; ?>
+          <?php echo $webui_admin_options_SlideShow_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displaySlideShow" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displaySlideShow" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_SlideShow_active; ?>" 
-               title="<? echo $webui_admin_options_SlideShow_active; ?>">
+               alt="<?php echo $webui_admin_options_SlideShow_active; ?>" 
+               title="<?php echo $webui_admin_options_SlideShow_active; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_SlideShow_active; ?>
+          <?php echo $webui_admin_options_SlideShow_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displaySlideShow" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displaySlideShow" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -625,34 +625,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_MegaMenu; ?>
+          <?php echo $webui_admin_options_MegaMenu; ?>
         </td>
         
         <td class="even">
           <? if ($displayMegaMenu == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_MegaMenu_desactive; ?>" 
-               title="<? echo $webui_admin_options_MegaMenu_desactive; ?>">
+               alt="<?php echo $webui_admin_options_MegaMenu_desactive; ?>" 
+               title="<?php echo $webui_admin_options_MegaMenu_desactive; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_MegaMenu_desactive; ?>
+          <?php echo $webui_admin_options_MegaMenu_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayMegaMenu" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayMegaMenu" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_MegaMenu_active; ?>" 
-               title="<? echo $webui_admin_options_MegaMenu_active; ?>">
+               alt="<?php echo $webui_admin_options_MegaMenu_active; ?>" 
+               title="<?php echo $webui_admin_options_MegaMenu_active; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_MegaMenu_active; ?>
+          <?php echo $webui_admin_options_MegaMenu_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayMegaMenu" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayMegaMenu" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -661,34 +661,34 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_Date; ?>
+          <?php echo $webui_admin_options_Date; ?>
         </td>
         
         <td class="odd">
           <? if ($displayDate == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_Date_desactive; ?>" 
-               title="<? echo $webui_admin_options_Date_desactive; ?>">
+               alt="<?php echo $webui_admin_options_Date_desactive; ?>" 
+               title="<?php echo $webui_admin_options_Date_desactive; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_Date_desactive; ?>
+          <?php echo $webui_admin_options_Date_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayDate" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayDate" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_Date_active; ?>" 
-               title="<? echo $webui_admin_options_Date_active; ?>">
+               alt="<?php echo $webui_admin_options_Date_active; ?>" 
+               title="<?php echo $webui_admin_options_Date_active; ?>">
 
         <td class="odd">
-          <? echo $webui_admin_options_Date_active; ?>
+          <?php echo $webui_admin_options_Date_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayDate" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayDate" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -697,34 +697,34 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_Time; ?>
+          <?php echo $webui_admin_options_Time; ?>
         </td>
         
         <td class="even">
           <? if ($displayTime == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_Time_desactive; ?>" 
-               title="<? echo $webui_admin_options_Time_desactive; ?>">
+               alt="<?php echo $webui_admin_options_Time_desactive; ?>" 
+               title="<?php echo $webui_admin_options_Time_desactive; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_Time_desactive; ?>
+          <?php echo $webui_admin_options_Time_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayTime" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayTime" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_Time_active; ?>" 
-               title="<? echo $webui_admin_options_Time_active; ?>">
+               alt="<?php echo $webui_admin_options_Time_active; ?>" 
+               title="<?php echo $webui_admin_options_Time_active; ?>">
 
         <td class="even">
-          <? echo $webui_admin_options_Time_active; ?>
+          <?php echo $webui_admin_options_Time_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayTime" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayTime" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>          
           <? } ?>
         </td>
@@ -733,35 +733,35 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_RoundedCorner; ?>
+          <?php echo $webui_admin_options_RoundedCorner; ?>
         </td>
         
         <td class="odd">
           <? if ($displayRoundedCorner == 0) { ?>
 
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_RoundedCorner_desactive; ?>" 
-               title="<? echo $webui_admin_options_RoundedCorner_desactive; ?>">
+               alt="<?php echo $webui_admin_options_RoundedCorner_desactive; ?>" 
+               title="<?php echo $webui_admin_options_RoundedCorner_desactive; ?>">
                
         <td class="odd">
-          <? echo $webui_admin_options_RoundedCorner_desactive; ?>
+          <?php echo $webui_admin_options_RoundedCorner_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayRoundedCorner" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayRoundedCorner" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
            
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_RoundedCorner_active; ?>" 
-               title="<? echo $webui_admin_options_RoundedCorner_active; ?>">
+               alt="<?php echo $webui_admin_options_RoundedCorner_active; ?>" 
+               title="<?php echo $webui_admin_options_RoundedCorner_active; ?>">
                
         <td class="odd">
-          <? echo $webui_admin_options_RoundedCorner_active; ?>
+          <?php echo $webui_admin_options_RoundedCorner_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayRoundedCorner" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayRoundedCorner" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -770,35 +770,35 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_BackgroundColorAnimation; ?>
+          <?php echo $webui_admin_options_BackgroundColorAnimation; ?>
         </td>
         
         <td class="even">
           <? if ($displayBackgroundColorAnimation == 0) { ?>
 
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_BackgroundColorAnimation_desactive; ?>" 
-               title="<? echo $webui_admin_options_BackgroundColorAnimation_desactive; ?>">
+               alt="<?php echo $webui_admin_options_BackgroundColorAnimation_desactive; ?>" 
+               title="<?php echo $webui_admin_options_BackgroundColorAnimation_desactive; ?>">
                
         <td class="even">
-          <? echo $webui_admin_options_BackgroundColorAnimation_desactive; ?>
+          <?php echo $webui_admin_options_BackgroundColorAnimation_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayBackgroundColorAnimation" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayBackgroundColorAnimation" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
            
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_BackgroundColorAnimation_active; ?>" 
-               title="<? echo $webui_admin_options_BackgroundColorAnimation_active; ?>">
+               alt="<?php echo $webui_admin_options_BackgroundColorAnimation_active; ?>" 
+               title="<?php echo $webui_admin_options_BackgroundColorAnimation_active; ?>">
                
         <td class="even">
-          <? echo $webui_admin_options_BackgroundColorAnimation_active; ?>
+          <?php echo $webui_admin_options_BackgroundColorAnimation_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayBackgroundColorAnimation" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayBackgroundColorAnimation" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -807,35 +807,35 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_PageLoadTime; ?>
+          <?php echo $webui_admin_options_PageLoadTime; ?>
         </td>
         
         <td class="odd">
           <? if ($displayPageLoadTime == 0) { ?>
 
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_PageLoadTime_desactive; ?>" 
-               title="<? echo $webui_admin_options_PageLoadTime_desactive; ?>">
+               alt="<?php echo $webui_admin_options_PageLoadTime_desactive; ?>" 
+               title="<?php echo $webui_admin_options_PageLoadTime_desactive; ?>">
                
         <td class="odd">
-          <? echo $webui_admin_options_PageLoadTime_desactive; ?>
+          <?php echo $webui_admin_options_PageLoadTime_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayPageLoadTime" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayPageLoadTime" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
            
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_PageLoadTime_active; ?>" 
-               title="<? echo $webui_admin_options_PageLoadTime_active; ?>">
+               alt="<?php echo $webui_admin_options_PageLoadTime_active; ?>" 
+               title="<?php echo $webui_admin_options_PageLoadTime_active; ?>">
                
         <td class="odd">
-          <? echo $webui_admin_options_PageLoadTime_active; ?>
+          <?php echo $webui_admin_options_PageLoadTime_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayPageLoadTime" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayPageLoadTime" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -844,35 +844,35 @@
 
       <tr>
         <td class="even">
-          <? echo $webui_admin_options_W3c; ?>
+          <?php echo $webui_admin_options_W3c; ?>
         </td>
         
         <td class="even">
           <? if ($displayW3c == 0) { ?>
 
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_W3c_desactive; ?>" 
-               title="<? echo $webui_admin_options_W3c_desactive; ?>">
+               alt="<?php echo $webui_admin_options_W3c_desactive; ?>" 
+               title="<?php echo $webui_admin_options_W3c_desactive; ?>">
                
         <td class="even">
-          <? echo $webui_admin_options_W3c_desactive; ?>
+          <?php echo $webui_admin_options_W3c_desactive; ?>
         </td>
 
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayW3c" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayW3c" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
            
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_W3c_active; ?>" 
-               title="<? echo $webui_admin_options_W3c_active; ?>">
+               alt="<?php echo $webui_admin_options_W3c_active; ?>" 
+               title="<?php echo $webui_admin_options_W3c_active; ?>">
                
         <td class="even">
-          <? echo $webui_admin_options_W3c_active; ?>
+          <?php echo $webui_admin_options_W3c_active; ?>
         </td>
         
         <td class="even">
-          <button class="adminsettings_bouton" type="submit" name="displayW3c" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayW3c" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>
@@ -881,35 +881,35 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_Rss; ?>
+          <?php echo $webui_admin_options_Rss; ?>
         </td>
         
         <td class="odd">
           <? if ($displayRss == 0) { ?>
 
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_Rss_desactive; ?>" 
-               title="<? echo $webui_admin_options_Rss_desactive; ?>">
+               alt="<?php echo $webui_admin_options_Rss_desactive; ?>" 
+               title="<?php echo $webui_admin_options_Rss_desactive; ?>">
                
         <td class="odd">
-          <? echo $webui_admin_options_Rss_desactive; ?>
+          <?php echo $webui_admin_options_Rss_desactive; ?>
         </td>
 
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayRss" value="<? echo $webui_admin_settings_activate_bouton; ?>"><? echo $webui_admin_settings_activate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayRss" value="<?php echo $webui_admin_settings_activate_bouton; ?>"><?php echo $webui_admin_settings_activate_bouton; ?></button>
         </td>
            
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_Rss_active; ?>" 
-               title="<? echo $webui_admin_options_Rss_active; ?>">
+               alt="<?php echo $webui_admin_options_Rss_active; ?>" 
+               title="<?php echo $webui_admin_options_Rss_active; ?>">
                
         <td class="odd">
-          <? echo $webui_admin_options_Rss_active; ?>
+          <?php echo $webui_admin_options_Rss_active; ?>
         </td>
         
         <td class="odd">
-          <button class="adminsettings_bouton" type="submit" name="displayRss" value="<? echo $webui_admin_settings_desactivate_bouton; ?>"><? echo $webui_admin_settings_desactivate_bouton; ?></button>
+          <button class="adminsettings_bouton" type="submit" name="displayRss" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>"><?php echo $webui_admin_settings_desactivate_bouton; ?></button>
         </td>
           <? } ?>
         </td>

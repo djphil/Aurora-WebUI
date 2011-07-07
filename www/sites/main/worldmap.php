@@ -1,8 +1,8 @@
 <div id="content">
-  <div id="ContentHeaderLeft"><h5><?= SYSNAME ?>: <? echo $webui_world_map ?></h5></div>
+  <div id="ContentHeaderLeft"><h5><?= SYSNAME ?>: <?php echo $webui_world_map ?></h5></div>
   <div id="ContentHeaderCenter"></div>
   <div id="ContentHeaderRight">
-  <h5><a <?= "onclick=\"window.open('".SYSURL."app/map/index.php','mywindow')\"" ?> style="float:right; display:inline-block;"><? echo $webui_fullscreen; ?></a></h5></div>
+  <h5><a <?= "onclick=\"window.open('".SYSURL."app/map/index.php','mywindow')\"" ?> style="float:right; display:inline-block;"><?php echo $webui_fullscreen; ?></a></h5></div>
 
 <br /><br /><br /><br /><br />
 

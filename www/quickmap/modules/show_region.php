@@ -60,7 +60,7 @@ if($_GET[region]){
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td align="right"><span class="styleTitel"><? echo $CONF_txt_region;?>:&nbsp;</span></td>
+        <td align="right"><span class="styleTitel"><?php echo $CONF_txt_region;?>:&nbsp;</span></td>
         <td><span class="styleTitel1"><?=$regionName?></span></td>
       </tr>
      
@@ -75,22 +75,22 @@ if($_GET[region]){
       </tr>
             
       <tr>
-        <td align="right"><span class="styleItem"><? echo $CONF_txt_region_uuid;?>:&nbsp;</span></td>
+        <td align="right"><span class="styleItem"><?php echo $CONF_txt_region_uuid;?>:&nbsp;</span></td>
         <td><span class="styleDesc"> <?=$UUID?></span></td>
       </tr>
       
       <tr>
         <? if ($locX > 80000) { $locX = $locX / 256; $locY = $locY / 256; } ?>
 
-        <td align="right"><span class="styleItem"><? echo $CONF_txt_coordinates;?>:&nbsp;</span></td>
+        <td align="right"><span class="styleItem"><?php echo $CONF_txt_coordinates;?>:&nbsp;</span></td>
         <td><span class="styleDesc"> X: <?=$locX?>&nbsp;&nbsp; Y: <?=$locY?></span></td>
       </tr>
       <tr>
-        <td align="right"><span class="styleItem"><? echo $CONF_txt_size;?> X:&nbsp;</span></td> 
+        <td align="right"><span class="styleItem"><?php echo $CONF_txt_size;?> X:&nbsp;</span></td> 
         <td><span class="styleDesc"> <?=$sizeX?></span></td>
       </tr>
       <tr>
-        <td align="right"><span class="styleItem"><? echo $CONF_txt_size;?> Y:&nbsp;</span></td>
+        <td align="right"><span class="styleItem"><?php echo $CONF_txt_size;?> Y:&nbsp;</span></td>
         <td><span class="styleDesc"> <?=$sizeY?></span></td>
       </tr>
       <tr>
@@ -98,7 +98,7 @@ if($_GET[region]){
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td align="right"><span class="styleItem"><? echo $CONF_txt_owner; ?>:&nbsp;</span></td>
+        <td align="right"><span class="styleItem"><?php echo $CONF_txt_owner; ?>:&nbsp;</span></td>
         <td><span class="styleLink"><a href="./show_member.php?agent=<?=$owner?>"><?=$firstN?> <?=$lastN?></a></span></td>
       </tr>
       <tr>

@@ -31,7 +31,7 @@ $ORDERBY=" ORDER by locY ASC";
               <TR>
                 <TD width="55%" align=left class=regiontoptext>
                   <a style="cursor:pointer" onclick="document.location.href='?regio=name'">
-                  <strong><? echo $webui_regionbox; ?>:</strong></a>
+                  <strong><?php echo $webui_regionbox; ?>:</strong></a>
                 </TD>
                 <TD width="20%" align=left class=regiontoptext>
                   <div align="left">

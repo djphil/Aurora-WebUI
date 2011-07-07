@@ -53,9 +53,9 @@
 <div id="content">   
     <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
     <div id="ContentHeaderCenter"></div>
-    <div id="ContentHeaderRight"><h5><? echo $webui_gallery; ?></h5></div>
+    <div id="ContentHeaderRight"><h5><?php echo $webui_gallery; ?></h5></div>
     <div id="gallery">
-        <div id="info"><p><? echo $webui_gallery_info; ?></p></div>
+        <div id="info"><p><?php echo $webui_gallery_info; ?></p></div>
         <div class="highslide-gallery" style="width: 100%; margin: auto" align="center">
         <!--
       	4) This is how you mark up the thumbnail images with an anchor tag around it.

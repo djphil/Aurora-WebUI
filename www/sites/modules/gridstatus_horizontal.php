@@ -54,16 +54,16 @@ list($REGIONSCOUNT) = $DbLink->next_record();
   <table>
     <tr>
       <td><div id="gridstatus1">
-        <? echo $webui_grid_status; ?>: <? if($GRIDSTATUS == 1){ ?>
-        <span class=online><? echo $webui_grid_status_online; ?></span>
+        <?php echo $webui_grid_status; ?>: <? if($GRIDSTATUS == 1){ ?>
+        <span class=online><?php echo $webui_grid_status_online; ?></span>
         <? } else { ?>
-        <span class=offline><? echo $webui_grid_status_offline; ?></span>
+        <span class=offline><?php echo $webui_grid_status_offline; ?></span>
         <? } ?></div>         
       </td>
       
-      <td><div id="gridstatus2"><? echo $webui_total_users; ?>: <?=$USERCOUNT?></div></td>
-      <td><div id="gridstatus3"><? echo $webui_total_regions; ?>: <?=$REGIONSCOUNT?></div></td>
-      <td><div id="gridstatus4"><? echo $webui_unique_visitors; ?>: <?=$LASTMONTHONLINE?></div></td>
-      <td><div id="gridstatus5"><strong><a href="index.php?page=onlineusers"><? echo $webui_online_now; ?></a>: <?=$NOWONLINE?></strong></div></td>
+      <td><div id="gridstatus2"><?php echo $webui_total_users; ?>: <?=$USERCOUNT?></div></td>
+      <td><div id="gridstatus3"><?php echo $webui_total_regions; ?>: <?=$REGIONSCOUNT?></div></td>
+      <td><div id="gridstatus4"><?php echo $webui_unique_visitors; ?>: <?=$LASTMONTHONLINE?></div></td>
+      <td><div id="gridstatus5"><strong><a href="index.php?page=onlineusers"><?php echo $webui_online_now; ?></a>: <?=$NOWONLINE?></strong></div></td>
     </tr>
   </table>

@@ -118,9 +118,9 @@
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_admin_options; ?></h5></div>
+  <div id="ContentHeaderRight"><h5><?php echo $webui_admin_options; ?></h5></div>
   <div id="adminsettings">
-  <div id="info"><p><? echo $webui_admin_options_info; ?> $displayBackgroundColorAnimation </p></div>
+  <div id="info"><p><?php echo $webui_admin_options_info; ?> $displayBackgroundColorAnimation </p></div>
   
   <table>
   
@@ -132,36 +132,36 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_BackgroundColorAnimation; ?>
+          <?php echo $webui_admin_options_BackgroundColorAnimation; ?>
         </td>
         
         <td class="odd">
           <? if ($displayLogoEffect == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_LogoEffect_desactive; ?>" 
-               title="<? echo $webui_admin_options_LogoEffect_desactive; ?>">
+               alt="<?php echo $webui_admin_options_LogoEffect_desactive; ?>" 
+               title="<?php echo $webui_admin_options_LogoEffect_desactive; ?>">
 
         <td class="odd">
           
-          <? echo $webui_admin_options_desactive; ?>
+          <?php echo $webui_admin_options_desactive; ?>
         </td>
 
         <td class="odd">
-          <input type="submit" name="displayLogoEffect" value="<? echo $webui_admin_settings_activate_bouton; ?>" />
+          <input type="submit" name="displayLogoEffect" value="<?php echo $webui_admin_settings_activate_bouton; ?>" />
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_LogoEffect_active; ?>" 
-               title="<? echo $webui_admin_options_LogoEffect_active; ?>">
+               alt="<?php echo $webui_admin_options_LogoEffect_active; ?>" 
+               title="<?php echo $webui_admin_options_LogoEffect_active; ?>">
 
         <td class="odd">
           
-          <? echo $webui_admin_options_active; ?>
+          <?php echo $webui_admin_options_active; ?>
         </td>
         
         <td class="odd">
-          <input type="submit" name="displayLogoEffect" value="<? echo $webui_admin_settings_desactivate_bouton; ?>" />
+          <input type="submit" name="displayLogoEffect" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>" />
         </td>          
           <? } ?>
         </td>
@@ -185,36 +185,36 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_options_BackgroundColorAnimation; ?>
+          <?php echo $webui_admin_options_BackgroundColorAnimation; ?>
         </td>
         
         <td class="odd">
           <? if ($displayBackgroundColorAnimation == 0) { ?>
           <img src="images/icons/desactivate.png" 
-               alt="<? echo $webui_admin_options_LogoEffect_desactive; ?>" 
-               title="<? echo $webui_admin_options_LogoEffect_desactive; ?>">
+               alt="<?php echo $webui_admin_options_LogoEffect_desactive; ?>" 
+               title="<?php echo $webui_admin_options_LogoEffect_desactive; ?>">
 
         <td class="odd">
           
-          <? echo $webui_admin_options_desactive; ?>
+          <?php echo $webui_admin_options_desactive; ?>
         </td>
 
         <td class="odd">
-          <input type="submit" name="displayBackgroundColorAnimation" value="<? echo $webui_admin_settings_activate_bouton; ?>" />
+          <input type="submit" name="displayBackgroundColorAnimation" value="<?php echo $webui_admin_settings_activate_bouton; ?>" />
         </td>
 
           <? } else { ?>
           <img src="images/icons/activate.png" 
-               alt="<? echo $webui_admin_options_LogoEffect_active; ?>" 
-               title="<? echo $webui_admin_options_LogoEffect_active; ?>">
+               alt="<?php echo $webui_admin_options_LogoEffect_active; ?>" 
+               title="<?php echo $webui_admin_options_LogoEffect_active; ?>">
 
         <td class="odd">
           
-          <? echo $webui_admin_options_active; ?>
+          <?php echo $webui_admin_options_active; ?>
         </td>
         
         <td class="odd">
-          <input type="submit" name="displayBackgroundColorAnimation" value="<? echo $webui_admin_settings_desactivate_bouton; ?>" />
+          <input type="submit" name="displayBackgroundColorAnimation" value="<?php echo $webui_admin_settings_desactivate_bouton; ?>" />
         </td>          
           <? } ?>
         </td>
@@ -226,7 +226,7 @@
     <? if ($displayBackgroundColorAnimation) { ?>
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep1; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep1; ?>
         </td>
         <td class="odd">
 ...
@@ -235,14 +235,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep1" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep1" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep1; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep1; ?>
         </td>
         <td class="odd">
 ...
@@ -251,7 +251,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep1" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep1" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -262,7 +262,7 @@
       
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep2; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep2; ?>
         </td>
         <td class="odd">
 ...
@@ -271,14 +271,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep2" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep2" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep2; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep2; ?>
         </td>
         <td class="odd">
 ...
@@ -287,7 +287,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep2" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep2" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -298,7 +298,7 @@
       
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep3; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep3; ?>
         </td>
         <td class="odd">
 ...
@@ -307,14 +307,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep3" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep3" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep3; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep3; ?>
         </td>
         <td class="odd">
 ...
@@ -323,7 +323,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep3" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep3" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -334,7 +334,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep4; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep4; ?>
         </td>
         <td class="odd">
 ...
@@ -343,14 +343,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep4" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep4" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep4; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep4; ?>
         </td>
         <td class="odd">
 ...
@@ -359,7 +359,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep4" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep4" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -371,7 +371,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep5; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep5; ?>
         </td>
         <td class="odd">
 ...
@@ -380,14 +380,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep5" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep5" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep5; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep5; ?>
         </td>
         <td class="odd">
 ...
@@ -396,7 +396,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep5" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep5" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>      
@@ -409,7 +409,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep6; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep6; ?>
         </td>
         <td class="odd">
 ...
@@ -418,14 +418,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep6" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep6" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep6; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep6; ?>
         </td>
         <td class="odd">
 ...
@@ -434,7 +434,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep6" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep6" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -447,7 +447,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep7; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep7; ?>
         </td>
         <td class="odd">
 ...
@@ -456,14 +456,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep7" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep7" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep7; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep7; ?>
         </td>
         <td class="odd">
 ...
@@ -472,7 +472,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep7" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep7" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -485,7 +485,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep8; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep8; ?>
         </td>
         <td class="odd">
 ...
@@ -494,14 +494,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep8" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep8" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep8; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep8; ?>
         </td>
         <td class="odd">
 ...
@@ -510,7 +510,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep8" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep8" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -526,7 +526,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep9; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep9; ?>
         </td>
         <td class="odd">
 ...
@@ -535,14 +535,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep9" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep9" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep9; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep9; ?>
         </td>
         <td class="odd">
 ...
@@ -551,7 +551,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep9" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep9" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
@@ -567,7 +567,7 @@
 
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_HoverStep10; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_HoverStep10; ?>
         </td>
         <td class="odd">
 ...
@@ -576,14 +576,14 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="HoverStep10" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="HoverStep10" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>
         
       <tr>
         <td class="odd">
-          <? echo $webui_admin_BackgroundColorAnimation_EndStep10; ?>
+          <?php echo $webui_admin_BackgroundColorAnimation_EndStep10; ?>
         </td>
         <td class="odd">
 ...
@@ -592,7 +592,7 @@
             </td>
         
             <td class="odd">
-              <input type="submit" name="EndStep10" value="<? echo $webui_admin_options_modify; ?>" />
+              <input type="submit" name="EndStep10" value="<?php echo $webui_admin_options_modify; ?>" />
             </td>
         </td>
       </tr>

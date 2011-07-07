@@ -46,27 +46,27 @@ function gallery() {
   <a href="#" class="show">
     <img src="<?php echo SYSURL; ?>images/gallery/login1.jpg"
          title="" alt="<?= SYSNAME ?>"  rel="<h3><?= SYSNAME ?></h3>
-         <? echo $webui_slideshow_comment01; ?>"/>
+         <?php echo $webui_slideshow_comment01; ?>"/>
   </a>
   <a href="#">
     <img src="<?php echo SYSURL; ?>images/gallery/login2.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
-         <? echo $webui_slideshow_comment02; ?>"/>
+         <?php echo $webui_slideshow_comment02; ?>"/>
   </a>
   <a href="#">
     <img src="<?php echo SYSURL; ?>images/gallery/login3.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
-         <? echo $webui_slideshow_comment03; ?>"/>
+         <?php echo $webui_slideshow_comment03; ?>"/>
   </a>
   <a href="#">
     <img src="<?php echo SYSURL; ?>images/gallery/login4.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
-         <? echo $webui_slideshow_comment04; ?>"/>
+         <?php echo $webui_slideshow_comment04; ?>"/>
   </a>
   <a href="#">
     <img src="<?php echo SYSURL; ?>images/gallery/login5.jpg"
          title="" alt="<?= SYSNAME ?>" rel="<h3><?= SYSNAME ?></h3>
-         <? echo $webui_slideshow_comment01; ?>"/>
+         <?php echo $webui_slideshow_comment01; ?>"/>
   </a>
   <div class="caption">
     <div class="content"></div>

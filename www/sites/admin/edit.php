@@ -86,11 +86,11 @@ $active=3;
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_admin_edit_manage; ?></h5></div>   
+  <div id="ContentHeaderRight"><h5><?php echo $webui_admin_edit_manage; ?></h5></div>   
   <div id="managepanel">
 
         <div id="info">
-            <p><? echo $webui_admin_edit_manage_info; ?></p>
+            <p><?php echo $webui_admin_edit_manage_info; ?></p>
         </div>
         
         <table>
@@ -99,18 +99,18 @@ $active=3;
             <input type="hidden" name="uuid" value="<?=$uuid?>" />
                
             <tr>
-                <td class="odd" width="50%"><? echo $webui_admin_edit_manage_userid; ?></td>
+                <td class="odd" width="50%"><?php echo $webui_admin_edit_manage_userid; ?></td>
                 <td class="odd"><?=$uuid?></td>
             </tr>
             
       		  <tr>
-		            <td class="even"><? echo $webui_admin_edit_manage_avatar_firstname; ?></td> 
+		            <td class="even"><?php echo $webui_admin_edit_manage_avatar_firstname; ?></td> 
 		            <td class="even"><input style="width:99%" name="accfirst" type="text" id="accfirst" value="<?=$accfirst?>"</td>
 		        </tr>
 		        
             <tr>
 		            <td class="odd">
-                    <? echo $webui_admin_edit_manage_avatar_lastname; ?>
+                    <?php echo $webui_admin_edit_manage_avatar_lastname; ?>
                 </td>
                 
                 <td class="idd">
@@ -119,35 +119,35 @@ $active=3;
             </tr>
             
             <tr>
-                <td class="even"><? echo $webui_admin_edit_manage_real_firstname; ?></td>
+                <td class="even"><?php echo $webui_admin_edit_manage_real_firstname; ?></td>
                 <td class="even">
                     <input style="width:99%" name="fname" type="text" id="fname" value="<?=$firstnm?>" />
                 </td>
             </tr>
           
             <tr>
-                <td class="odd"><? echo $webui_admin_edit_manage_real_lastname; ?></td>
+                <td class="odd"><?php echo $webui_admin_edit_manage_real_lastname; ?></td>
                 <td class="odd"><input style="width:99%" name="lname" type="text" id="lname" value="<?=$lastnm?>" /></td>
             </tr>
             
           
             <tr>
-                <td class="even"><? echo $webui_admin_edit_manage_real_street; ?></td>
+                <td class="even"><?php echo $webui_admin_edit_manage_real_street; ?></td>
                 <td class="even"><input style="width:99%" name="street" type="text" id="street" value="<?=$street?>" /></td>
             </tr>
             
             <tr>
-                <td class="odd"><? echo $webui_admin_edit_manage_real_zip; ?></td>
+                <td class="odd"><?php echo $webui_admin_edit_manage_real_zip; ?></td>
                 <td class="odd"><input style="width:99%" name="zip" type="text" id="city" value="<?=$zip?>" size="8" /></td>
             </tr>
             
             <tr>                            
-                <td class="even"><? echo $webui_admin_edit_manage_real_city; ?></td>
+                <td class="even"><?php echo $webui_admin_edit_manage_real_city; ?></td>
                 <td class="even"><input style="width:99%" name="city" type="text" id="street2" value="<?=$city?>" /></td>                    
             </tr>
             
             <tr>
-                <td class="odd"><? echo $webui_admin_edit_manage_real_country; ?></td>
+                <td class="odd"><?php echo $webui_admin_edit_manage_real_country; ?></td>
                 <td class="odd">
                     <select style="width:100%" class="box" wide="25" name="country">
                     <?
@@ -161,7 +161,7 @@ $active=3;
             </tr>
       
       		  <tr>
-                <td class="even"><? echo $webui_admin_edit_manage_real_email; ?></td>
+                <td class="even"><?php echo $webui_admin_edit_manage_real_email; ?></td>
                 <td class="even"><input style="width:99%" name="email" type="text" id="email" value="<?=$email?>" /></td>
             </tr>
 
@@ -169,7 +169,7 @@ $active=3;
             <tr>
                 <td colspan="2" class="odd">
                     <div align="center">
-                        <input type="submit" name="Submit2" value="<? echo $webui_admin_edit_manage_savechanges; ?>" />
+                        <input type="submit" name="Submit2" value="<?php echo $webui_admin_edit_manage_savechanges; ?>" />
                     </div>
                 </td>
             </tr>
@@ -178,7 +178,7 @@ $active=3;
             <form name="form1" method="post" action="index.php?page=edit">
 
             <tr>
-                <td class="even"><? echo $webui_admin_edit_manage_currentstatus; ?></td>
+                <td class="even"><?php echo $webui_admin_edit_manage_currentstatus; ?></td>
                 <td class="even">
                   <? if($active==1){echo"<font COLOR=#00FF00>$webui_admin_edit_manage_active</font>";}
 				            else if($active==3){echo"<font COLOR=#FF0000>$webui_admin_edit_manage_notconf</font>";}
@@ -188,15 +188,15 @@ $active=3;
             </tr>
               
             <tr>
-                <td class="odd"><? echo $webui_admin_edit_manage_setstatus; ?></td>
+                <td class="odd"><?php echo $webui_admin_edit_manage_setstatus; ?></td>
                 <td class="odd">
                     <input type="hidden" name="state" value="set" />
                     <input type="hidden" name="uuid" value="<?=$uuid?>" />
 				            <input type="hidden" name="active" value="<?=$active?>" />
                     
                     <select name="status">
-                        <option value="1"><? echo $webui_admin_edit_manage_active; ?></option> 
-                        <option value="0"><? echo $webui_admin_edit_manage_inactive; ?></option>
+                        <option value="1"><?php echo $webui_admin_edit_manage_active; ?></option> 
+                        <option value="0"><?php echo $webui_admin_edit_manage_inactive; ?></option>
                     </select>
                 </td>
             </tr>
@@ -204,7 +204,7 @@ $active=3;
             <tr>
                 <td colspan="2" class="odd">
                     <div align="center">
-                        <input type="submit" name="Submit" value="<? echo $webui_admin_edit_manage_savestatus; ?>" />
+                        <input type="submit" name="Submit" value="<?php echo $webui_admin_edit_manage_savestatus; ?>" />
                     </div>
                 </td>
             </tr>

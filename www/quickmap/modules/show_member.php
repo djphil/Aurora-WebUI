@@ -90,7 +90,7 @@ if($agent){
       </tr>
       
       <tr>
-        <td align="right" class="styleItem"><? echo $CONF_txt_avatar_uuid;?>:&nbsp;</td> 
+        <td align="right" class="styleItem"><?php echo $CONF_txt_avatar_uuid;?>:&nbsp;</td> 
         <td align="left" class="styleDesc"><?=$uuid?></td>
       </tr>
       

@@ -1,12 +1,12 @@
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_news; ?></h5></div>
+  <div id="ContentHeaderRight"><h5><?php echo $webui_news; ?></h5></div>
   
   	<div class="clear"></div>
         	
   <div id="news">
-    <div id="info"><p><? echo $webui_news; ?></p></div>
+    <div id="info"><p><?php echo $webui_news; ?></p></div>
     
 <?php
 

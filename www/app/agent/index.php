@@ -75,9 +75,9 @@ if ($_GET[name]) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="<?php echo SYSURL; ?><? echo $template_css ?>" type="text/css" />
+    <link rel="stylesheet" href="<?php echo SYSURL; ?><?php echo $template_css ?>" type="text/css" />
     <link rel="icon" href="<?php echo SYSURL; ?><?=$favicon_image?>" />
-    <title><?= SYSNAME ?>: <? echo $webui_users_profile; ?> <? echo $userName ?></title>
+    <title><?= SYSNAME ?>: <?php echo $webui_users_profile; ?> <?php echo $userName ?></title>
     
 <?php if($displayRoundedCorner)  { ?>
 <script src="<?php echo SYSURL; ?>javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -93,21 +93,21 @@ if ($_GET[name]) {
 <body class="webui">
 <div id="container_popup">
 <div id="content_popup">
-  <h2><?= SYSNAME ?>: <? echo $webui_users_profile; ?> <? echo $userName ?></h2>
+  <h2><?= SYSNAME ?>: <?php echo $webui_users_profile; ?> <?php echo $userName ?></h2>
   
   <div id="useragentprofil">
-	<!--  <div id="info"><p><? echo $webui_region_list_page_info ?></p></div> -->
+	<!--  <div id="info"><p><?php echo $webui_region_list_page_info ?></p></div> -->
 
   <hr>
       <table>
           <tr>
               <td>
-                  <? echo $webui_resident_since ?>: <?= $date ?> <br /> <? echo $webui_resident_age ?>: (<?= $diff ?>)
+                  <?php echo $webui_resident_since ?>: <?= $date ?> <br /> <?php echo $webui_resident_age ?>: (<?= $diff ?>)
               </td>
           </tr>
           <tr>
               <td>
-                  <? echo $webui_account_info ?>: <?= $type ?>
+                  <?php echo $webui_account_info ?>: <?= $type ?>
               </td>
           </tr>         
           <tr>
@@ -116,7 +116,7 @@ if ($_GET[name]) {
               <? if ($partner != '') { ?>
           <tr>
               <td>
-                  <? echo $webui_partner; ?>: <? echo $partner ?>
+                  <?php echo $webui_partner; ?>: <?php echo $partner ?>
               </td>
           </tr>
           <tr>
@@ -125,7 +125,7 @@ if ($_GET[name]) {
               <? } ?>
           <tr>
               <td>
-                  <h2><? echo $webui_about_me; ?></h2>
+                  <h2><?php echo $webui_about_me; ?></h2>
               </td>
           </tr>       
           <tr>
@@ -147,7 +147,7 @@ if ($_GET[name]) {
             else
                 $profileLink = WIREDUX_TEXTURE_SERVICE . '/index.php?method=GridTexture&uuid=' . $profileImage;
           ?>
-          <img alt="<? echo $profileImage ?>" src="<? echo $profileLink ?>" title="<? echo $userName ?>" />
+          <img alt="<?php echo $profileImage ?>" src="<?php echo $profileLink ?>" title="<?php echo $userName ?>" />
       </div>
   </div>
 </div>  </div>

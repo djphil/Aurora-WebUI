@@ -31,12 +31,12 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
 <div id="content">
     <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
     <div id="ContentHeaderCenter"></div>
-    <div id="ContentHeaderRight"><h5><? echo $webui_admin_edit_loginscreen; ?></h5></div>
+    <div id="ContentHeaderRight"><h5><?php echo $webui_admin_edit_loginscreen; ?></h5></div>
 
     <div id="loginscreen_manager">
 
         <div id="info">
-            <p><? echo $webui_admin_loginscreen_info ?></p>
+            <p><?php echo $webui_admin_loginscreen_info ?></p>
         </div>
 
         <table>
@@ -46,7 +46,7 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
                 <tr>
                     <td>
                         <div align="right">
-                            <? echo $webui_admin_grid_status ?>
+                            <?php echo $webui_admin_grid_status ?>
                         </div>
                     </td>
 
@@ -65,7 +65,7 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
 
                     <td>
                         <div align="right">
-<? echo $webui_admin_windows_status ?>
+<?php echo $webui_admin_windows_status ?>
                         </div>
                     </td>
 
@@ -84,7 +84,7 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
 
                     <td>
                         <div align="right">
-<? echo $webui_admin_windows_color ?>
+<?php echo $webui_admin_windows_color ?>
                         </div>
                     </td>
 
@@ -114,7 +114,7 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
 
                     <tr>
                         <td>
-<? echo $webui_admin_windows_title ?>
+<?php echo $webui_admin_windows_title ?>
                         </td>
 
                         <td colspan="5">
@@ -124,7 +124,7 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
 
                     <tr>
                         <td>
-<? echo $webui_admin_windows_message ?>
+<?php echo $webui_admin_windows_message ?>
                         </td>
 
                         <td colspan="5">
@@ -137,7 +137,7 @@ list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->ne
                     <tr>
                         <td colspan="6">
                             <div align="center">
-                                <input type="submit" name="Submit" value="<? echo $webui_admin_windows_settings ?>" />
+                                <input type="submit" name="Submit" value="<?php echo $webui_admin_windows_settings ?>" />
                         </div>
                     </td>
                 </tr>

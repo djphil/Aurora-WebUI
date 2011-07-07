@@ -98,12 +98,12 @@ if($_SESSION[ADMINID]) {
 <div id="content">
     <div id="ContentHeaderLeft"><h5><p><?= SYSNAME ?></p></h5></div>
     <div id="ContentHeaderCenter"></div>
-    <div id="ContentHeaderRight"><h5><p><? echo $webui_admin_manage; ?></p></h5></div>
+    <div id="ContentHeaderRight"><h5><p><?php echo $webui_admin_manage; ?></p></h5></div>
       
     <div id="managepanel">
 
         <div id="info">
-            <p><? echo $webui_admin_manage_info; ?></p>
+            <p><?php echo $webui_admin_manage_info; ?></p>
         </div>
 
         <table>
@@ -117,7 +117,7 @@ if($_SESSION[ADMINID]) {
                     <table>
                         <tr>
                             <td>
-                        <font><p><?= $count ?> <? echo $webui_users_found ?></p></font>
+                        <font><p><?= $count ?> <?php echo $webui_users_found ?></p></font>
                     </td>
 
                   <td>                   
@@ -138,7 +138,7 @@ if($_SESSION[ADMINID]) {
                 </td>
                         
                 <td>
-                    <p><? echo $webui_navigation_page; ?> <?=$LANG_ADMPAYMENT8?> <?= round($AStart / $ALimit ,0)+1; ?> <? echo $webui_navigation_of; ?> <?= @round($count / $ALimit,0); ?></p>
+                    <p><?php echo $webui_navigation_page; ?> <?=$LANG_ADMPAYMENT8?> <?= round($AStart / $ALimit ,0)+1; ?> <?php echo $webui_navigation_of; ?> <?= @round($count / $ALimit,0); ?></p>
                 </td>
                         
                 <td>
@@ -196,9 +196,9 @@ if($_SESSION[ADMINID]) {
         <tr>
             <td>
                 <div id="message">
-                    <? echo $webui_admin_manage_username; ?>:
+                    <?php echo $webui_admin_manage_username; ?>:
                     <input TYPE="TEXT" NAME="query" SIZE="50" value="<?=$_POST[query]?>">
-                    <button id="search_bouton" TYPE="Submit" value="<? echo $webui_people_search_bouton ?>"><? echo $webui_people_search_bouton ?></button>
+                    <button id="search_bouton" TYPE="Submit" value="<?php echo $webui_people_search_bouton ?>"><?php echo $webui_people_search_bouton ?></button>
                 </div>       
             </td>
         </tr>
@@ -212,10 +212,10 @@ if($_SESSION[ADMINID]) {
               <table>
                   <tr>
                   <td width=36></td>
-                  <td width=113 align="center"><p><? echo $webui_admin_manage_edit; ?></p></td>
-                  <td width=312 align="center"><p><? echo $webui_admin_manage_username; ?></p></td>
-                  <td width=220 align="center"><p><? echo $webui_admin_manage_created; ?></p></td>
-                  <td width=167 align="center"><p><? echo $webui_admin_manage_active; ?></p></td>
+                  <td width=113 align="center"><p><?php echo $webui_admin_manage_edit; ?></p></td>
+                  <td width=312 align="center"><p><?php echo $webui_admin_manage_username; ?></p></td>
+                  <td width=220 align="center"><p><?php echo $webui_admin_manage_created; ?></p></td>
+                  <td width=167 align="center"><p><?php echo $webui_admin_manage_active; ?></p></td>
                   <td width=47></td>
                   </tr>
               </table>
@@ -237,14 +237,14 @@ if($_SESSION[ADMINID]) {
             ?>
 
             <table>
-                <tr class="<? echo ($odd = $w%2 )? "even":"odd" ?>" >
+                <tr class="<?php echo ($odd = $w%2 )? "even":"odd" ?>" >
                     <td width=21 align=center>
-                        <img src="images/icons/icon_user.png" alt="<? echo $webui_admin_manage_user; ?>" title="<? echo $webui_admin_manage_user; ?>">
+                        <img src="images/icons/icon_user.png" alt="<?php echo $webui_admin_manage_user; ?>" title="<?php echo $webui_admin_manage_user; ?>">
                     </td>
 
                     <td width=91 align="center">
                         <a href="index.php?page=adminedit&userid=<?=$user_id?>">
-                            <b><? echo $webui_admin_manage_edit; ?></b>
+                            <b><?php echo $webui_admin_manage_edit; ?></b>
                         </a>
                     </td>
 
@@ -260,16 +260,16 @@ if($_SESSION[ADMINID]) {
                     <b>
                       <?
                           if(($flags & 7) == 7) {
-                              echo"<FONT COLOR=#00FF00><? echo $webui_admin_manage_active; ?></FONT>";
+                              echo"<FONT COLOR=#00FF00><?php echo $webui_admin_manage_active; ?></FONT>";
                               }
                           elseif(($flags & 3) == 3) {
-                              echo"<FONT COLOR=#FF0000><? echo $webui_admin_manage_notconf; ?></FONT>";
+                              echo"<FONT COLOR=#FF0000><?php echo $webui_admin_manage_notconf; ?></FONT>";
                               }
                          elseif(($flags & 5) == 5) {
-                              echo"<FONT COLOR=#FF0000><? echo $webui_admin_manage_banned; ?></FONT>";
+                              echo"<FONT COLOR=#FF0000><?php echo $webui_admin_manage_banned; ?></FONT>";
                               }
                           else {
-                              echo"<FONT COLOR=#FF0000><? echo $webui_admin_manage_inactive; ?></FONT>";
+                              echo"<FONT COLOR=#FF0000><?php echo $webui_admin_manage_inactive; ?></FONT>";
                               }
                       ?>
                     </b>
@@ -278,20 +278,20 @@ if($_SESSION[ADMINID]) {
                     <td width=21 align=center>
                         <? if($active ==5) {?>
                         <a href="index.php?<?=$GoPage?>&action=unban&unbanusr=<?=$username?>&user_id=<?=$user_id?>">
-                            <img src="images/icons/unban.png" alt="<? echo $webui_admin_manage_userunban; ?>" title="<? echo $webui_admin_manage_userunban; ?>">
+                            <img src="images/icons/unban.png" alt="<?php echo $webui_admin_manage_userunban; ?>" title="<?php echo $webui_admin_manage_userunban; ?>">
                         </a>
 
                         <? } else { ?>
 
                         <a href="index.php?<?=$GoPage?>&action=ban&banusr=<?=$username?>&user_id=<?=$user_id?>">
-                            <img src="images/icons/ban.png" alt="<? echo $webui_admin_manage_userban; ?>" title="<? echo $webui_admin_manage_userban; ?>">
+                            <img src="images/icons/ban.png" alt="<?php echo $webui_admin_manage_userban; ?>" title="<?php echo $webui_admin_manage_userban; ?>">
                         </a>
                         <? } ?>
                     </td>
 
                     <td width=21 align=center>
                         <a HREF="index.php?<?=$GoPage?>&action=delete&delusr=<?=$username?>&user_id=<?=$user_id?>">
-                            <img src="images/icons/btn_del.png" alt="<? echo $webui_admin_manage_userdelete; ?>" title="<? echo $webui_admin_manage_userdelete; ?>">
+                            <img src="images/icons/btn_del.png" alt="<?php echo $webui_admin_manage_userdelete; ?>" title="<?php echo $webui_admin_manage_userdelete; ?>">
                         </a>
                     </td>
                 </tr>

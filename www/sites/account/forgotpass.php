@@ -106,16 +106,16 @@ if($_POST[Submit]=="Submit")
 <div id="content">
   <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
   <div id="ContentHeaderCenter"></div>
-  <div id="ContentHeaderRight"><h5><? echo $webui_forgot_password; ?></h5></div> 
+  <div id="ContentHeaderRight"><h5><?php echo $webui_forgot_password; ?></h5></div> 
   <div id="forget_pass">
-  <div id="info"><p><? echo $webui_forgot_password_info ?></p></div>
+  <div id="info"><p><?php echo $webui_forgot_password_info ?></p></div>
   <form method="POST" action="index.php?page=forgotpass" onSubmit="return Form(this)">
     <table>
       <tr>
         <td>
           <table>
             <tr>
-              <td class="even"><? echo $webui_avatar_name ?>*</td>
+              <td class="even"><?php echo $webui_avatar_name ?>*</td>
               <td class="even" width="50%">
                 <div class="roundedinput">
                   <input id="forgot_pass_input" name="name" type="text" size="40" maxlength="50" value="<?=$_POST[name]?>">
@@ -124,7 +124,7 @@ if($_POST[Submit]=="Submit")
             </tr>
                 
             <tr>
-              <td class="odd"><? echo $webui_email ?>*</td>
+              <td class="odd"><?php echo $webui_email ?>*</td>
               <td class="odd">
                 <div class="roundedinput">
                   <input id="forgot_pass_input" name="email" type="text" size="40" maxlength="50" value="<?=$_POST[email]?>">
@@ -133,7 +133,7 @@ if($_POST[Submit]=="Submit")
             </tr>
                 
             <tr>
-              <td class="even"><? echo $webui_confirm ?> <? echo $webui_email ?>*</td>
+              <td class="even"><?php echo $webui_confirm ?> <?php echo $webui_email ?>*</td>
               <td class="even">
                 <div class="roundedinput">
                   <input id="forgot_pass_input" name="email2" type="text" size="40" maxlength="50" value="<?=$_POST[email2]?>">
@@ -146,7 +146,7 @@ if($_POST[Submit]=="Submit")
               <td class="odd">
                 <div class="center">
                   <input type="hidden" name="action" value="check">
-                  <button id="forgot_pass_bouton" name="Submit" type="Submit"><? echo $webui_submit ?></button>
+                  <button id="forgot_pass_bouton" name="Submit" type="Submit"><?php echo $webui_submit ?></button>
                   <!-- <input id="forgot_pass_bouton" type="submit" name="Submit" value="<? // echo $webui_submit ?>"></td> -->
               </div>
             </tr>

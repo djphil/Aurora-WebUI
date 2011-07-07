@@ -34,7 +34,7 @@ else
             <tr>
               <td valign="top"><table width="50%" border="0" align="center">
                 <tr>
-                  <td><p align="center" class="Stil1"><? echo $webui_activate_account ?></p></td>
+                  <td><p align="center" class="Stil1"><?php echo $webui_activate_account ?></p></td>
                 </tr>
               </table>
               <br />
