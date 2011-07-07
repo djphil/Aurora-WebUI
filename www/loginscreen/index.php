@@ -72,7 +72,7 @@ list($REGIONSCOUNT) = $DbLink->next_record();
 <script src="<?php echo SYSURL; ?>loginscreen/javascripts/resize.js" type="text/javascript"></script>
 <script src="<?php echo SYSURL; ?><?if($picturesByTime){ echo "loginscreen/javascripts/timeimageswitch.js"; } else { echo "loginscreen/javascripts/randomimageswitch.js"; }; ?>" type="text/javascript"></script>
 
-<? include("../languages/translator.php"); ?>
+<?php include("../languages/translator.php"); ?>
 <title><?=SYSNAME?>: <?php echo $webui_login_screen ?></title>
 
 <SCRIPT>
@@ -110,7 +110,7 @@ bgImgRotate();
 <? if($showNewsBar) { ?>
 <div id=bottom>
     <div id=news>
-      <? include("modules/news.php"); ?>
+      <?php include("modules/news.php"); ?>
     </div>
 </div>
 <? } ?>
@@ -121,7 +121,7 @@ bgImgRotate();
     <br />
     <? if($showGridStatus) { ?>
     <div id=gridstatus>
-      <? include("modules/gridstatus.php"); ?>
+      <?php include("modules/gridstatus.php"); ?>
     </div>
     <? } ?>
     

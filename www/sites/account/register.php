@@ -283,7 +283,7 @@ function displayDefaultAvatars()
 		<tr>
 			<td class="even" colspan="2">
 				<div style="width:100%;height:300px;overflow:auto;">
-				  <? include("tos.php"); ?>
+				  <?php include("tos.php"); ?>
 				</div>
 			</td>
         </tr>

@@ -163,7 +163,7 @@ if($agent){
 
 
 <div id="footer">
-<? include("../includes/mt_footer.php"); ?>
+<?php include("../includes/mt_footer.php"); ?>
 </div><!-- fin de #footer -->
 
 

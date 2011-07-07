@@ -602,11 +602,11 @@ $(document).ready(function(){
     </div><!-- fin de #header -->
 
     <?php if($displayMegaMenu) { ?>
-      <div id="menubar"><? include("sites/menus/megamenu/menubar.php"); ?></div>
+      <div id="menubar"><?php include("sites/menus/megamenu/menubar.php"); ?></div>
     <?php } ?>
         
     <div id="MainContainer">
-        <div id="sites"><? include("sites.php"); ?></div>
+        <div id="sites"><?php include("sites.php"); ?></div>
     </div><!-- fin de #mainContent -->
 </div><!-- fin de #container -->
 
