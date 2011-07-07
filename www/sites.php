@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Copyright (c) 2007, 2008 Contributors, http://opensimulator.org/
  * See CONTRIBUTORS for a full list of copyright holders.
@@ -9,7 +9,7 @@
 
 $DbLink = new DB;
 
-$page = $_SESSION[page];
+$page = $_SESSION['page'];
 
 $DbLink->query("SELECT type, include FROM ".C_SITES_TBL." where pagecase = '".cleanQuery($page)."'");
 
