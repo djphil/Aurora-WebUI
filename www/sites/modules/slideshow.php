@@ -3,27 +3,29 @@
 <script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.easing.compatibility.js"></script>
 <!--  initialize the slideshow when the DOM is ready -->
 <script type="text/javascript">
-
+var
+	slideshowConfig = <?php echo json_encode(array(
+		'fx'      => $SlideShowStyle,
+		'timeout' => $SlideShowTimeout,
+		'speed'   => $SlideShowSpeed,
+		'easing'  => $SlideShowEaseing,
+		'delay'   => $SlideShowDelay,
+		'sync'    => $SlideShowSync,
+//		'next'    => $SlideShowNext,
+//		'prev'    => $SlideShowPrev,
+		'pause'   => $SlideShowPause,
+		'random'  => $SlideShowRandom,
+		'pager'   => $SlideShowPager
+	)); ?>
+;
+/*	slideshowConfig.before = onBefore; */
+/*	slideshowConfig.after  = onAfter;  */
+/*	slideshowConfig.speedIn = 2500;    */
+/*	slideshowConfig.speedOut = 500;    */ 
 $(document).ready(function() {
     $('.slideshow')
     .before('<div id="nav">') 
-    .cycle({
-    fx:      '<?= $SlideShowStyle ?>', 
-    timeout: '<?= $SlideShowTimeout ?>', 
-    speed:   '<?= $SlideShowSpeed ?>',
-    easing:  '<?= $SlideShowEaseing  ?>',
-    delay:   '<?= $SlideShowDelay ?>',
-    sync:    '<?= $SlideShowSync ?>',
-    // next:    '<?= $SlideShowNext ?>',
-    // prev:    '<?= $SlideShowPrev ?>',
-    pause:   '<?= $SlideShowPause ?>',
-    random:  '<?= $SlideShowRandom ?>',
-    pager:   '<?= $SlideShowPager ?>'
-    /* before:  onBefore, */ 
-    /* after:    onAfter */
-    /* speedIn:  2500, */
-    /* speedOut: 500, */
-	});
+    .cycle(slideshowConfig);
 
 });
 </script>
