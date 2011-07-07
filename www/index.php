@@ -601,7 +601,6 @@ $(document).ready(function(){
         <div id="home_content_right"><?php include("sites/modules/slideshow.php"); ?></div>		
     </div><!-- fin de #header -->
 
-    <!-- <div id="menubar"><? // include("sites/menubar.php"); ?></div> -->
     <?php if($displayMegaMenu) { ?>
       <div id="menubar"><? include("sites/menus/megamenu/menubar.php"); ?></div>
     <?php } ?>
