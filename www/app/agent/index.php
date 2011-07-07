@@ -77,7 +77,7 @@ if ($_GET[name]) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="<?php echo SYSURL; ?><?php echo $template_css ?>" type="text/css" />
     <link rel="icon" href="<?php echo SYSURL; ?><?=$favicon_image?>" />
-    <title><?= SYSNAME ?>: <?php echo $webui_users_profile; ?> <?php echo $userName ?></title>
+    <title><?php echo SYSNAME; ?>: <?php echo $webui_users_profile; ?> <?php echo $userName ?></title>
     
 <?php if($displayRoundedCorner)  { ?>
 <script src="<?php echo SYSURL; ?>javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -93,7 +93,7 @@ if ($_GET[name]) {
 <body class="webui">
 <div id="container_popup">
 <div id="content_popup">
-  <h2><?= SYSNAME ?>: <?php echo $webui_users_profile; ?> <?php echo $userName ?></h2>
+  <h2><?php echo SYSNAME; ?>: <?php echo $webui_users_profile; ?> <?php echo $userName ?></h2>
   
   <div id="useragentprofil">
 	<!--  <div id="info"><p><?php echo $webui_region_list_page_info ?></p></div> -->

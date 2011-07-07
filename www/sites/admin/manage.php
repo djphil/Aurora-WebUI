@@ -96,7 +96,7 @@ if($_SESSION[ADMINID]) {
         ?>
 
 <div id="content">
-    <div id="ContentHeaderLeft"><h5><p><?= SYSNAME ?></p></h5></div>
+    <div id="ContentHeaderLeft"><h5><p><?php echo SYSNAME; ?></p></h5></div>
     <div id="ContentHeaderCenter"></div>
     <div id="ContentHeaderRight"><h5><p><?php echo $webui_admin_manage; ?></p></h5></div>
       

@@ -136,7 +136,7 @@ while (list($RegionNameX, $locX1, $locY1) = $DbLink->next_record()) {
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="<?php echo SYSURL; ?><?php echo $template_css ?>" type="text/css" />
   <link rel="icon" href="<?php echo SYSURL; ?><?= $favicon_image ?>" />
-  <title><?= SYSNAME ?>: <?php echo $webui_region_information; ?></title>
+  <title><?php echo SYSNAME; ?>: <?php echo $webui_region_information; ?></title>
 
 <?php if($displayRoundedCorner)  { ?>
 <script src="<?php echo SYSURL; ?>javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -153,7 +153,7 @@ while (list($RegionNameX, $locX1, $locY1) = $DbLink->next_record()) {
 <body class="webui">
 <div id="container_popup">
 <div id="content_popup">
-  <h2><?= SYSNAME ?>: <?php echo $webui_region_information; ?></h2>
+  <h2><?php echo SYSNAME; ?>: <?php echo $webui_region_information; ?></h2>
   
   <div id="regioninfo">
   <!--  <div id="info"><p><? // echo $webui_regioninfo ?></p></div> -->

@@ -142,7 +142,7 @@ function displayDefaultAvatars()
 ?>
     <div id="content">
     
-    <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
+    <div id="ContentHeaderLeft"><h5><?php echo SYSNAME; ?></h5></div>
     <div id="ContentHeaderCenter"></div>
     <div id="ContentHeaderRight"><h5><?php echo $webui_register; ?></h5></div>
       
@@ -557,9 +557,9 @@ function displayDefaultAvatars()
 <h2><?php echo $webui_successfully; ?></h2>
   <div id="info">
   	<p><?php echo $webui_successfully_info; ?></p><br />
-    <p><?= SYSNAME ?> <?php echo $webui_avatar_first_name ?>: <b><?= $_SESSION[ACCFIRST] ?></b></p><br />
-    <p><?= SYSNAME ?> <?php echo $webui_avatar_last_name ?>:  <b><?= $_SESSION[ACCLAST] ?></b></p><br />
-    <p><?= SYSNAME ?> <?php echo $webui_email ?>: <?= $_SESSION[EMAIL] ?></b></p><br />
+    <p><?php echo SYSNAME; ?> <?php echo $webui_avatar_first_name ?>: <b><?= $_SESSION[ACCFIRST] ?></b></p><br />
+    <p><?php echo SYSNAME; ?> <?php echo $webui_avatar_last_name ?>:  <b><?= $_SESSION[ACCLAST] ?></b></p><br />
+    <p><?php echo SYSNAME; ?> <?php echo $webui_email ?>: <?= $_SESSION[EMAIL] ?></b></p><br />
 	</div>
 </div>
 
@@ -585,7 +585,7 @@ else { ?>
 
 <div id="content">
 
-<div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
+<div id="ContentHeaderLeft"><h5><?php echo SYSNAME; ?></h5></div>
 <div id="ContentHeaderCenter"></div>
 <div id="ContentHeaderRight"><h5><?php echo $webui_register; ?></h5></div> 
 

@@ -4,11 +4,11 @@ if ($_SESSION[ADMINID]) {
 
 <div id="content">
 
-    <div id="ContentHeaderLeft"><h5><p><?= SYSNAME ?></p></h5></div>
+    <div id="ContentHeaderLeft"><h5><p><?php echo SYSNAME; ?></p></h5></div>
     <div id="ContentHeaderCenter"></div>
     <div id="ContentHeaderRight"><h5><p><?php echo $webui_admin_home; ?></p></h5></div>
 
-	<h3><p><?php echo $webui_admin_welcome; ?> <?php echo $webui_admin_panel; ?> <?= SYSNAME ?></p></h3>
+	<h3><p><?php echo $webui_admin_welcome; ?> <?php echo $webui_admin_panel; ?> <?php echo SYSNAME; ?></p></h3>
 	<div id="info">
 		<p><?php echo $webui_admin_home_info; ?></p>
 	</div>
@@ -39,7 +39,7 @@ if ($_SESSION[ADMINID]) {
 
   <? } else { ?>
 	<div id="content">  	
-    <div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
+    <div id="ContentHeaderLeft"><h5><?php echo SYSNAME; ?></h5></div>
     <div id="ContentHeaderCenter"></div>
     <div id="ContentHeaderRight"><h5><?php echo $webui_admin_login; ?></h5></div>
 		<div id="login">        

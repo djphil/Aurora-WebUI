@@ -62,7 +62,7 @@ if ($_GET[starty]) {
 ?>
 
 <head>
-  <title><?= SYSNAME ?> World Map</title>
+  <title><?php echo SYSNAME; ?> World Map</title>
   <style type="text/css" media=all>@import url(map.css);</style>
   <script src="prototype.js" type="text/javascript"></script>
   <script src="effects.js" type="text/javascript"></script>

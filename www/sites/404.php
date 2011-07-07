@@ -1,5 +1,5 @@
 <div id="content">
-    <h2><?= SYSNAME ?>: <?php echo $webui_404_title ?></h2>
+    <h2><?php echo SYSNAME; ?>: <?php echo $webui_404_title ?></h2>
     <div id="alert">
         <p><?php echo $webui_404_text ?></p>
     </div>

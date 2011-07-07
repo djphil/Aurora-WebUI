@@ -1,6 +1,6 @@
 <div id="content">
 <?php if($displayDate) { ?>
-<div id="ContentHeaderLeft"><h5><?= SYSNAME ?></h5></div>
+<div id="ContentHeaderLeft"><h5><?php echo SYSNAME; ?></h5></div>
 
 <div id="ContentHeaderCenter">
     <div id="date">
@@ -18,7 +18,7 @@
         
 <?php include("sites/modules/steps123.php"); ?>
         
-<div id="annonce7"><h3><?php echo $webui_welcome; ?> <?= SYSNAME ?></h3><?php echo $webui_home_page; ?></div>
+<div id="annonce7"><h3><?php echo $webui_welcome; ?> <?php echo SYSNAME; ?></h3><?php echo $webui_home_page; ?></div>
 <div id="annonce10"><p><?php echo $webui_home_page_warning; ?></p></div>
 
 <?php include("sites/modules/infos123.php"); ?>
