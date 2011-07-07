@@ -37,3 +37,5 @@
 *.pid
 *.pl
 *.user
+www/settings/config.php
+www/settings/databaseinfo.php
