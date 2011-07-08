@@ -17,6 +17,20 @@ namespace Aurora{
 		public function Info();
 	}
 
+	interface User{
+		public function PrincipalID();
+		public function ScopeID();
+		public function FirstName();
+		public function LastName();
+		public function Email();
+		public function ServiceURLs();
+		public function Created();
+		public function UserLevel();
+		public function UserFlags();
+		public function UserTitle();
+		public function Name();
+	}
+
 	function is_uuid($uuid){
 		return is_string($uuid) && preg_match('/^[A-Fa-f\d]{8}\-[A-Fa-f\d]{4}\-[A-Fa-f\d]{4}\-[A-Fa-f\d]{4}\-[A-Fa-f\d]{12}$/', $uuid) === 1;
 	}
@@ -31,8 +45,39 @@ namespace Aurora\WebUI{
 
 	use Aurora;
 	use Aurora\Region as typeRegion;
+	use Aurora\User   as typeUser  ;
 
-	abstract class Region implements typeRegion{
+	abstract class abstractEntity{
+		protected static function validate_Int($value){
+			if(is_integer($value) === false){
+				if((is_float($value) && ($value % 1) === 0) || (is_string($value) && ctype_digit($value))){
+					
+				}else{
+					throw new InvalidArgumentException('Integer should be an integer, integer-as-float or integer-as-string');
+				}
+			}
+			return $value;
+		}
+
+		public static function validate_UUID($value){
+			if(is_string($value) === false){
+				throw new InvalidArgumentException('Value should be a string'    , 1);
+			}else if(Aurora\is_uuid($value) === false){
+				throw new InvalidArgumentException('Value should be a valid UUID', 2);
+			}
+			return $value;
+		}
+
+		public static function validate_String($value, $canBeEmpty=false){
+			if(is_string($value) === false){
+				throw new InvalidArgumentException('Value must be a string', 1);
+			}else if(!$canBeEmpty && empty($value)){
+				throw new InvalidArgumentException('Value is empty!', 2);
+			}
+		}
+	}
+
+	abstract class abstractRegion extends abstractEntity implements typeRegion{
 		protected function __construct(){ // here to prevent direct instantiation
 			$this->ScopeID    = static::validate_ScopeID   ( $this->ScopeID    );
 			$this->RegionUUID = static::validate_RegionUUID( $this->RegionUUID );
@@ -114,26 +159,6 @@ namespace Aurora\WebUI{
 		protected $Info;
 		public function Info(){
 			return $this->Info;
-		}
-
-		protected static function validate_Int($value){
-			if(is_integer($value) === false){
-				if((is_float($value) && ($value % 1) === 0) || (is_string($value) && ctype_digit($value))){
-					
-				}else{
-					throw new InvalidArgumentException('Integer should be an integer, integer-as-float or integer-as-string');
-				}
-			}
-			return $value;
-		}
-
-		public static function validate_UUID($value){
-			if(is_string($value) === false){
-				throw new InvalidArgumentException('Value should be a string'    , 1);
-			}else if(Aurora\is_uuid($value) === false){
-				throw new InvalidArgumentException('Value should be a valid UUID', 2);
-			}
-			return $value;
 		}
 
 		protected static function validate_ScopeID($value){
@@ -247,7 +272,7 @@ namespace Aurora\WebUI{
 		}
 	}
 
-	class RegionFromDB extends Region{
+	class RegionFromDB extends abstractRegion{
 		const sql_get_by_uuid =
 'SELECT
 	ScopeID,
@@ -369,6 +394,234 @@ LIMIT 1';
 			}
 
 			return static::r($db, $uuid);
+		}
+	}
+
+
+	class abstractUser extends abstractEntity implements typeUser{
+		protected function __construct(){ // here to prevent direct instantiation
+			$this->PrincipalID = static::validate_PrincipalID( $this->PrincipalID );
+			$this->ScopeID     = static::validate_ScopeID    ( $this->ScopeID     );
+			$this->FirstName   = static::validate_FirstName  ( $this->FirstName   );
+			$this->LastName    = static::validate_LastName   ( $this->LastName    );
+			$this->Email       = static::validate_Email      ( $this->Email       );
+			$this->ServiceURLs = static::validate_ServiceURLs( $this->ServiceURLs );
+			$this->Created     = static::validate_Created    ( $this->Created     );
+			$this->UserLevel   = static::validate_UserLevel  ( $this->UserLevel   );
+			$this->UserFlags   = static::validate_UserFlags  ( $this->UserFlags   );
+			$this->UserTitle   = static::validate_UserTitle  ( $this->UserTitle   );
+			$this->Name        = static::validate_Name       ( $this->Name        );
+		}
+
+		protected $PrincipalID;
+		public function PrincipalID(){
+			return $this->PrincipalID;
+		}
+
+		protected $ScopeID;
+		public function ScopeID(){
+			return $this->ScopeID;
+		}
+
+		protected $FirstName;
+		public function FirstName(){
+			return $this->FirstName;
+		}
+
+		protected $LastName;
+		public function LastName(){
+			return $this->LastName;
+		}
+
+		protected $Email;
+		public function Email(){
+			return $this->Email;
+		}
+
+		protected $ServiceURLs;
+		public function ServiceURLs(){
+			return $this->ServiceURLs;
+		}
+
+		protected $Created;
+		public function Created(){
+			return $this->Created;
+		}
+
+		protected $UserLevel;
+		public function UserLevel(){
+			return $this->UserLevel;
+		}
+
+		protected $UserFlags;
+		public function UserFlags(){
+			return $this->UserFlags;
+		}
+
+		protected $UserTitle;
+		public function UserTitle(){
+			return $this->UserTitle;
+		}
+
+		protected $Name;
+		public function Name(){
+			return $this->Name;
+		}
+
+		protected static function validate_PrincipalID($value){
+			try{
+				return static::validate_UUID($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('User ID was invalid', 10 + $e->getCode());
+			}
+		}
+
+		protected static function validate_ScopeID($value){
+			try{
+				return static::validate_UUID($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('Scope ID was invalid', 20 + $e->getCode());
+			}
+		}
+
+		protected static function validate_FirstName($value){
+			try{
+				return static::validate_String($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('First Name was invalid', 30 + $e->getCode());
+			}
+		}
+
+		protected static function validate_LastName($value){
+			try{
+				return static::validate_String($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('Last Name was invalid', 40 + $e->getCode());
+			}
+		}
+
+		protected static function validate_Email($value){
+			try{
+				return static::validate_String($value, true);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('Email was invalid', 50 + $e->getCode());
+			}
+		}
+
+		protected static function validate_ServiceURLs($value){
+			try{
+				return static::validate_String($value, true);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('ServiceURLs was invalid', 60 + $e->getCode());
+			}
+		}
+
+		protected static function validate_Created($value){
+			try{
+				return static::validate_Int($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('Created was invalid', 70 + $e->getCode());
+			}
+		}
+
+		protected static function validate_UserLevel($value){
+			try{
+				return static::validate_Int($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('UserLevel was invalid', 80 + $e->getCode());
+			}
+		}
+
+		protected static function validate_UserFlags($value){
+			try{
+				return static::validate_Int($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('User Flags was invalid', 90 + $e->getCode());
+			}
+		}
+
+		protected static function validate_UserTitle($value){
+			try{
+				return static::validate_String($value, true);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('User Title was invalid', 100 + $e->getCode());
+			}
+		}
+
+		protected static function validate_Name($value){
+			try{
+				return static::validate_String($value);
+			}catch(InvalidArgumentException $e){
+				throw new InvalidArgumentException('Name was invalid', 110 + $e->getCode());
+			}
+		}
+	}
+
+	class UserFromDB extends abstractUser{
+		const sql_get_by_uuid =
+'SELECT
+	PrincipalID,
+	ScopeID,
+	FirstName,
+	LastName,
+	Email,
+	ServiceURLs,
+	Created,
+	UserLevel,
+	UserFlags,
+	UserTitle,
+	Name
+FROM
+	useraccounts
+WHERE
+	PrincipalID = :PrincipalID
+LIMIT 1';
+		public static function r(PDO $db, $uuid){
+			static $registry = array();
+
+			$hash = spl_object_hash($db);
+			if(isset($registry[$hash]) === false){
+				$registry[$hash] = array();
+			}
+
+			$uuid = static::validate_PrincipalID($uuid);
+			if(isset($registry[$hash][$uuid]) === false){
+				try{
+					$sth = $db->prepare(static::sql_get_by_uuid);
+				}catch(PDOException $e){
+					throw new RuntimeException('Could not prepare query (check ' . get_called_class() . '::sql_get_by_uuid )', 1001);
+				}
+
+				try{
+					$sth->bindValue(':PrincipalID', $uuid);
+				}catch(PDOException $e){
+					throw new RuntimeException('Could not bind UUID to query', 1002);
+				}
+
+				try{
+					$sth->execute();
+				}catch(PDOException $e){
+					throw new RuntimeException('Could not execute query', 1003);
+				}
+
+				try{
+					$registry[$hash][$uuid] = $sth->fetchObject(get_called_class());
+				}catch(PDOException $e){
+					throw new RuntimeException('Could not get user object', 1004);
+				}catch(InvalidArgumentException $e){
+					throw new RuntimeException('There appears to be some invalid data in the database:' . "\n" + $e->getMessage(), 1005);
+				}
+
+				if(($registry[$hash][$uuid] instanceof typeUser) === false){
+					throw new RuntimeException('Failed to get user object', 1006);
+				}
+			}
+
+			return $registry[$hash][$uuid];
+		}
+
+		public static function getRegionOwner(PDO $db, typeRegion $region){
+			return static::r($db, $region->OwnerUUID());
 		}
 	}
 }
