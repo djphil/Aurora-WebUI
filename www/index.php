@@ -34,6 +34,7 @@ require_once("settings/config.php");
 require_once("settings/databaseinfo.php");
 require_once("settings/json.php");
 require_once("settings/mysql.php");
+require_once('settings/entity-types.php');
 require_once("check.php");
 require_once("languages/translator.php");
 require_once("templates/templates.php");
