@@ -11,12 +11,12 @@
 <?php
 
                 $querypage = 0;
-                if($_GET[pagenum] != "") {
+                if(isset($_GET['pagenum']) && $_GET['pagenum'] != "") {
                     $querypage = cleanQuery($_GET[pagenum]);
                 }
                 $showNext = true;
                 $DbLink = new DB;
-                $DbLink->query("SELECT COUNT(*) from " . C_NEWS_TBL . $query);
+                $DbLink->query("SELECT COUNT(*) from " . C_NEWS_TBL);
 while (list($count) = $DbLink->next_record()) {
 if($querypage*5 + 5 > $count)
     $showNext = false;
