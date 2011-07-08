@@ -562,7 +562,7 @@ $webui_pagination_tooltips_limit50 = 'Limite di 50';
 $webui_pagination_tooltips_limit100 = 'Limite di 100';
 $webui_pagination_tooltips_sortn = 'Ordine Alfabetico';
 $webui_pagination_tooltips_sortx = 'Ordine secondo coordinata X';
-$webui_pagination_tooltips_sortn = 'Ordine secondo coordinata Y';
+$webui_pagination_tooltips_sorty = 'Ordine secondo coordinata Y';
 
 //
 // SlideShow Comments

@@ -547,7 +547,7 @@ $webui_pagination_tooltips_limit50 = 'Limite 50';
 $webui_pagination_tooltips_limit100 = 'Limite 100';
 $webui_pagination_tooltips_sortn = 'Trier par Nom';
 $webui_pagination_tooltips_sortx = 'Trier par Grille X';
-$webui_pagination_tooltips_sortn = 'Trier par Grille Y';
+$webui_pagination_tooltips_sorty = 'Trier par Grille Y';
 
 //
 // SlideShow Comments

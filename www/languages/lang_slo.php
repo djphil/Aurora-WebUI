@@ -552,7 +552,7 @@ $webui_pagination_tooltips_limit50 = 'Meja je 50';
 $webui_pagination_tooltips_limit100 = 'Meja je 100';
 $webui_pagination_tooltips_sortn = 'Uredi po imenu';
 $webui_pagination_tooltips_sortx = 'Uredi po X osi';
-$webui_pagination_tooltips_sortn = 'Uredi po Y osi';
+$webui_pagination_tooltips_sorty = 'Uredi po Y osi';
 
 //
 // SlideShow Comments

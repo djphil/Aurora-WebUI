@@ -554,7 +554,7 @@ $webui_pagination_tooltips_limit50 = 'Limit 50';
 $webui_pagination_tooltips_limit100 = 'Limit 100';
 $webui_pagination_tooltips_sortn = 'Sort by Name';
 $webui_pagination_tooltips_sortx = 'Sort by Grid X';
-$webui_pagination_tooltips_sortn = 'Sort by Grid Y';
+$webui_pagination_tooltips_sorty = 'Sort by Grid Y';
 
 //
 // SlideShow Comments
