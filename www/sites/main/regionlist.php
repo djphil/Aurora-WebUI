@@ -1,12 +1,13 @@
-<?
-if($_GET[order]=="name"){
-$ORDERBY=" ORDER by regionName ASC";
-}else if($_GET[order]=="x"){
-$ORDERBY=" ORDER by locX ASC";
-}else if($_GET[order]=="y"){
-$ORDERBY=" ORDER by locY ASC";
-}else{
+<?php
 $ORDERBY=" ORDER by RegionName ASC";
+if(isset($_GET['order'])){
+	if($_GET['order']=="name"){
+		$ORDERBY=" ORDER by regionName ASC";
+	}else if($_GET['order']=="x"){
+		$ORDERBY=" ORDER by locX ASC";
+	}else if($_GET['order']=="y"){
+		$ORDERBY=" ORDER by locY ASC";
+	}
 }
 
 $GoPage= "index.php?page=regionlist";
@@ -16,13 +17,12 @@ $AnzeigeStart = 0;
 // LINK SELECTOR
 $LinkAusgabe="page=index.php?page=regionlist&";
 
-if($_GET[AStart]){$AStart=$_GET[AStart];};
-if(!$AStart) $AStart = $AnzeigeStart;
+$AStart = isset($_GET['AStart']) ? $_GET['AStart'] : $AnzeigeStart;
 
 $ALimit = 10;
 $Limit = "LIMIT $AStart, $ALimit";
 
-$DbLink->query("SELECT COUNT(*) FROM ".C_REGIONS_TBL.""); 
+$DbLink->query("SELECT COUNT(*) FROM ".C_REGIONS_TBL."");
 list($count) = $DbLink->next_record();
 
 $sitemax=ceil($count / 10);
@@ -39,19 +39,19 @@ if($sitemax == 0){$sitemax=1;}
 	<table>
 		<tr>
 			<td>
-				<p><?=$count?> <?php echo $webui_regions_found; ?><p>
+				<p><?php echo $count; ?> <?php echo $webui_regions_found; ?><p>
 			</td>
 			<td>
 			<div id="region_navigation">
 				<table>
 					<tr>
 						<td>
-							<a href="<?=$GoPage?>&<?=$Link1?>AStart=0&amp;ALimit=<?=$ALimit?>" target="_self" title="<?php echo $webui_pagination_tooltips_back_begin; ?>">
+							<a href="<?php echo $GoPage,'&',$Link1; ?>AStart=0&amp;ALimit=<?php echo $ALimit; ?>" target="_self" title="<?php echo $webui_pagination_tooltips_back_begin; ?>">
 								<img SRC=images/icons/icon_back_more_<? if(0 > ($AStart - $ALimit)) echo off; else echo on ?>.gif WIDTH=15 HEIGHT=15 border="0" />
 							</a>
 						</td>
 						<td>
-							<a href="<?=$GoPage?>&<?=$Link1?>AStart=<? if(0 > ($AStart - $ALimit)) echo 0; else echo $AStart - $ALimit; ?>&amp;ALimit=<?=$ALimit?>" target="_self"  title="<?php echo $webui_pagination_tooltips_back_page; ?>">
+							<a href="<?php echo $GoPage,'&',$Link1; ?>AStart=<?php  echo (0 > ($AStart - $ALimit)) ? 0 : $AStart - $ALimit; ?>&amp;ALimit=<?php echo $ALimit; ?>" target="_self"  title="<?php echo $webui_pagination_tooltips_back_page; ?>">
 								<img SRC=images/icons/icon_back_one_<? if(0 > ($AStart - $ALimit)) echo off; else echo on ?>.gif WIDTH=15 HEIGHT=15 border="0" />
 							</a>
 						</td>
