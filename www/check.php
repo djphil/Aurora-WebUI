@@ -6,20 +6,32 @@
  * See LICENSE for the full licensing terms of this file.
  *
  */
-$DbLink = new DB;
+ 
+namespace{
+	$DbLink = new DB;
 
-$DbLink->query("DELETE FROM ".C_CODES_TBL." where (time + 86400) < ".time()." and info='pwreset'");
+	$DbLink->query("DELETE FROM ".C_CODES_TBL." where (time + 86400) < ".time()." and info='pwreset'");
 
-if($unconfirmed_deltime != " "){
-$deletetime=60*60*$unconfirmed_deltime;
+	if($unconfirmed_deltime != " "){
+	$deletetime=60*60*$unconfirmed_deltime;
 
-$DbLink->query("SELECT UUID FROM ".C_CODES_TBL." where (time + $deletetime) < ".time()." and info='confirm'");	
-while(list($REGUUID) = $DbLink->next_record()){
+	$DbLink->query("SELECT UUID FROM ".C_CODES_TBL." where (time + $deletetime) < ".time()." and info='confirm'");	
+	while(list($REGUUID) = $DbLink->next_record()){
 
-$DbLink1 = new DB;
-$DbLink1->query("DELETE FROM ".C_USERS_TBL." where PrincipalID='".cleanQuery($REGUUID)."'");
-$DbLink1->query("DELETE FROM ".C_CODES_TBL." where UUID='".cleanQuery($REGUUID)."'");
+	$DbLink1 = new DB;
+	$DbLink1->query("DELETE FROM ".C_USERS_TBL." where PrincipalID='".cleanQuery($REGUUID)."'");
+	$DbLink1->query("DELETE FROM ".C_CODES_TBL." where UUID='".cleanQuery($REGUUID)."'");
 
+	}
+	}
 }
+
+namespace Aurora\WebUI{
+	use RuntimeException;
+
+	$PDODB = DB::i();
+	if(isset($PDODB['Aurora']) === false){
+		throw new RuntimeException('Aurora database PDO object not specified');
+	}
 }
 ?>
