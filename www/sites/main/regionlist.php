@@ -133,7 +133,7 @@ if($sitemax == 0){$sitemax=1;}
 								</td>
 								<td width="15%">
 									<div>
-										<a onClick="window.open('<?php echo SYSURL,'app/region/?x=',$locX,'&y',$locY;?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=400')">
+										<a onClick="window.open('<?php echo SYSURL,'app/region/?x=',$locX,'&y=',$locY;?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=400')">
 											<p><?php echo $webui_more_info ?></p>
 										</a>
 									</div>
