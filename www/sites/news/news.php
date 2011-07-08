@@ -26,21 +26,21 @@ if($querypage*5 + 5 > $count)
         <div style="text-align: left; width: 50%; float: left;">
         <?php
         if($querypage > 0) { ?>
-            <a href="<?php echo SYSURL; ?>index.php?page=news&pagenum=<?=$querypage-1?>">Previous Page</a>
+            <a href="<?php echo SYSURL; ?>index.php?page=news&pagenum=<?php echo $querypage-1; ?>">Previous Page</a>
             <?php } ?>&nbsp;
         </div>
         <div style="text-align: right; width: 50%; float: left;">
             <?php
             if($showNext) { ?>
-            <a href="<?php echo SYSURL; ?>index.php?page=news&pagenum=<?=$querypage+1?>">Next Page</a>
+            <a href="<?php echo SYSURL; ?>index.php?page=news&pagenum=<?php echo $querypage+1; ?>">Next Page</a>
             <?php } ?>&nbsp;
         </div>
 <!-- STYLE TO DO -->        
         	
             <table>
-                <?
+                <?php
                 $query = "";
-                if($_GET[scr] != "") {
+                if(isset($_GET['scr']) && $_GET['scr'] != "") {
                     $query = " where id='".cleanQuery($_GET[scr])."'";
                 }
                 $querypage = $querypage * 5;
@@ -58,19 +58,19 @@ if($querypage*5 + 5 > $count)
                 ?>
 
                     <tr>
-                        <td width="100"><div class="news_time"><b><?= $TIMES ?></b></div></td>
-                        <td><div class="news_title"><h3> <a href="<?php echo SYSURL; ?>index.php?page=news&scr=<?=$id?>" ><?=$title?></a></h3></div></td>
+                        <td width="100"><div class="news_time"><b><?php echo $TIMES; ?></b></div></td>
+                        <td><div class="news_title"><h3> <a href="<?php echo SYSURL; ?>index.php?page=news&scr=<?php echo $id; ?>" ><?php echo $title; ?></a></h3></div></td>
                     </tr>
 
                     <tr>
                         <td></td>
-                        <td><div class="news_content"><?= $message ?></div></td>
+                        <td><div class="news_content"><?php echo $message; ?></div></td>
                     </tr>
 
                     <tr>
                         <td colspan="2"><hr /></td>
                     </tr>
-                <? } $DbLink->clean_results();
+                <?php } $DbLink->clean_results();
 				
                 $DbLink->close(); ?>
             </table>
