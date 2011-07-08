@@ -5,7 +5,7 @@
   <div id="searchpeople">
   <div id="info"><p><?php echo $webui_people_search_info; ?></p></div>
 <p>
-<?
+<?php
   $DbLink2 = new DB;
   $DbLink = new DB;
   
