@@ -1,5 +1,5 @@
 <?
-if($_SESSION[USERID] == "")
+if($_SESSION['USERID'] == "")
 {
 echo "<script language='javascript'>
 <!--
@@ -89,7 +89,7 @@ if($GENERATED)
       <TD width="221" height="40" align="center" valign="middle" bgcolor="#FFFFFF"><input type=text name=region_ip_hostname size=80></TD>
 	</TR>
 	<?
-	$DbLink->query("SELECT FirstName,LastName FROM ".C_USERS_TBL." where PrincipalID='".$_SESSION[USERID]."'");
+	$DbLink->query("SELECT FirstName,LastName FROM ".C_USERS_TBL." where PrincipalID='".$_SESSION['USERID']."'");
 	list($first,$last) = $DbLink->next_record();
 	?>
     <TR style='BACKGROUND-COLOR: #e8eff5'>

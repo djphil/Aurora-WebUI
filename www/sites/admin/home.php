@@ -17,7 +17,7 @@ if ($_SESSION[ADMINID]) {
 <?
 	$DbLink2 = new DB;
 	$DbLink = new DB;
-	if ($_SESSION[USERID])
+	if ($_SESSION['USERID'])
 		$Display = 1;
 	else
 		$Display = 0;

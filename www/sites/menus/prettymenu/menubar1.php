@@ -69,7 +69,7 @@
     <ul class="menu">
     <?
 		$DbLink = new DB;
-		if ($_SESSION[USERID])
+		if ($_SESSION['USERID'])
 			$Display = 1;
 		else
 			$Display = 0;
