@@ -8,7 +8,7 @@
 
   <div id="region_map">
 
-    <iframe src="<?=SYSURL?>app/map/index.php" frameborder="0" width="100%" height="100%">
+    <iframe src="<?php echo SYSURL; ?>app/map/index.php" frameborder="0" width="100%" height="100%">
     <p>Your browser does not support iframes.</p>
   </iframe>
   </div>

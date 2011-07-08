@@ -28,7 +28,7 @@
                   
                   <tr <? if(($w % 2)){echo"class=even";}else{echo"class=odd";}?>>
                       <td class=boxtext vAlign=top>
-                          <a href="<?=SYSURL?>index.php?page=news&scr=<?=$ID?>" target="_blank"><?=$NEWS?></a>
+                          <a href="<?php echo SYSURL; ?>index.php?page=news&scr=<?=$ID?>" target="_blank"><?=$NEWS?></a>
                       </td>
                       
                       <td class=boxtext vAlign=top noWrap width="1%">

@@ -90,26 +90,26 @@
     <center>         
       <table border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td><img src="<?=SYSURL?>images/spacer.gif" alt="" /></td>
-          <td><a href="index.php?x=<?php echo $grid_x;?>&y=<?php echo $grid_y + 10; ?>" target="_self"><img src="<?=SYSURL?>images/pan_up.png" border="0" alt="<?php echo $CONF_txt_north;?>" title="<?php echo $CONF_txt_north;?>" /></a>
+          <td><img src="<?php echo SYSURL; ?>images/spacer.gif" alt="" /></td>
+          <td><a href="index.php?x=<?php echo $grid_x;?>&y=<?php echo $grid_y + 10; ?>" target="_self"><img src="<?php echo SYSURL; ?>images/pan_up.png" border="0" alt="<?php echo $CONF_txt_north;?>" title="<?php echo $CONF_txt_north;?>" /></a>
           </td>
-          <td><img src="<?=SYSURL?>images/spacer.gif" alt="" /></td>
+          <td><img src="<?php echo SYSURL; ?>images/spacer.gif" alt="" /></td>
         </tr>
         
         <tr>
-          <td><a href="index.php?x=<? print $grid_x - 10; ?>&y=<? print $grid_y; ?>" target="_self"><img src="<?=SYSURL?>images/pan_left.png" border="0" alt="<?php echo $CONF_txt_west;?>" title="<?php echo $CONF_txt_west;?>" /></a>
+          <td><a href="index.php?x=<? print $grid_x - 10; ?>&y=<? print $grid_y; ?>" target="_self"><img src="<?php echo SYSURL; ?>images/pan_left.png" border="0" alt="<?php echo $CONF_txt_west;?>" title="<?php echo $CONF_txt_west;?>" /></a>
           </td>
-          <td><a href="index.php?x=<?php echo $CONF_center_coord_x;?>&y=<?php echo $CONF_center_coord_y;?>" target="_self"><img src="<?=SYSURL?>images/center.png" border="0" alt="<?php echo $CONF_txt_center;?>" title="<?php echo $CONF_txt_center;?>" /></a>
+          <td><a href="index.php?x=<?php echo $CONF_center_coord_x;?>&y=<?php echo $CONF_center_coord_y;?>" target="_self"><img src="<?php echo SYSURL; ?>images/center.png" border="0" alt="<?php echo $CONF_txt_center;?>" title="<?php echo $CONF_txt_center;?>" /></a>
           </td>
-          <td><a href="index.php?x=<? print $grid_x + 10; ?>&y=<? print $grid_y; ?>" target="_self"><img src="<?=SYSURL?>images/pan_right.png" border="0" alt="<?php echo $CONF_txt_east;?>" title="<?php echo $CONF_txt_east;?>" /></a>
+          <td><a href="index.php?x=<? print $grid_x + 10; ?>&y=<? print $grid_y; ?>" target="_self"><img src="<?php echo SYSURL; ?>images/pan_right.png" border="0" alt="<?php echo $CONF_txt_east;?>" title="<?php echo $CONF_txt_east;?>" /></a>
           </td>
         </tr>
         
         <tr>
-          <td><img src ="<?=SYSURL?>images/spacer.gif" alt="" /></td>
-          <td><a href="index.php?x=<? print $grid_x; ?>&y=<? print $grid_y -10; ?>" target="_self"><img src="<?=SYSURL?>images/pan_down.png" border="0" alt="<?php echo $CONF_txt_south;?>" title="<?php echo $CONF_txt_south;?>" /></a>
+          <td><img src ="<?php echo SYSURL; ?>images/spacer.gif" alt="" /></td>
+          <td><a href="index.php?x=<? print $grid_x; ?>&y=<? print $grid_y -10; ?>" target="_self"><img src="<?php echo SYSURL; ?>images/pan_down.png" border="0" alt="<?php echo $CONF_txt_south;?>" title="<?php echo $CONF_txt_south;?>" /></a>
           </td>
-          <td><img src ="<?=SYSURL?>images/spacer.gif" alt="" /></td>
+          <td><img src ="<?php echo SYSURL; ?>images/spacer.gif" alt="" /></td>
         </tr>
       </table>
     </center>
@@ -205,7 +205,7 @@ $x = $start_x;
              
       <td>
         <a style="cursor:pointer" onClick="window.open('./modules/show_region.php?region=<?print $region_uuid; ?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=950,height=600')">
-        <img src="<?=SYSURL?>images/grid_mainland.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" /></a>
+        <img src="<?php echo SYSURL; ?>images/grid_mainland.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" /></a>
         <? $x++; }
         else { if ($sim_new == 1) { ?>
               
@@ -213,14 +213,14 @@ $x = $start_x;
               
       <td>
         <a style="cursor:pointer" onClick="window.open('./modules/show_region.php?region=<?print $region_uuid; ?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=950,height=600')">
-        <img src="<?=SYSURL?>images/grid_occupied.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" /></a>
+        <img src="<?php echo SYSURL; ?>images/grid_occupied.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" /></a>
         <? $x++; }
               
         else { ?>
       </td>
               
       <td>
-        <img src="<?=SYSURL?>images/grid_free.jpg" alt= "X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" title="X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" />
+        <img src="<?php echo SYSURL; ?>images/grid_free.jpg" alt= "X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" title="X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" />
         <? $x++; }}}}
         $y--; } ?>
       </td>

@@ -26,13 +26,13 @@ if($querypage*5 + 5 > $count)
         <div style="text-align: left; width: 50%; float: left;">
         <?php
         if($querypage > 0) { ?>
-            <a href="<?=SYSURL?>index.php?page=news&pagenum=<?=$querypage-1?>">Previous Page</a>
+            <a href="<?php echo SYSURL; ?>index.php?page=news&pagenum=<?=$querypage-1?>">Previous Page</a>
             <?php } ?>&nbsp;
         </div>
         <div style="text-align: right; width: 50%; float: left;">
             <?php
             if($showNext) { ?>
-            <a href="<?=SYSURL?>index.php?page=news&pagenum=<?=$querypage+1?>">Next Page</a>
+            <a href="<?php echo SYSURL; ?>index.php?page=news&pagenum=<?=$querypage+1?>">Next Page</a>
             <?php } ?>&nbsp;
         </div>
 <!-- STYLE TO DO -->        
@@ -59,7 +59,7 @@ if($querypage*5 + 5 > $count)
 
                     <tr>
                         <td width="100"><div class="news_time"><b><?= $TIMES ?></b></div></td>
-                        <td><div class="news_title"><h3> <a href="<?=SYSURL?>index.php?page=news&scr=<?=$id?>" ><?=$title?></a></h3></div></td>
+                        <td><div class="news_title"><h3> <a href="<?php echo SYSURL; ?>index.php?page=news&scr=<?=$id?>" ><?=$title?></a></h3></div></td>
                     </tr>
 
                     <tr>

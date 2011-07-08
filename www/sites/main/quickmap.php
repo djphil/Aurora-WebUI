@@ -73,32 +73,32 @@
   <div id="map-nav"> <!-- <? // echo $CONF_txt_nav;?> -->
   <div id="map-nav-up" style="z-index: 1;">
     <a href="index.php?page=quickmap&x=<?php echo $grid_x;?>&y=<?php echo $grid_y + 10; ?>" target="_self">
-      <img src="<?=SYSURL?>quickmap/images/pan_up.png" border="0" alt="<?php echo $CONF_txt_north;?>" title="<?php echo $CONF_txt_north;?>" />
+      <img src="<?php echo SYSURL; ?>quickmap/images/pan_up.png" border="0" alt="<?php echo $CONF_txt_north;?>" title="<?php echo $CONF_txt_north;?>" />
     </a>
   </div>
   
   <div id="map-nav-down" style="z-index: 1;">
     <a href="index.php?page=quickmap&x=<? print $grid_x; ?>&y=<? print $grid_y -10; ?>" target="_self">
-      <img src="<?=SYSURL?>quickmap/images/pan_down.png" border="0" alt="<?php echo $CONF_txt_south;?>" title="<?php echo $CONF_txt_south;?>" />
+      <img src="<?php echo SYSURL; ?>quickmap/images/pan_down.png" border="0" alt="<?php echo $CONF_txt_south;?>" title="<?php echo $CONF_txt_south;?>" />
     </a>
   </div>
   
   <div id="map-nav-left" style="z-index: 1;">
     <a href="index.php?page=quickmap&x=<? print $grid_x - 10; ?>&y=<? print $grid_y; ?>" target="_self">
-      <img src="<?=SYSURL?>quickmap/images/pan_left.png" border="0" alt="<?php echo $CONF_txt_west;?>" title="<?php echo $CONF_txt_west;?>" />
+      <img src="<?php echo SYSURL; ?>quickmap/images/pan_left.png" border="0" alt="<?php echo $CONF_txt_west;?>" title="<?php echo $CONF_txt_west;?>" />
     </a>
     
   </div>
   
   <div id="map-nav-right" style="z-index: 1;">
     <a href="index.php?page=quickmap&x=<? print $grid_x + 10; ?>&y=<? print $grid_y; ?>" target="_self">
-      <img src="<?=SYSURL?>quickmap/images/pan_right.png" border="0" alt="<?php echo $CONF_txt_east;?>" title="<?php echo $CONF_txt_east;?>" />
+      <img src="<?php echo SYSURL; ?>quickmap/images/pan_right.png" border="0" alt="<?php echo $CONF_txt_east;?>" title="<?php echo $CONF_txt_east;?>" />
     </a>
   </div>
   
   <div id="map-nav-center" style="z-index: 1;">
     <a href="index.php?page=quickmap&x=<?php echo $CONF_center_coord_x;?>&y=<?php echo $CONF_center_coord_y;?>" target="_self">
-      <img src="<?=SYSURL?>quickmap/images/center.png" border="0" alt="<?php echo $CONF_txt_center;?>" title="<?php echo $CONF_txt_center;?>" />
+      <img src="<?php echo SYSURL; ?>quickmap/images/center.png" border="0" alt="<?php echo $CONF_txt_center;?>" title="<?php echo $CONF_txt_center;?>" />
     </a>
   </div>
 </div>
@@ -181,7 +181,7 @@
              
              <td>
                 <a style="cursor:pointer" onClick="window.open('quickmap/modules/show_region.php?region=<?print $region_uuid; ?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=950,height=600')">
-                  <img src="<?=SYSURL?>quickmap/images/grid_mainland.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" /></a>
+                  <img src="<?php echo SYSURL; ?>quickmap/images/grid_mainland.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_occupied;?>" /></a>
                 <? $x++; }
               else { if ($sim_new == 1) { ?>
               
@@ -189,14 +189,14 @@
               
               <td>
                 <a style="cursor:pointer" onClick="window.open('quickmap/modules/show_region.php?region=<?print $region_uuid; ?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=950,height=600')">
-                <img src="<?=SYSURL?>quickmap/images/grid_occupied.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" /></a>
+                <img src="<?php echo SYSURL; ?>quickmap/images/grid_occupied.jpg" alt="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" title="Region=<? print $region_name; ?> | X=<?print $x; ?> | Y=<?print $y; ?> | Status: occupied" /></a>
                 <? $x++; }
               
                 else { ?>
               </td>
               
               <td>
-                <img src="<?=SYSURL?>quickmap/images/grid_free.jpg" alt= "X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" title="X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" />
+                <img src="<?php echo SYSURL; ?>quickmap/images/grid_free.jpg" alt= "X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" title="X=<?print $x; ?> | Y=<?print $y; ?> | Status: <?php echo $CONF_txt_free;?>" />
                 <? $x++; }}}}
                 $y--; } ?>
           </td>

@@ -16,7 +16,7 @@
 			       <center>
                 <p><?php echo $webui_special_info; ?></p>
                 <p><?php echo $webui_special_visit; ?>
-                <a href =<?=SYSURL?> target="_blank">
+                <a href =<?php echo SYSURL; ?> target="_blank">
                 <?php echo $webui_special_website; ?></a> 
                 <?php echo $webui_special_moreinfo; ?></p>
             </center>
