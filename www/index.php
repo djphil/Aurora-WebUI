@@ -198,6 +198,7 @@ if ($_POST[Submit] == $webui_admin_login) {
 
 <script type="text/javascript">
 $(document).ready(function($){
+	$('html').removeClass('no-js');
 	$('#mega-menu-1').dcMegaMenu({
 		rowItems: '<?php echo $MegaMenuRowItems; ?>',
 		speed: '<?php echo $MegaMenuSpeed; ?>',
