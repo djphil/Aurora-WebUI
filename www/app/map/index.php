@@ -1,8 +1,9 @@
-<?
-include("../../settings/config.php");
-include("../../settings/databaseinfo.php");
-include("../../settings/mysql.php");
-include("../../settings/json.php");
+<?php
+require_once("../../settings/config.php");
+require_once("../../settings/databaseinfo.php");
+require_once("../../settings/mysql.php");
+require_once('../../settings/entity-types.php');
+require_once("../../settings/json.php");
 
 $maxZoom = 8;
 $sizes=array(1 => 4,
@@ -14,16 +15,16 @@ $sizes=array(1 => 4,
     7 => 256,
     8 => 512);
 
-if($ALLOW_ZOOM == TRUE && $_GET[zoom])
+if($ALLOW_ZOOM == TRUE && isset($_GET['zoom']))
 {
 	foreach ($sizes as $zoomUntested => $sizeUntested) 
 	{
-		if($zoomUntested == $_GET[zoom])
+		if($zoomUntested == $_GET['zoom'])
 		{
 		    $zoomSize = $sizeUntested;
 		    $zoomLevel = $zoomUntested;
 		}
-		if($zoomUntested == 9-$_GET[zoom])
+		if($zoomUntested == 9-$_GET['zoom'])
 		{
 		    $antiZoomSize = $sizeUntested;
 		}
@@ -48,17 +49,8 @@ if ($zoomLevel == 1) {
     $infosize = 40;
 }
 
-if ($_GET[startx]) {
-    $mapX = $_GET[startx];
-} else {
-    $mapX = $mapstartX;
-}
-
-if ($_GET[starty]) {
-    $mapY = $_GET[starty];
-} else {
-    $mapY = $mapstartY;
-}
+$mapX = isset($_GET['startx']) ? $_GET['startx'] : $mapstartX;
+$mapY = isset($_GET['starty']) ? $_GET['starty'] : $mapstartY;
 ?>
 
 <head>
@@ -71,70 +63,95 @@ if ($_GET[starty]) {
   <script type="text/javascript">
   function loadmap() 
   {
-    <? if ($ALLOW_ZOOM == TRUE) { ?>    
+    <?php if ($ALLOW_ZOOM == TRUE) { ?>    
         if (window.addEventListener)
         /** DOMMouseScroll is for mozilla. */
         window.addEventListener('DOMMouseScroll', wheel, false);
         /* IE/Opera. */
         window.onmousewheel = document.onmousewheel = wheel;
-    <? } ?>
+    <?php } ?>
 
-    mapInstance = new ZoomSize(<?= $zoomSize ?>);
+    mapInstance = new ZoomSize(<?php echo $zoomSize ?>);
     mapInstance = new WORLDMap(document.getElementById('map-container'), {hasZoomControls: true, hasPanningControls: true});
-    mapInstance.centerAndZoomAtWORLDCoord(new XYPoint(<?= $mapX ?>,<?= $mapY ?>),1);
-<?
-  $DbLink = new DB;
-  $DbLink->query("SELECT RegionUUID, RegionName,LocX,LocY,SizeX,SizeY,OwnerUUID,Info FROM " . C_REGIONS_TBL . " Order by LocX");
-  while (list($uuid, $regionName, $locX, $locY, $sizeX, $sizeY, $owner, $info) = $DbLink->next_record()) {
+    mapInstance.centerAndZoomAtWORLDCoord(new XYPoint(<?php echo $mapX,',',$mapY; ?>),1);
+<?php
+	class RegionIterator extends Aurora\WebUI\RegionIteratorFromDB{
+		const sql_get_uuids =
+'SELECT
+	RegionUUID
+FROM
+	gridregions
+ORDER BY
+	LocX';
+	}
 
-  $DbLink1 = new DB;
-  $DbLink1->query("SELECT FirstName,LastName FROM " . C_USERS_TBL . " where PrincipalID='".cleanQuery($owner)."'");
-  list($firstN, $lastN) = $DbLink1->next_record();
+	$PDODB = Aurora\WebUI\DB::i();
+	$regions = RegionIterator::r($PDODB['Aurora']);
 
-  $MarkerCoordX = $locX;
-  $MarkerCoordY = $locY;
+	$regionJSON = array();
+	foreach($regions as $regionUUID => $region){
+		$regionOwner = Aurora\WebUI\UserFromDB::getRegionOwner($PDODB['AuroraUsers'], $region);
 
-  $regionSizeOffset = ($sizeX / 256) * 0.40;
-  if ($display_marker == "tl") {
-    $MarkerCoordX = ($MarkerCoordX / 256) - $regionSizeOffset;
-    $MarkerCoordY = ($MarkerCoordY / 256) + $regionSizeOffset;
-  }
-  
-  else if ($display_marker == "tr") {
-    $MarkerCoordX = ($MarkerCoordX / 256) + $regionSizeOffset;
-    $MarkerCoordY = ($MarkerCoordY / 256) + $regionSizeOffset;
-  }
-  
-  else if ($display_marker == "dl") {
-    $MarkerCoordX = ($MarkerCoordX / 256) - $regionSizeOffset;
-    $MarkerCoordY = ($MarkerCoordY / 256) - $regionSizeOffset;
-  }
-  
-  else if ($display_marker == "dr") {
-    $MarkerCoordX = ($MarkerCoordX / 256) + $regionSizeOffset;
-    $MarkerCoordY = ($MarkerCoordY / 256) - $regionSizeOffset;
-  }
-  
-  $recieved = json_decode($info);
-  $serverUrl = $recieved->{'serverURI'};
-  $uuid = str_replace('-', '', $uuid);
-  $filename = $serverUrl . "/index.php?method=regionImage" . $uuid;
-  $mapTextureURL = WIREDUX_TEXTURE_SERVICE.'/index.php?method=MapTexture&zoom='. $antiZoomSize .'&x=' . $mapX . '&y=' . $mapY;
-  echo 'var tmp_region_image = new Img("' . $filename . '",' . $zoomSize * ($sizeX / 256) . ',' . $zoomSize * ($sizeY / 256) . ');';
-  $url = "secondlife://" . $regionName . "/" . ($sizeX / 2) . "/" . ($sizeY / 2);
+		$MarkerCoordX = $region->LocX();
+		$MarkerCoordY = $region->LocY();
+
+		$regionSizeOffset = ($region->SizeX() / 256) * 0.40;
+
+		switch($display_marker){
+			case 'tl':
+				$MarkerCoordX = ($MarkerCoordX / 256) - $regionSizeOffset;
+				$MarkerCoordY = ($MarkerCoordY / 256) + $regionSizeOffset;
+			break;
+			case 'tr':
+				$MarkerCoordX = ($MarkerCoordX / 256) + $regionSizeOffset;
+				$MarkerCoordY = ($MarkerCoordY / 256) + $regionSizeOffset;
+			break;
+			case 'dl':
+				$MarkerCoordX = ($MarkerCoordX / 256) - $regionSizeOffset;
+				$MarkerCoordY = ($MarkerCoordY / 256) - $regionSizeOffset;
+			break;
+			case 'dr':
+				$MarkerCoordX = ($MarkerCoordX / 256) + $regionSizeOffset;
+				$MarkerCoordY = ($MarkerCoordY / 256) - $regionSizeOffset;
+			break;
+		}
+
+		$info = json_decode($region->Info());
+
+		$filename = $info->serverURI . '/index.php?method=regionImage' . str_replace('-','',$region->RegionUUID());
+
+		$regionJSON[$regionUUID] = array(
+			'name'             => $region->RegionName(),
+			'serverURI'        => $info->serverURI,
+			'LocX'             => $region->LocX(),
+			'LocY'             => $region->LocY(),
+			'SizeX'            => $region->SizeX(),
+			'SizeY'            => $region->SizeY(),
+			'Owner'            => $regionOwner->FirstName() . ' ' . $regionOwner->LastName(),
+			'MarkerCoordX'     => $MarkerCoordX,
+			'MarkerCoordY'     => $MarkerCoordY,
+		);
+	}
 ?>
-var region_loc = new Icon(tmp_region_image);
-var all_images = [region_loc, region_loc, region_loc, region_loc, region_loc, region_loc];
-var marker = new Marker(all_images, new XYPoint(<?= (($locX / 256)) ?>,<?= (($locY / 256)) ?>));
-mapInstance.addMarker(marker);
+	var
+		zoomSize   = <?php echo json_encode($zoomSize); ?>,
+		infosize   = <?php echo json_encode($infosize); ?>,
+		regionJSON = <?php echo json_encode($regionJSON); ?>
+	;
+	for(var regionUUID in regionJSON){
+		var
+			regionData      = regionJSON[regionUUID],
+			region_loc      = new Icon(new Img(regionData.serverURI + '/index.php?method=regionImage' + regionUUID.replace(/\-/g,''), zoomSize * (regionData.SizeX / 256), zoomSize * (regionData.SizeY / 256))),
+			marker1         = new Marker([region_loc, region_loc, region_loc, region_loc, region_loc, region_loc], new XYPoint(regionData.LocX / 256, regionData.LocY / 256)),
+			map_marker_img  = new Img('images/info.gif', infosize, infosize),
+			map_marker_icon = new Icon(map_marker_img),
+			mapWindow       = new MapWindow(['Region Name: ' + regionData.name, 'Coordinates: ' + (regionData.LocX / 256) + ',' + (regionData.LocY / 256),'Owner: ' + regionData.Owner, '<a href="' + [escape(regionData.name), escape(regionData.SizeX / 256), escape(regionData.SizeY / 256)].join('/') + '">Teleport</a>'].join('<br><br>'),{closeOnMove:true}),
+			marker2         = new Marker([map_marker_icon, map_marker_icon, map_marker_icon, map_marker_icon, map_marker_icon, map_marker_icon], new XYPoint(regionData.MarkerCoordX, regionData.MarkerCoordY))
+		;
 
-var map_marker_img = new Img("images/info.gif",<?= $infosize ?>,<?= $infosize ?>);
-var map_marker_icon = new Icon(map_marker_img);
-var mapWindow = new MapWindow("Region Name: <?= $regionName ?><br /><br />Coordinates: <?= $locX / 256 ?>,<?= $locY / 256 ?><br /><br />Size: <?= $sizeX ?>,<?= $sizeY ?><br><br>Owner: <?= $firstN ?> <?= $lastN ?><br><br><a href=<?= $url ?>>Teleport</a>",{closeOnMove: true});
-var all_images = [map_marker_icon, map_marker_icon, map_marker_icon, map_marker_icon, map_marker_icon, map_marker_icon];
-var marker = new Marker(all_images, new XYPoint(<?= $MarkerCoordX ?>,<?= $MarkerCoordY ?>));
-mapInstance.addMarker(marker, mapWindow);
-<? } ?>
+		mapInstance.addMarker(marker1);
+		mapInstance.addMarker(marker2, mapWindow);
+	}
 }
 
 function setZoom(size) {
@@ -181,12 +198,11 @@ function wheel(event){
 
 function handle(delta) {
   if (delta == 1) { 
-    <? if (($zoomLevel) < $maxZoom) { ?> setZoom(<?echo ($zoomLevel + 1); ?>);
-    <? } ?>
+    <?php if (($zoomLevel) < $maxZoom) { ?> setZoom(<?php echo ($zoomLevel + 1); ?>);<?php } ?>
   }
   
   else {
-    <? if (($zoomLevel - 1) != 0) { ?>setZoom(<?echo ($zoomLevel - 1); ?>);<? } ?>
+    <?php if (($zoomLevel - 1) != 0) { ?>setZoom(<?php echo ($zoomLevel - 1); ?>);<?php } ?>
   }
 }
 </script>
@@ -214,32 +230,32 @@ function handle(delta) {
     <img alt=Right src="images/pan_right.png"></a>
   </div>
   
-  <div id=map-nav-center style="z-index: 1;"><a href="javascript: mapInstance.panOrRecenterToWORLDCoord(new XYPoint(<?= $mapstartX ?>,<?= $mapstartY ?>), true);">
+  <div id=map-nav-center style="z-index: 1;"><a href="javascript: mapInstance.panOrRecenterToWORLDCoord(new XYPoint(<?php echo $mapstartX,',',$mapstartY; ?>), true);">
     <img alt=Center src="images/center.png"></a>
   </div>
   
   <!-- START ZOOM PANEL-->
-  <? if ($ALLOW_ZOOM == TRUE) { ?>
+  <?php if ($ALLOW_ZOOM == TRUE) { ?>
     <div id=map-zoom-plus>
-      <? if (($zoomLevel + 1) > $maxZoom) { ?>
+      <?php if (($zoomLevel + 1) > $maxZoom) { ?>
         <img alt="Zoom In" src="images/zoom_in_grey.png">
-        <? } else { ?>
-          <a href="javascript: setZoom(<?= ($zoomLevel + 1) ?>);">
+        <?php } else { ?>
+          <a href="javascript: setZoom(<?php echo ($zoomLevel + 1); ?>);">
             <img alt="Zoom In" src="images/zoom_in.png">
           </a>
-        <? } ?>
+        <?php } ?>
     </div>
     
     <div id=map-zoom-minus>
-      <? if (($zoomLevel - 1) == 0) { ?>
+      <?php if (($zoomLevel - 1) == 0) { ?>
         <img alt="Zoom In" src="images/zoom_out_grey.png">
-        <? } else { ?>
-          <a href="javascript: setZoom(<?= ($zoomLevel - 1) ?>);">
+        <?php } else { ?>
+          <a href="javascript: setZoom(<?php echo ($zoomLevel - 1); ?>);">
             <img alt="Zoom Out" src="images/zoom_out.png">
           </a>
-        <? } ?>
+        <?php } ?>
     </div>
-    <? } ?>
+    <?php } ?>
   <!-- END ZOOM PANEL-->
 </div>
 </body>

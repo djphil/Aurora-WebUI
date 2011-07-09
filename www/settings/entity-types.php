@@ -41,14 +41,19 @@ namespace Aurora\WebUI{
 	use RuntimeException;
 	use PDOException;
 
+	use SeekableIterator;
+	use Countable;
+
+	use ArrayIterator;
 	use PDO;
+	use PDOStatement;
 
 	use Aurora;
 	use Aurora\Region as typeRegion;
 	use Aurora\User   as typeUser  ;
 
 	abstract class abstractEntity{
-		protected static function validate_Int($value){
+		public static function validate_Int($value){
 			if(is_integer($value) === false){
 				if((is_float($value) && ($value % 1) === 0) || (is_string($value) && ctype_digit($value))){
 					
@@ -76,6 +81,92 @@ namespace Aurora\WebUI{
 			}
 		}
 	}
+
+	interface EntityIterator extends SeekableIterator, Countable{}
+	interface EntityIteratorBindsValues extends EntityIterator{
+		public function bindValues(PDOStatement $sth);
+	}
+	
+	abstract class EntityIteratorFromDB implements SeekableIterator, Countable{
+		protected $uuids = array();
+		protected $PDO;
+		protected function __construct(PDO $db){
+			$this->PDO = $db;
+			$this->get_uuids();
+		}
+
+		private function get_uuids(){
+			try{
+				$sth = $this->PDO->prepare(static::sql_get_uuids);
+			}catch(PDOException $e){
+				throw new RuntimeException('Cannot prepare query, check ' . get_called_class() . '::sql_get_uuids', 1);
+			}
+
+			if($this instanceof EntityIteratorBindsValues){
+				try{
+					$this->bindValues($sth);
+				}catch(PDOException $e){
+					throw new RuntimeException('Implementation of EntityIteratorBindsValues::bindValues() did not catch PDOException', 2);
+				}catch(RuntimeException $e){
+					throw new RuntimeException('Failed to bind values:' . "\n" . $e->getMessage(), 3);
+				}
+			}
+
+			try{
+				$sth->execute();
+			}catch(PDOException $e){
+				throw new RuntimeException('Failed to execute query', 4);
+			}
+
+			$result = null;
+			try{
+				$result = $sth->fetchAll(PDO::FETCH_COLUMN);
+			}catch(PDOException $e){
+				throw new RuntimeException('Failed to fetch UUIDs from database', 5);
+			}
+
+			if(is_array($result) === false){
+				throw new RuntimeException('Failed to fetch UUIDs from database', 6);
+			}
+
+			try{
+				foreach($result as $k=>$v){
+					$result[$k] = abstractEntity::validate_UUID($v);
+				}
+			}catch(InvalidArgumentException $e){
+				throw new RuntimeException(sprintf('Invalid UUID found at index %1$u', $k), 7);
+			}
+
+			reset($result);
+
+			$this->uuids = new ArrayIterator($result);
+		}
+
+		public function seek($to){
+			$this->uuids->seek($to);
+		}
+
+		public function next(){
+			$this->uuids->next();
+		}
+
+		public function key(){
+			return $this->uuids->current();
+		}
+
+		public function valid(){
+			return $this->uuids->valid();
+		}
+
+		public function rewind(){
+			$this->get_uuids();
+		}
+
+		public function count(){
+			return $this->uuids->count();
+		}
+	}
+
 
 	abstract class abstractRegion extends abstractEntity implements typeRegion{
 		protected function __construct(){ // here to prevent direct instantiation
@@ -397,6 +488,32 @@ LIMIT 1';
 		}
 	}
 
+	class RegionIteratorFromDB extends EntityIteratorFromDB{
+		const sql_get_uuids =
+'SELECT
+	RegionUUID
+FROM
+	gridregions';
+		public function current(){
+			return RegionFromDB::r($this->PDO, $this->key());
+		}
+
+		public static function r(PDO $db){
+			static $registry = array();
+
+			$hash = md5(get_called_class());
+			if(isset($registry[$hash]) === false){
+				$registry[$hash] = array();
+			}
+
+			$hash2 = spl_object_hash($db);
+			if(isset($registry[$hash][$hash2]) === false){
+				$registry[$hash][$hash2] = new static($db);
+			}
+
+			return $registry[$hash][$hash2];
+		}
+	}
 
 	class abstractUser extends abstractEntity implements typeUser{
 		protected function __construct(){ // here to prevent direct instantiation
