@@ -63,13 +63,13 @@
 	      option is set to 'this.img.alt', the caption is grabbed from the alt attribute of
 	      the thumbnail image.
         -->
-        <?
+        <?php
           $DbLink->query("SELECT picture,picturethumbnail,description FROM " . C_GALLERY_TBL . " Where active='1' ORDER BY rank ASC ");
           while (list($picture, $picturethumbnail, $description) = $DbLink->next_record()) {
         ?>
-        <a class='highslide' href='images/gallery/<?= $picture ?>' onclick="return hs.expand(this)">
-        <img src='images/gallery/<?= $picturethumbnail ?>' alt='<?= $description ?>'/></a>
-        <? } ?>
+        <a class='highslide' href='images/gallery/<?php echo $picture; ?>' onclick="return hs.expand(this)">
+        <img src='images/gallery/<?php echo $picturethumbnail; ?>' alt='<?php echo $description; ?>'/></a>
+        <?php } ?>
       </div>
     </div>
 </div>
