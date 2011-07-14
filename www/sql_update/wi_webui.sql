@@ -406,7 +406,6 @@ INSERT INTO `wi_pagemanager` (`id`, `rank`, `active`, `url`, `target`, `display`
 ('webui_menu_item_news', 4.1, '1', 'index.php?page=news', '_self', '2', 'webui_menu_item_world'),
 ('webui_menu_item_regions', 4.2, '1', 'index.php?page=regionlist', '_self', '2','webui_menu_item_world'),
 ('webui_menu_item_worldmap', 4.3, '1', 'index.php?page=worldmap', '_self', '2', 'webui_menu_item_world'),
-('webui_menu_item_quickmap', 4.4, '1', 'index.php?page=quickmap', '_self', '2', 'webui_menu_item_world'),
 ('webui_menu_item_gallery', 4.5, '1', 'index.php?page=gallery', '_self', '2', 'webui_menu_item_world'),
 
 ('webui_menu_item_users', 5.0, '1', 'index.php?page=users', '_self', '1', null),
@@ -465,7 +464,6 @@ INSERT INTO `wi_sitemanagement` (`pagecase`, `type`, `include`) VALUES
 ('regionlist', 'main', 'regionlist.php'),
 ('resetpass', 'account', 'resetpass.php'),
 ('worldmap', 'main', 'worldmap.php'),
-('quickmap', 'main', 'quickmap.php'),
 ('adminhome', 'admin', 'home.php'),
 ('adminloginscreen', 'admin', 'loginscreenmanager.php'),
 ('adminnewsmanager', 'admin', 'newsmanager.php'),

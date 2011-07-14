@@ -97,7 +97,6 @@ $webui_menu_item_news2 = 'News';
 $webui_menu_item_events = 'Current Events';
 $webui_menu_item_regions = 'Regions';
 $webui_menu_item_worldmap = 'Map';
-$webui_menu_item_quickmap = 'QuickMap';
 $webui_menu_item_register = 'Register';
 $webui_menu_item_logout = 'Logout';
 $webui_menu_item_login = 'Login';

@@ -95,7 +95,6 @@ $webui_menu_item_changeaccount = 'Επεξεργασία';
 $webui_menu_item_news = 'Ειδήσεις';
 $webui_menu_item_regions = 'Περιφέρειες';
 $webui_menu_item_worldmap = 'Χάρτης';
-$webui_menu_item_quickmap = 'QuickMap';
 $webui_menu_item_register = 'Εγγραφή';
 $webui_menu_item_logout = 'Αποσύνδεση';
 $webui_menu_item_login = 'Είσοδος';

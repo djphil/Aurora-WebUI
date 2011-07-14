@@ -95,7 +95,6 @@ $webui_menu_item_changeaccount = 'Editar Conta';
 $webui_menu_item_news = 'Noticias';
 $webui_menu_item_regions = 'Lista de Regi&otilde;es';
 $webui_menu_item_worldmap = 'Mapa';
-$webui_menu_item_quickmap = 'QuickMap';
 $webui_menu_item_register = 'Registar';
 $webui_menu_item_logout = 'Logout';
 $webui_menu_item_login = 'Login';

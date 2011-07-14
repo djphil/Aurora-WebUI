@@ -94,7 +94,6 @@ $webui_menu_item_home = 'Home';
 $webui_menu_item_changeaccount = 'Edit';
 $webui_menu_item_news = 'News';
 $webui_menu_item_regions = 'Regions';
-$webui_menu_item_quickmap = 'QuickMap';
 $webui_menu_item_worldmap = 'Map';
 $webui_menu_item_register = 'Register';
 $webui_menu_item_logout = 'Logout';

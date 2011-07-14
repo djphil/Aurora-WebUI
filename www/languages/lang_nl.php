@@ -95,7 +95,6 @@ $webui_menu_item_changeaccount = 'Wijzig Profiel';
 $webui_menu_item_news = 'Nieuws';
 $webui_menu_item_regions = 'Regio Overzicht';
 $webui_menu_item_worldmap = 'Kaart';
-$webui_menu_item_quickmap = 'QuickMap';
 $webui_menu_item_register = 'Registreer';
 $webui_menu_item_logout = 'Loguit';
 $webui_menu_item_login = 'Login';
