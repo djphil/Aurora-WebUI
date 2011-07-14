@@ -96,7 +96,6 @@ $webui_menu_item_news2 = 'Novice';
 $webui_menu_item_events = 'Trenutni dogodki';
 $webui_menu_item_regions = 'Območja';
 $webui_menu_item_worldmap = 'Karta';
-$webui_menu_item_quickmap = 'HitraKarta';
 $webui_menu_item_register = 'Registracija';
 $webui_menu_item_logout = 'Odjava';
 $webui_menu_item_login = 'Prijava';
