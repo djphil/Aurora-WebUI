@@ -4,9 +4,9 @@ $DbLink->query("SELECT adress,region,allowRegistrations,verifyUsers,ForceAge FRO
 list($ADRESSCHECK, $REGIOCHECK,$ALLOWREGISTRATION,$VERIFYUSERS,$FORCEAGE) = $DbLink->next_record();
 
 //GET IP ADRESS
-if ($_SERVER["HTTP_X_FORWARDED_FOR"]) {
+if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
     $userIP = $_SERVER["HTTP_X_FORWARDED_FOR"];
-} elseif ($_SERVER["REMOTE_ADDR"]) {
+} elseif (isset($_SERVER["REMOTE_ADDR"])) {
     $userIP = $_SERVER["REMOTE_ADDR"];
 } else {
     $userIP = "This user has no ip";
@@ -14,10 +14,28 @@ if ($_SERVER["HTTP_X_FORWARDED_FOR"]) {
 
 if($ALLOWREGISTRATION == '1')
 {
+	$session_defaults = array(
+		'PASSWD',
+		'EMAIC',
+		'EMAIL',
+		'ACCFIRST',
+		'ACCLAST',
+		'COUNTRY',
+		'ZIP',
+		'CITY',
+		'ADRESS',
+		'NAMEL',
+		'NAMEF',
+		'AVATARARCHIVE',
+		'REGIONID',
+	);
+	foreach($session_defaults as $v){
+		if(!isset($_SESSION[$v])){
+			$_SESSION[$v] = '';
+		}
+	}
 
-if ($_POST[action] == "") {
-    $_SESSION[PASSWD] = "";
-    $_SESSION[EMAIC] = "";
+if (isset($_POST['action']) === false || $_POST['action'] == "") {
 	
 	
 function printLastNames()
@@ -33,7 +51,7 @@ function printLastNames()
 		}
 		echo "</select></div>";
 	} else {
-		echo "<div class=\"roundedinput\"><input minlength=\"3\" require=\"true\" label=\"accountlast_label\" id=\"register_input\" name=\"accountlast\" type=\"text\" size=\"25\" maxlength=\"15\" value=\"$_SESSION[ACCLAST]\" /></div>";
+		echo "<div class=\"roundedinput\"><input minlength=\"3\" require=\"true\" label=\"accountlast_label\" id=\"register_input\" name=\"accountlast\" type=\"text\" size=\"25\" maxlength=\"15\" value=\"",$_SESSION['ACCLAST'],"\" /></div>";
 	}
 }
 
@@ -41,10 +59,21 @@ function printLastNames()
 function displayRegions()
 {
 	$DbLink = new DB;
+	class RegionIterator extends Aurora\WebUI\RegionIteratorFromDB{
+		const sql_get_uuids =
+'SELECT
+	RegionUUID
+FROM
+	gridregions
+ORDER BY
+	RegionName ASC';
+	}
+
+	$PDODB = Aurora\WebUI\DB::i();
+	$regions = RegionIterator::r($PDODB['Aurora']);
 	echo "<div class=\"roundedinput\"><select require=\"true\" label=\"startregion_label\" id=\"register_input\" wide=\"25\" name=\"startregion\">";
-	$DbLink->query("SELECT RegionName,RegionUUID FROM " . C_REGIONS_TBL . " ORDER BY RegionName ASC ");
-	while (list($RegionName, $RegionHandle) = $DbLink->next_record()) {
-		echo "<option value=\"$RegionHandle\">$RegionName</option>";
+	foreach(RegionIterator::r($PDODB['Aurora']) as $region){
+		echo '<option value="',$region->RegionUUID(),'">',htmlentities($region->RegionName()),'</option>';
 	}
 	echo "</select></div>";
 }
@@ -53,7 +82,7 @@ function displayRegions()
 function displayCountry()
 {
 	$DbLink = new DB;
-	echo "<div class=\"roundedinput\"><select require=\"true\" label=\"country_label\" id=\"register_input\" wide=\"25\" name=\"country\" value=\"$_SESSION[COUNTRY]\">";
+	echo "<div class=\"roundedinput\"><select require=\"true\" label=\"country_label\" id=\"register_input\" wide=\"25\" name=\"country\" value=\"",$_SESSION['COUNTRY'],"\">";
 	$DbLink->query("SELECT name FROM " . C_COUNTRY_TBL . " ORDER BY name ASC ");
 	echo "<option></option>";
 	while (list($COUNTRYDB) = $DbLink->next_record()) {
@@ -119,6 +148,10 @@ function displayDefaultAvatars()
 	$do_post_requested = do_post_request($found);
 	$recieved = json_decode($do_post_requested);
 
+	if(!$recieved){
+		return;
+	}
+
 	if ($recieved->{'Verified'} == "true")
 	{
 		$names = explode(",", $recieved->{'names'});
@@ -149,19 +182,21 @@ function displayDefaultAvatars()
     <div id="register">
         <form ACTION="index.php?page=register" METHOD="POST" onsubmit="if (!validate(this)) return false;">
             <table>
-                <tr><td class="error" colspan="2" align="center" id="error_message"><?=$_SESSION[ERROR];?><?=$_GET[ERROR]?></td></tr>
+<?php if(isset($_SESSION['ERROR'], $_GET['ERROR'])){ ?>
+                <tr><td class="error" colspan="2" align="center" id="error_message"><?php echo $_SESSION['ERROR'],$_GET['ERROR']; ?></td></tr>
+<?php } ?>
                 <tr>
                     <td class="even" width="52%"><span id="accountfirst_label"><?php echo $webui_avatar_first_name ?>*</span></td>
                     <td class="even">
                         <div class="roundedinput">
-                          <input minlength="3" id="register_input" require="true" label="accountfirst_label" name="accountfirst" type="text" size="25" maxlength="15" value="<?= $_SESSION[ACCFIRST] ?>">
+                          <input minlength="3" id="register_input" require="true" label="accountfirst_label" name="accountfirst" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['ACCFIRST']; ?>">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="odd"><span id="accountlast_label"><?php echo $webui_avatar_last_name; ?>*</span></td>
                     <td class="odd">
-                      <?=printLastNames()?>
+                      <?php echo printLastNames(); ?>
                     </td>
                 </tr>
 
@@ -183,21 +218,21 @@ function displayDefaultAvatars()
                     </td>
                 </tr>
                 
-                <? if ($REGIOCHECK == "0") { ?>
+                <?php if ($REGIOCHECK == "0") { ?>
                 
                 <tr>
                     <td class="even"><span id="startregion_label"><?php echo $webui_start_region ?>*</span></td>
                     <td class="even">
-                        <? displayRegions();	?>
+                        <?php displayRegions();	?>
                     </td>
                 </tr>
                 
-                <? } if ($ADRESSCHECK == "1") { ?>
+                <?php } if ($ADRESSCHECK == "1") { ?>
 				<tr>
 					<td class="odd"><span id="firstname_label"><?php echo $webui_first_name ?>*</span></td>
 					<td class="odd">
 						<div class="roundedinput">
-              <input require="true" label="firstname_label" id="register_input" name="firstname" type="text" size="25" maxlength="15" value="<?= $_SESSION[NAMEF] ?>">
+              <input require="true" label="firstname_label" id="register_input" name="firstname" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['NAMEF']; ?>">
             </div>
 					</td>
 				</tr>
@@ -206,7 +241,7 @@ function displayDefaultAvatars()
 					<td class="even"><span id="lastname_label"><?php echo $webui_last_name ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
-              <input require="true" label="lastname_label" id="register_input" name="lastname" type="text" size="25" maxlength="15" value="<?= $_SESSION[NAMEL] ?>">
+              <input require="true" label="lastname_label" id="register_input" name="lastname" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['NAMEL']; ?>">
             </div>
 					</td>
 				</tr>
@@ -215,7 +250,7 @@ function displayDefaultAvatars()
 					<td class="odd"><span id="adress_label"><?php echo $webui_address ?>*</span></td>
 					<td class="odd">
 						<div class="roundedinput">
-              <input require="true" label="adress_label" id="register_input" name="adress" type="text" size="50" maxlength="50" value="<?= $_SESSION[ADRESS] ?>">
+              <input require="true" label="adress_label" id="register_input" name="adress" type="text" size="50" maxlength="50" value="<?php echo $_SESSION['ADRESS']; ?>">
             </div>
 					</td>
 				</tr>
@@ -224,7 +259,7 @@ function displayDefaultAvatars()
 					<td class="even"><span id="zip_label"><?php echo $webui_zip_code ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
-              <input require="true" label="zip_label" id="register_input" name="zip" type="text" size="25" maxlength="15" value="<?= $_SESSION[ZIP] ?>">
+              <input require="true" label="zip_label" id="register_input" name="zip" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['ZIP']; ?>">
             </div>
 					</td>
 				</tr>
@@ -232,39 +267,39 @@ function displayDefaultAvatars()
 					<td class="odd"><span id="city_label"><?php echo $webui_city ?>*</span></td>
 					<td class="odd">
 						<div class="roundedinput">
-              <input require="true" label="city_label" id="register_input" name="city" type="text" size="25" maxlength="15" value="<?= $_SESSION[CITY] ?>">
+              <input require="true" label="city_label" id="register_input" name="city" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['CITY']; ?>">
             </div>
 					</td>
 				</tr>
 				<tr>
 					<td class="even"><span id="country_label"><?php echo $webui_country ?>*</span></td>
 					<td class="even">
-						<? displayCountry(); ?>
+						<?php displayCountry(); ?>
                     </td>
                 </tr>
                 <tr>
                     <td class="odd"><span id="dob_label"><?php echo $webui_date_of_birth ?>*</span></td>
                     <td class="odd">
-                        <? displayDOB(); ?>
+                        <?php displayDOB(); ?>
                     </td>
                 </tr>
                 
-                <? }else if ($FORCEAGE == "1"){ ?>
+                <?php }else if ($FORCEAGE == "1"){ ?>
                 
                 <tr>
                     <td class="odd"><span id="dob_label"><?php echo $webui_date_of_birth ?>*</span></td>
                     <td class="odd">
-                        <? displayDOB(); ?>
+                        <?php displayDOB(); ?>
                     </td>
                 </tr>
                 
-                <? } ?>
+                <?php } ?>
                 
 				<tr>
 					<td class="odd"><span id="email_label"><?php echo $webui_email ?>*</span></td>
 					<td class="odd">
           	<div class="roundedinput">
-              <input compare="emaic" require="true" label="email_label" id="register_input" name="email" type="text" size="40" maxlength="40" value="<?= $_SESSION[EMAIL] ?>">
+              <input compare="emaic" require="true" label="email_label" id="register_input" name="email" type="text" size="40" maxlength="40" value="<?php echo $_SESSION['EMAIL']; ?>">
             </div>
           </td>
 				</tr>
@@ -272,34 +307,34 @@ function displayDefaultAvatars()
 					<td class="even"><span id="emaic_label"><?php echo $webui_confirm ?> <?php echo $webui_email ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
-              <input require="true" label="emaic_label" id="register_input" name="emaic" type="text" size="40" maxlength="40" value="<?= $_SESSION[EMAIC] ?>" >
+              <input require="true" label="emaic_label" id="register_input" name="emaic" type="text" size="40" maxlength="40" value="<?php echo $_SESSION['EMAIC']; ?>" >
             </div>  
           </td>
 				</tr>
 				
-        <? displayDefaultAvatars(); ?>
-        <? if( file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/TOS.php"))  { ?>
+        <?php displayDefaultAvatars(); ?>
+        <?php if( file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/TOS.php "))  { ?>
 				
 		<tr>
 			<td class="even" colspan="2">
 				<div style="width:100%;height:300px;overflow:auto;">
-				  <?php include("tos.php"); ?>
+				  <?php include("tos.php "); ?>
 				</div>
 			</td>
         </tr>
         <tr>
 			<td colspan="2" valign="top" class="odd"><input label="agree_label" require="true" type="checkbox" name="Agree_with_TOS" id="agree" value="1" />
-				<label for="agree"><span id="agree_label"><?=$site_terms_of_service_agree?></span></label>
+				<label for="agree"><span id="agree_label"><?echo $site_terms_of_service_agree; ?></span></label>
 			</td>
 		</tr>
-        <? } ?>
+        <?php } ?>
 				
         <tr>
           <td class="even">
             <div class="center">
-              <? 
+              <?php
                 echo "<script type=\"text/javascript\">var RecaptchaOptions = {theme : '".$template_captcha_color."'};</script>"; ?>
-                <? require_once('recaptchalib.php');
+                <?php require_once('recaptchalib.php ');
                 $publickey = "6Lf_MQQAAAAAAIGLMWXfw2LWbJglGnvEdEA8fWqk"; // you got this from the signup page
                 echo recaptcha_get_html($publickey);
               ?>
@@ -310,7 +345,6 @@ function displayDefaultAvatars()
             <div class="center">
               <input type="hidden" name="action" value="check">
               <button id="register_bouton" name="submit" type="submit"><?php echo $webui_create_new_account ?></button>
-              <!-- <input id="register_bouton" name="submit" TYPE="submit" value='<? //echo $webui_create_new_account ?>'> -->
             </div>
           </td>
         </tr>
@@ -318,45 +352,45 @@ function displayDefaultAvatars()
 		</form>
 	</div>
 </div>
-<? } else if ($_POST[action] == "check") 
+<?php } else if (isset($_POST['action']) && $_POST['action'] == "check") 
 {
-	$_SESSION[ACCFIRST] = $_POST[accountfirst];
-	$_SESSION[ACCFIRSL] = strtolower($_POST[accountfirst]);
-	$_SESSION[ACCLAST] = $_POST[accountlast];
-	$_SESSION[AVATARARCHIVE] = $_POST[AvatarArchive];
+	$_SESSION['ACCFIRST'] = $_POST['accountfirst'];
+	$_SESSION['ACCFIRSL'] = strtolower($_POST['accountfirst']);
+	$_SESSION['ACCLAST'] = $_POST['accountlast'];
+	$_SESSION['AVATARARCHIVE'] = $_POST['AvatarArchive'];
 
 	if ($ADRESSCHECK == "1") {
-		$_SESSION[NAMEF] = $_POST[firstname];
-		$_SESSION[NAMEL] = $_POST[lastname];
-		$_SESSION[ADRESS] = $_POST[adress];
-		$_SESSION[ZIP] = $_POST[zip];
-		$_SESSION[CITY] = $_POST[city];
-		$_SESSION[COUNTRY] = $_POST[country];
+		$_SESSION['NAMEF'] = $_POST['firstname'];
+		$_SESSION['NAMEL'] = $_POST['lastname'];
+		$_SESSION['ADRESS'] = $_POST['adress'];
+		$_SESSION['ZIP'] = $_POST['zip'];
+		$_SESSION['CITY'] = $_POST['city'];
+		$_SESSION['COUNTRY'] = $_POST['country'];
 	} else {
-		$_SESSION[NAMEF] = "none";
-		$_SESSION[NAMEL] = "none";
-		$_SESSION[ADRESS] = "none";
-		$_SESSION[ZIP] = "00000";
-		$_SESSION[CITY] = "none";
-		$_SESSION[COUNTRY] = "none";
+		$_SESSION['NAMEF'] = "none";
+		$_SESSION['NAMEL'] = "none";
+		$_SESSION['ADRESS'] = "none";
+		$_SESSION['ZIP'] = "00000";
+		$_SESSION['CITY'] = "none";
+		$_SESSION['COUNTRY'] = "none";
 	}
 
 	if ($REGIOCHECK == "0") {
-		$_SESSION[REGIONID] = $_POST[startregion];
+		$_SESSION['REGIONID'] = $_POST['startregion'];
 	} else {
 		$DbLink->query("SELECT startregion FROM " . C_ADM_TBL . "");
 		list($adminregion) = $DbLink->next_record();
-		$_SESSION[REGIONID] = $adminregion;
+		$_SESSION['REGIONID'] = $adminregion;
 	}
 	
-	$_SESSION[EMAIL] = $_POST[email];
-	$_SESSION[EMAIC] = $_POST[emaic];
-	$_SESSION[PASSWD] = $_POST[wordpass];
+	$_SESSION['EMAIL'] = $_POST['email'];
+	$_SESSION['EMAIC'] = $_POST['emaic'];
+	$_SESSION['PASSWD'] = $_POST['wordpass'];
 	$_SESSION[PASSWD2] = $_POST[wordpass2];
 
-	$tag = $_POST[tag];
-	$monat = $_POST[monat];
-	$jahr = $_POST[jahr];
+	$tag = $_POST['tag'];
+	$monat = $_POST['monat'];
+	$jahr = $_POST['jahr'];
 
 	$tag2 = date("d", time());
 	$monat2 = date("m", time());
@@ -378,7 +412,7 @@ function displayDefaultAvatars()
 		}
 	}
 	
-	require_once('recaptchalib.php');
+	require_once('recaptchalib.php ');
 	$privatekey = "6Lf_MQQAAAAAAB2vCZraiD2lGDKCkWfULvhG4szK";
 	$resp = recaptcha_check_answer($privatekey,
 					$_SERVER["REMOTE_ADDR"],
@@ -386,60 +420,60 @@ function displayDefaultAvatars()
 					$_POST["recaptcha_response_field"]);
 
 	if (!$resp->is_valid) {
-		$_SESSION[ERROR] = "The reCAPTCHA wasn't entered correctly. Please try it again.";
+		$_SESSION['ERROR'] = "The reCAPTCHA wasn't entered correctly. Please try it again.";
 		echo "<script language='javascript'>
 		   <!--
 		   window.location.href='index.php?page=register';
 		   -->
 		   </script>";
-	} else if (($_SESSION[PASSWD] != $_SESSION[PASSWD2]) or ($_SESSION[PASSWD] == '') or ($_SESSION[PASSWD2] == '') or ($_SESSION[EMAIC] == '') or ($_SESSION[EMAIL] == '') or ($_SESSION[CITY] == '') or ($_SESSION[ZIP] == '') or ($_SESSION[ADRESS] == '') or ($_SESSION[NAMEL] == '') or ($_SESSION[NAMEF] == '') or ($_SESSION[ACCFIRST] == '') or ($_SESSION[ACCLAST] == '')) {
+	} else if (($_SESSION['PASSWD'] != $_SESSION[PASSWD2]) or ($_SESSION['PASSWD'] == '') or ($_SESSION[PASSWD2] == '') or ($_SESSION['EMAIC'] == '') or ($_SESSION['EMAIL'] == '') or ($_SESSION['CITY'] == '') or ($_SESSION['ZIP'] == '') or ($_SESSION['ADRESS'] == '') or ($_SESSION['NAMEL'] == '') or ($_SESSION['NAMEF'] == '') or ($_SESSION['ACCFIRST'] == '') or ($_SESSION['ACCLAST'] == '')) {
 
-		if ($_SESSION[EMAIC] == '') {
-			$_SESSION[ERROR] = "Please confirm your email";
+		if ($_SESSION['EMAIC'] == '') {
+			$_SESSION['ERROR'] = "Please confirm your email";
 		}
 
-		if ($_SESSION[PASSWD] != $_SESSION[PASSWD2]) {
-			$_SESSION[ERROR] = "Passwords do not match.";
+		if ($_SESSION['PASSWD'] != $_SESSION[PASSWD2]) {
+			$_SESSION['ERROR'] = "Passwords do not match.";
 		}
 
-		if ($_SESSION[PASSWD] == '') {
-			$_SESSION[ERROR] = "Please enter your Password";
+		if ($_SESSION['PASSWD'] == '') {
+			$_SESSION['ERROR'] = "Please enter your Password";
 		}
 
 		if ($_SESSION[PASSWD2] == '') {
-			$_SESSION[ERROR] = "Please enter your Password Confirm";
+			$_SESSION['ERROR'] = "Please enter your Password Confirm";
 		}
 
-		if ($_SESSION[EMAIL] == '') {
-			$_SESSION[ERROR] = "Please enter your Email address";
+		if ($_SESSION['EMAIL'] == '') {
+			$_SESSION['ERROR'] = "Please enter your Email address";
 		}
 
-		if ($_SESSION[CITY] == '') {
-			$_SESSION[ERROR] = "Please enter your City";
+		if ($_SESSION['CITY'] == '') {
+			$_SESSION['ERROR'] = "Please enter your City";
 		}
 
-		if ($_SESSION[ZIP] == '') {
-			$_SESSION[ERROR] = "Please enter your ZIP";
+		if ($_SESSION['ZIP'] == '') {
+			$_SESSION['ERROR'] = "Please enter your ZIP";
 		}
 
-		if ($_SESSION[ADRESS] == '') {
-			$_SESSION[ERROR] = "Please enter your address";
+		if ($_SESSION['ADRESS'] == '') {
+			$_SESSION['ERROR'] = "Please enter your address";
 		}
 
-		if ($_SESSION[NAMEL] == '') {
-			$_SESSION[ERROR] = "Please enter your real last name";
+		if ($_SESSION['NAMEL'] == '') {
+			$_SESSION['ERROR'] = "Please enter your real last name";
 		}
 
-		if ($_SESSION[NAMEF] == '') {
-			$_SESSION[ERROR] = "Please enter your real first name";
+		if ($_SESSION['NAMEF'] == '') {
+			$_SESSION['ERROR'] = "Please enter your real first name";
 		}
 
-		if ($_SESSION[ACCFIRST] == "") {
-			$_SESSION[ERROR] = "Please enter a first name for your account";
+		if ($_SESSION['ACCFIRST'] == "") {
+			$_SESSION['ERROR'] = "Please enter a first name for your account";
 		}
 
-		if ($_SESSION[ACCLAST] == "") {
-			$_SESSION[ERROR] = "Please enter a last name for your account";
+		if ($_SESSION['ACCLAST'] == "") {
+			$_SESSION['ERROR'] = "Please enter a last name for your account";
 		}
 
 		echo "<script language='javascript'>
@@ -448,8 +482,8 @@ function displayDefaultAvatars()
 				// -->
 				</script>";
 	} 
-	else if ($_SESSION[EMAIL] != $_SESSION[EMAIC]) {
-		$_SESSION[ERROR] = "Email confirmation not correct";
+	else if ($_SESSION['EMAIL'] != $_SESSION['EMAIC']) {
+		$_SESSION['ERROR'] = "Email confirmation not correct";
 		echo "<script language='javascript'>
 
 		 <!--
@@ -457,21 +491,16 @@ function displayDefaultAvatars()
 			   // -->
 			   </script>";
 	} else {
-		$passneu = $_SESSION[PASSWD];
+		$passneu = $_SESSION['PASSWD'];
 		$passwordHash = md5(md5($passneu) . ":");
 
 		$found = array();
-		$found[0] = json_encode(array('Method' => 'CheckIfUserExists', 'WebPassword' => md5(WIREDUX_PASSWORD), 'Name' => cleanQuery($_SESSION[ACCFIRST].' '.$_SESSION[ACCLAST])));
+		$found[0] = json_encode(array('Method' => 'CheckIfUserExists', 'WebPassword' => md5(WIREDUX_PASSWORD), 'Name' => cleanQuery($_SESSION['ACCFIRST'].' '.$_SESSION['ACCLAST'])));
 		$do_post_requested = do_post_request($found);
 		$recieved = json_decode($do_post_requested);
 
-		// echo '<pre>';
-		// var_dump($recieved);
-		// var_dump($do_post_requested);
-		// echo '</pre>';
-
 		if ($recieved->{'Verified'} != "False") {
-			$_SESSION[ERROR] = "User already exists in Database";
+			$_SESSION['ERROR'] = "User already exists in Database";
 			echo "<script language='javascript'>
 				<!--
 				window.location.href='index.php?page=register';
@@ -501,19 +530,19 @@ function displayDefaultAvatars()
 
 			$found = array();
 			$found[0] = json_encode(array('Method' => 'CreateAccount', 'WebPassword' => md5(WIREDUX_PASSWORD),
-						'Name' => cleanQuery($_SESSION[ACCFIRST].' '.$_SESSION[ACCLAST]),
-						'Email' => cleanQuery($_SESSION[EMAIL]),
-						'HomeRegion' => cleanQuery($_SESSION[REGIONID]),
+						'Name' => cleanQuery($_SESSION['ACCFIRST'].' '.$_SESSION['ACCLAST']),
+						'Email' => cleanQuery($_SESSION['EMAIL']),
+						'HomeRegion' => cleanQuery($_SESSION['REGIONID']),
 						'PasswordHash' => cleanQuery($passneu),
 						'PasswordSalt' => cleanQuery($passwordSalt),
-						'AvatarArchive' => cleanQuery($_SESSION[AVATARARCHIVE]),
+						'AvatarArchive' => cleanQuery($_SESSION['AVATARARCHIVE']),
 						'UserLevel' => cleanQuery($userLevel),
-						'RLFisrtName' => cleanQuery($_SESSION[NAMEF]),
-						'RLLastName' => cleanQuery($_SESSION[NAMEL]),
-						'RLAdress' => cleanQuery($_SESSION[ADRESS]),
-						'RLCity' => cleanQuery($_SESSION[CITY]),
-						'RLZip' => cleanQuery($_SESSION[ZIP]),
-						'RLCountry' => cleanQuery($_SESSION[COUNTRY]),
+						'RLFisrtName' => cleanQuery($_SESSION['NAMEF']),
+						'RLLastName' => cleanQuery($_SESSION['NAMEL']),
+						'RLAdress' => cleanQuery($_SESSION['ADRESS']),
+						'RLCity' => cleanQuery($_SESSION['CITY']),
+						'RLZip' => cleanQuery($_SESSION['ZIP']),
+						'RLCountry' => cleanQuery($_SESSION['COUNTRY']),
 						'RLDOB' => cleanQuery($tag . "/" . $monat . "/" . $jahr),
 						'RLIP' => cleanQuery($userIP)
 						));
@@ -533,12 +562,12 @@ function displayDefaultAvatars()
 				//-----------------------------------MAIL--------------------------------------
 				$date_arr = getdate();
 				$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
-				$sendto = $_SESSION[EMAIL];
+				$sendto = $_SESSION['EMAIL'];
 				$subject = "Account Activation from " . SYSNAME;
 				$body .= "Your account was successfully created at " . SYSNAME . ".\n";
-				$body .= "Your first name: $_SESSION[ACCFIRST]\n";
-				$body .= "Your last name:  $_SESSION[ACCLAST]\n";
-				$body .= "Your password:  $_SESSION[PASSWD]\n\n";
+				$body .= "Your first name: " . $_SESSION['ACCFIRST'] . "\n";
+				$body .= "Your last name:  " . $_SESSION['ACCLAST'] . "\n";
+				$body .= "Your password:  " . $_SESSION['PASSWD'] . "\n\n";
 				$body .= "In order to login, you need to confirm your email by clicking this link within $deletetime hours:";
 				$body .= "\n";
 				$body .= "" . SYSURL . "/index.php?page=activate&code=$code";
@@ -550,20 +579,20 @@ function displayDefaultAvatars()
 				//-----------------------------MAIL END --------------------------------------
 				// insert code
 				$UUIDC = $recieved->{'UUID'};
-				$DbLink->query("INSERT INTO " . C_CODES_TBL . " (code,UUID,info,email,time)VALUES('$code','$UUIDC','confirm','".cleanQuery($_SESSION[EMAIL])."'," . time() . ")");
+				$DbLink->query("INSERT INTO " . C_CODES_TBL . " (code,UUID,info,email,time)VALUES('$code','$UUIDC','confirm','".cleanQuery($_SESSION['EMAIL'])."'," . time() . ")");
 				// insert code end
 ?>
 <div id="content">
 <h2><?php echo $webui_successfully; ?></h2>
   <div id="info">
   	<p><?php echo $webui_successfully_info; ?></p><br />
-    <p><?php echo SYSNAME; ?> <?php echo $webui_avatar_first_name ?>: <b><?= $_SESSION[ACCFIRST] ?></b></p><br />
-    <p><?php echo SYSNAME; ?> <?php echo $webui_avatar_last_name ?>:  <b><?= $_SESSION[ACCLAST] ?></b></p><br />
-    <p><?php echo SYSNAME; ?> <?php echo $webui_email ?>: <?= $_SESSION[EMAIL] ?></b></p><br />
+    <p><?php echo SYSNAME,' ',$webui_avatar_first_name ?>: <b><?php echo isset($_SESSION['ACCFIRST']) ? $_SESSION['ACCFIRST'] : ''; ?></b></p><br />
+    <p><?php echo SYSNAME,' ',$webui_avatar_last_name  ?>: <b><?php echo isset($_SESSION['ACCLAST' ]) ? $_SESSION['ACCLAST' ] : ''; ?></b></p><br />
+    <p><?php echo SYSNAME,' ',$webui_email             ?>: <b><?php echo isset($_SESSION['EMAIL'   ]) ? $_SESSION['EMAIL'   ] : ''; ?></b></p><br />
 	</div>
 </div>
 
-<?
+<?php
   session_unset();
 	session_destroy();
 	 }
@@ -594,4 +623,4 @@ else { ?>
   </div>
 </div>
 
-<? } ?>
+<?php } ?>
