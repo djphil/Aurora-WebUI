@@ -74,23 +74,23 @@
 			<p>&#149; <?php echo $webui_addgrid_add; ?></p>
 			<p>&#149; <?php echo $webui_addgrid_complete; ?></p>
 		
-			<p><b><?php echo $webui_addgrid_gridNick; ?> :</b> <?= AddGrid_GridNick ?></p>
-			<p><b><?php echo $webui_addgrid_gridName; ?> :</b> <?= AddGrid_GridName ?></p>
+			<p><b><?php echo $webui_addgrid_gridNick; ?> :</b> <?php echo AddGrid_GridNick; ?></p>
+			<p><b><?php echo $webui_addgrid_gridName; ?> :</b> <?php echo AddGrid_GridName; ?></p>
 
-			<p><b><?php echo $webui_addgrid_AvFirstName; ?> :</b> <?= AddGrid_AvFirstName ?></p>
-			<p><b><?php echo $webui_addgrid_AvlastName; ?> :</b> <?= AddGrid_AvLastName ?></p>
-			<p><b><?php echo $webui_addgrid_Avpassword; ?> :</b> <?= AddGrid_AvPassword ?></p>		
+			<p><b><?php echo $webui_addgrid_AvFirstName; ?> :</b> <?php echo AddGrid_AvFirstName; ?></p>
+			<p><b><?php echo $webui_addgrid_AvlastName; ?> :</b> <?php echo AddGrid_AvLastName; ?></p>
+			<p><b><?php echo $webui_addgrid_Avpassword; ?> :</b> <?php echo AddGrid_AvPassword; ?></p>		
 		
-			<p><b><?php echo $webui_addgrid_loginURL; ?> :</b> <?= AddGrid_LoginURL ?></p>
+			<p><b><?php echo $webui_addgrid_loginURL; ?> :</b> <?php echo AddGrid_LoginURL; ?></p>
 		
 			<p>&#149; <?php echo $webui_addgrid_getGridInfo; ?></p>
-			<p><b><?php echo $webui_addgrid_loginPage; ?> :</b> <?= AddGrid_LoginPage ?></p>
-			<p><b><?php echo $webui_addgrid_helperURL; ?> :</b> <?= AddGrid_HelperURL ?></p>
-			<p><b><?php echo $webui_addgrid_website; ?> :</b> <?= AddGrid_Website ?></p>
-			<p><b><?php echo $webui_addgrid_support; ?> :</b> <?= AddGrid_Support ?></p>
-			<p><b><?php echo $webui_addgrid_account; ?> :</b> <?= AddGrid_Account ?></p>
-			<p><b><?php echo $webui_addgrid_password; ?> :</b> <?= AddGrid_Password ?></p>
-			<p><b><?php echo $webui_addgrid_webSearch; ?> :</b> <?= AddGrid_WebSearch ?></p>
+			<p><b><?php echo $webui_addgrid_loginPage; ?> :</b> <?php echo AddGrid_LoginPage; ?></p>
+			<p><b><?php echo $webui_addgrid_helperURL; ?> :</b> <?php echo AddGrid_HelperURL; ?></p>
+			<p><b><?php echo $webui_addgrid_website; ?> :</b> <?php echo AddGrid_Website; ?></p>
+			<p><b><?php echo $webui_addgrid_support; ?> :</b> <?php echo AddGrid_Support; ?></p>
+			<p><b><?php echo $webui_addgrid_account; ?> :</b> <?php echo AddGrid_Account; ?></p>
+			<p><b><?php echo $webui_addgrid_password; ?> :</b> <?php echo AddGrid_Password; ?></p>
+			<p><b><?php echo $webui_addgrid_webSearch; ?> :</b> <?php echo AddGrid_WebSearch; ?></p>
 			<!-- <p><b>Select a grid :</b> digigrids</p> -->
 			<!-- <p><b>Plateform :</b> OpenSim</p> -->
 			<p>&#149; <?php echo $webui_addgrid_apply; ?></p>
@@ -100,7 +100,7 @@
 
 		<?php if($displayWelcomeMessage) { ?>
 			<?php
-			if($_SESSION[NAME] != "") {
+			if(isset($_SESSION['NAME']) && $_SESSION['NAME'] != "") {
 				// echo $webui_welcome_back." ";
 				// echo $_SESSION[NAME];
 				if($allowWebLogin == 'true')
@@ -122,9 +122,9 @@
 			<p>&#149; <?php echo $webui_addgrid_diff_propriete; ?></p>
 			<p>&#149; <?php echo $webui_addgrid_diff_complete; ?></p>
 
-			<p>- <b><?php echo $webui_addgrid_KokuaViewer; ?> :</b> Kokua.exe" -loginuri <?= AddGrid_KokuaURL ?></p>
-			<p>- <b><?php echo $webui_addgrid_SecondLifeViewer; ?> :</b> SecondLife.exe" -loginuri <?= AddGrid_SecondLifeURL ?></p>
-			<p>- <b><?php echo $webui_addgrid_KristenViewer; ?> :</b> Kirstens S20.exe" -loginuri <?= AddGrid_KristenURL ?></p>
+			<p>- <b><?php echo $webui_addgrid_KokuaViewer; ?> :</b> Kokua.exe" -loginuri <?php echo AddGrid_KokuaURL; ?></p>
+			<p>- <b><?php echo $webui_addgrid_SecondLifeViewer; ?> :</b> SecondLife.exe" -loginuri <?php echo AddGrid_SecondLifeURL; ?></p>
+			<p>- <b><?php echo $webui_addgrid_KristenViewer; ?> :</b> Kirstens S20.exe" -loginuri <?php echo AddGrid_KristenURL; ?></p>
 		</div>
 
 		<div id="info"><p><?php echo $webui_addgrid_HyperGrid_info; ?></p></div>
