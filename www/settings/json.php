@@ -8,13 +8,16 @@ function do_post_request($found) {
             'method' => 'POST',
             'content' => implode(',', $found)
             ));
-    if ($optional_headers !== null) {
+    if (isset($optional_headers)) {
         $params['http']['header'] = $optional_headers;
     }
     $ctx = stream_context_create($params);
     $timeout = 3;
     $old = ini_set('default_socket_timeout', $timeout);
-    $fp = @fopen(WIREDUX_SERVICE_URL, 'rb', false, $ctx);
+	$fp = false;
+	try{
+		$fp = @fopen(WIREDUX_SERVICE_URL, 'rb', false, $ctx);
+	}catch(ErrorException $e){}
     ini_set('default_socket_timeout', $old);
     if ($fp) {
         stream_set_timeout($fp, $timeout);
