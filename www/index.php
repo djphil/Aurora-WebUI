@@ -50,8 +50,8 @@ if ($_POST['Submit'] == $webui_login) {
 
     $found = array();
     $found[0] = json_encode(array('Method' => 'Login', 'WebPassword' => md5(WIREDUX_PASSWORD),
-                                 'Name' => cleanQuery($_POST[logname]),
-                                 'Password' => cleanQuery($_POST[logpassword])));
+                                 'Name' => cleanQuery($_POST['logname']),
+                                 'Password' => cleanQuery($_POST['logpassword'])));
     $do_post_request = do_post_request($found);
     $recieved = json_decode($do_post_request);
     $UUIDC = $recieved->{'UUID'};
