@@ -54,9 +54,9 @@ if ($_POST['Submit'] == $webui_login) {
                                  'Password' => cleanQuery($_POST['logpassword'])));
     $do_post_request = do_post_request($found);
     $recieved = json_decode($do_post_request);
-    $UUIDC = $recieved->{'UUID'};
 
-    if ($recieved->{'Verified'} == "true") {
+    if ($recieved && $recieved->{'Verified'} == "true") {
+		$UUIDC = $recieved->{'UUID'};
         $_SESSION['USERID'] = $UUIDC;
         $_SESSION['NAME'] = $_POST['logname'];
         $_SESSION['FIRSTNAME'] = $recieved->{'FirstName'};
@@ -68,6 +68,8 @@ if ($_POST['Submit'] == $webui_login) {
         $recieved = json_decode($do_post_request);
         $WEBLOGINKEY = $recieved->{'WebLoginKey'};
         $_SESSION['WEBLOGINKEY'] = $WEBLOGINKEY;
+	}else if(!$recieved){
+		echo '<script>',"\n",'<!--',"\n",'alert("Sorry, post request failed");',"\n",'// -->',"\n",'</script>';
     } else {
         echo "<script language='javascript'>
 		<!--
@@ -77,7 +79,7 @@ if ($_POST['Submit'] == $webui_login) {
     }
 }
 
-if ($_POST[Submit] == $webui_admin_login) {
+if (isset($_POST['Submit']) && $_POST['Submit'] == $webui_admin_login) {
 
     $found = array();
     $found[0] = json_encode(array('Method' => 'AdminLogin', 'WebPassword' => md5(WIREDUX_PASSWORD),
