@@ -213,4 +213,9 @@ define("C_USERS_RL_TBL", "useraccounts_rl");
 define("C_ADMINMODULES_TBL", "wi_adminmodules");
 define("C_ADMINOPTIONS_TBL", "wi_adminoptions");
 define("C_ADMINBGCOLORANIM_TBL", "wi_adminbgcoloranim");
+
+################ Recaptcha ###############################
+
+define('RECAPTCHA_PUBLIC_KEY', 'foo');
+define('RECAPTCHA_PRIVATE_KEY', 'bar');
 ?>
