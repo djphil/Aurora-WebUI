@@ -26,29 +26,7 @@ function code_gen($cod="") {
 	return $cod;
 }
 
-if($ALLOWREGISTRATION == '1')
-{
-	$session_defaults = array(
-		'PASSWD',
-		'EMAIC',
-		'EMAIL',
-		'ACCFIRST',
-		'ACCLAST',
-		'COUNTRY',
-		'ZIP',
-		'CITY',
-		'ADRESS',
-		'NAMEL',
-		'NAMEF',
-		'AVATARARCHIVE',
-		'REGIONID',
-	);
-	foreach($session_defaults as $v){
-		if(!isset($_SESSION[$v])){
-			$_SESSION[$v] = '';
-		}
-	}
-
+if($ALLOWREGISTRATION == '1'){
 	$error_400 = array();
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		if(empty($_POST) === true){
@@ -144,7 +122,7 @@ if($ALLOWREGISTRATION == '1')
 		$found = array(json_encode(array(
 			'Method' => 'CheckIfUserExists',
 			'WebPassword' => md5(WIREDUX_PASSWORD),
-			'Name' => cleanQuery($_SESSION['ACCFIRST'].' '.$_SESSION['ACCLAST'])
+			'Name' => cleanQuery($_POST['accountfirst'].' '.$_POST['accountlast'])
 		)));
 		$do_post_requested = do_post_request($found);
 		$recieved = json_decode($do_post_requested);
@@ -162,19 +140,19 @@ if($ALLOWREGISTRATION == '1')
 		$found = array(json_encode(array(
 				'Method' => 'CreateAccount',
 				'WebPassword' => md5(WIREDUX_PASSWORD),
-				'Name' => cleanQuery($_SESSION['ACCFIRST'].' '.$_SESSION['ACCLAST']),
-				'Email' => cleanQuery($_SESSION['EMAIL']),
-				'HomeRegion' => cleanQuery($_SESSION['REGIONID']),
+				'Name' => cleanQuery($_POST['accountfirst'].' '.$_POST['accountlast']),
+				'Email' => cleanQuery($_POST['email']),
+				'HomeRegion' => cleanQuery($_POST['startregion']),
 				'PasswordHash' => cleanQuery($passneu),
 				'PasswordSalt' => cleanQuery($passwordSalt),
-				'AvatarArchive' => cleanQuery($_SESSION['AVATARARCHIVE']),
+				'AvatarArchive' => cleanQuery($_POST['AvatarArchive']),
 				'UserLevel' => cleanQuery($userLevel),
-				'RLFisrtName' => cleanQuery($_SESSION['NAMEF']),
-				'RLLastName' => cleanQuery($_SESSION['NAMEL']),
-				'RLAdress' => cleanQuery($_SESSION['ADRESS']),
-				'RLCity' => cleanQuery($_SESSION['CITY']),
-				'RLZip' => cleanQuery($_SESSION['ZIP']),
-				'RLCountry' => cleanQuery($_SESSION['COUNTRY']),
+				'RLFisrtName' => cleanQuery($_POST['firstname']),
+				'RLLastName' => cleanQuery($_POST['lastname']),
+				'RLAdress' => cleanQuery($_POST['adress']),
+				'RLCity' => cleanQuery($_POST['city']),
+				'RLZip' => cleanQuery($_POST['zip']),
+				'RLCountry' => cleanQuery($_POST['country']),
 				'RLDOB' => cleanQuery($tag . "/" . $monat . "/" . $jahr),
 				'RLIP' => cleanQuery($userIP)
 		)));
@@ -192,7 +170,7 @@ if($ALLOWREGISTRATION == '1')
 		}else{
 			$code = code_gen();
 			$DbLink = new DB;
-			$DbLink->query(sprintf('INSERT INTO %1$s (code,UUID,info,email,time) VALUES("%2$s","%3$s","confirm","%4$s",$5$u)', C_CODES_TBL, cleanQuery($code), $recieved->UUID, cleanQuery($_SESSION['EMAIL']), time()));
+			$DbLink->query(sprintf('INSERT INTO %1$s (code,UUID,info,email,time) VALUES("%2$s","%3$s","confirm","%4$s",$5$u)', C_CODES_TBL, cleanQuery($code), $recieved->UUID, cleanQuery($_POST['email']), time()));
 ?>
 <div id="content">
 	<h2><?php echo $webui_successfully; ?></h2>
@@ -206,7 +184,7 @@ if($ALLOWREGISTRATION == '1')
 <?php
 			$date_arr = getdate();
 			$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
-			$sendto = $_SESSION['EMAIL'];
+			$sendto = $_POST['email'];
 			$subject = "Account Activation from " . SYSNAME;
 			$body .= "Your account was successfully created at " . SYSNAME . ".\n";
 			$body .= "Your first name: " . $_POST['accountfirst'] . "\n";
@@ -238,7 +216,7 @@ if($ALLOWREGISTRATION == '1')
 			}
 			echo "</select></div>";
 		} else {
-			echo '<div class="roundedinput"><input minlength="3" require="true" label="accountlast_label" id="register_input" name="accountlast" type="text" size="25" maxlength="15" value="',$_SESSION['ACCLAST'],'" /></div>';
+			echo '<div class="roundedinput"><input minlength="3" require="true" label="accountlast_label" id="register_input" name="accountlast" type="text" size="25" maxlength="15" value="',(isset($_POST['accountlast']) ? $_POST['accountlast'] : ''),'" /></div>';
 		}
 	}
 
@@ -267,7 +245,7 @@ ORDER BY
 
 	function displayCountry(){
 		$DbLink = new DB;
-		echo '<div class="roundedinput"><select require="true" label="country_label" id="register_input" wide="25" name="country" value="',$_SESSION['COUNTRY'],'">';
+		echo '<div class="roundedinput"><select require="true" label="country_label" id="register_input" wide="25" name="country" value="',(isset($_POST['country']) ? $_POST['country'] : ''),'">';
 		$DbLink->query("SELECT name FROM " . C_COUNTRY_TBL . " ORDER BY name ASC ");
 		echo '<option></option>';
 		while (list($COUNTRYDB) = $DbLink->next_record()) {
@@ -332,10 +310,10 @@ ORDER BY
 					'<div class="avatar_archive_screenshot"><label for="',$names[$i],'" >',htmlentities($names[$i]),'</label>',
 					'<input type="radio" id="',$names[$i],'" name="AvatarArchive" value="',$names[$i],'"'
 				;
-				if(($_SESSION["AVATARARCHIVE"] == $names[$i]) || (($i == 0) && ($_SESSION["AVATARARCHIVE"] == ""))){
-					echo "checked />";
+				if((isset($_POST['AvatarArchive']) && $_POST['AvatarArchive'] == $names[$i]) || ($i == 0 && $_POST['AvatarArchive'] == "")){
+					echo ' checked';
 				}
-				echo '<label for="',$names[$i],'" ><br><img src="',WIREDUX_TEXTURE_SERVICE,"/index.php?method=GridTexture&uuid=",$snapshot[$i],'" /></div>';
+				echo ' /><label for="',$names[$i],'" ><br><img src="',WIREDUX_TEXTURE_SERVICE,"/index.php?method=GridTexture&uuid=",$snapshot[$i],'" /></div>';
 			}
 			echo "</td></tr>";
 		}
@@ -349,16 +327,14 @@ ORDER BY
 	<div id="register">
 		<form action="index.php?page=register" method="POST" onsubmit="if (!validate(this)) return false;">
 			<table>
-<?php if(isset($_SESSION['ERROR'], $_GET['ERROR'])){ ?>
-				<tr><td class="error" colspan="2" align="center" id="error_message"><?php echo $_SESSION['ERROR'],$_GET['ERROR']; ?></td></tr>
-<?php } if(empty($error_400) === false){ ?>
+<?php if(empty($error_400) === false){ ?>
 				<tr><td class="error" colspan="2" align="center" id="error_message"><ul><?php foreach($error_400 as $error_msg){ echo '<li>',htmlentities($error_msg),'</li>'; } ?></ul></td></tr>
 <?php } ?>
 				<tr>
 					<td class="even" width="52%"><span id="accountfirst_label"><?php echo $webui_avatar_first_name ?>*</span></td>
 					<td class="even">
 						<div class="roundedinput">
-							<input minlength="3" id="register_input" require="true" label="accountfirst_label" name="accountfirst" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['ACCFIRST']; ?>">
+							<input minlength="3" id="register_input" require="true" label="accountfirst_label" name="accountfirst" type="text" size="25" maxlength="15" value="<?php echo isset($_POST['accountfirst']) ? $_POST['accountfirst'] : ''; ?>">
 						</div>
 					</td>
 				</tr>
@@ -391,31 +367,31 @@ ORDER BY
 				<tr>
 					<td class="odd"><span id="firstname_label"><?php echo $webui_first_name ?>*</span></td>
 					<td class="odd"><div class="roundedinput">
-						<input require="true" label="firstname_label" id="register_input" name="firstname" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['NAMEF']; ?>">
+						<input require="true" label="firstname_label" id="register_input" name="firstname" type="text" size="25" maxlength="15" value="<?php echo isset($_POST['firstname']) ? $_POST['firstname'] : ''; ?>">
 					</div></td>
 				</tr>
 				<tr>
 					<td class="even"><span id="lastname_label"><?php echo $webui_last_name ?>*</span></td>
 					<td class="even"><div class="roundedinput">
-						<input require="true" label="lastname_label" id="register_input" name="lastname" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['NAMEL']; ?>">
+						<input require="true" label="lastname_label" id="register_input" name="lastname" type="text" size="25" maxlength="15" value="<?php echo isset($_POST['lastname']) ? $_POST['lastname'] : ''; ?>">
 					</div></td>
 				</tr>
 				<tr>
 					<td class="odd"><span id="adress_label"><?php echo $webui_address ?>*</span></td>
 					<td class="odd"><div class="roundedinput">
-						<input require="true" label="adress_label" id="register_input" name="adress" type="text" size="50" maxlength="50" value="<?php echo $_SESSION['ADRESS']; ?>">
+						<input require="true" label="adress_label" id="register_input" name="adress" type="text" size="50" maxlength="50" value="<?php echo isset($_POST['adress']) ? $_POST['adress'] : ''; ?>">
 					</div></td>
 				</tr>
 				<tr>
 					<td class="even"><span id="zip_label"><?php echo $webui_zip_code ?>*</span></td>
 					<td class="even"><div class="roundedinput">
-						<input require="true" label="zip_label" id="register_input" name="zip" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['ZIP']; ?>">
+						<input require="true" label="zip_label" id="register_input" name="zip" type="text" size="25" maxlength="15" value="<?php echo isset($_POST['zip']) ? $_POST['zip'] : ''; ?>">
 					</div></td>
 				</tr>
 				<tr>
 					<td class="odd"><span id="city_label"><?php echo $webui_city ?>*</span></td>
 					<td class="odd"><div class="roundedinput">
-						<input require="true" label="city_label" id="register_input" name="city" type="text" size="25" maxlength="15" value="<?php echo $_SESSION['CITY']; ?>">
+						<input require="true" label="city_label" id="register_input" name="city" type="text" size="25" maxlength="15" value="<?php echo isset($_POST['city']) ? $_POST['city'] : ''; ?>">
 					</div></td>
 				</tr>
 				<tr>
@@ -437,13 +413,13 @@ ORDER BY
 				<tr>
 					<td class="odd"><span id="email_label"><?php echo $webui_email ?>*</span></td>
 					<td class="odd"><div class="roundedinput">
-						<input compare="emaic" require="true" label="email_label" id="register_input" name="email" type="text" size="40" maxlength="40" value="<?php echo $_SESSION['EMAIL']; ?>">
+						<input compare="emaic" require="true" label="email_label" id="register_input" name="email" type="text" size="40" maxlength="40" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
 					</div></td>
 				</tr>
 				<tr>
 					<td class="even"><span id="emaic_label"><?php echo $webui_confirm ?> <?php echo $webui_email ?>*</span></td>
 					<td class="even"><div class="roundedinput">
-						<input require="true" label="emaic_label" id="register_input" name="emaic" type="text" size="40" maxlength="40" value="<?php echo $_SESSION['EMAIC']; ?>" >
+						<input require="true" label="emaic_label" id="register_input" name="emaic" type="text" size="40" maxlength="40" value="<?php echo (isset($_POST['email'], $_POST['emaic']) && $_POST['email'] === $_POST['emaic']) ? $_POST['emaic'] : ''; ?>" >
 					</div></td>
 				</tr>
 				
@@ -465,7 +441,7 @@ ORDER BY
 <?php
 	echo
 		"<script type=\"text/javascript\">var RecaptchaOptions = {theme : '",$template_captcha_color,"'};</script>",
-		recaptcha_get_html(RECAPTCHA_KEY) // you got this from the signup page
+		recaptcha_get_html(RECAPTCHA_PUBLIC_KEY) // you got this from the signup page
 	;
 ?>
 					</div></td>
