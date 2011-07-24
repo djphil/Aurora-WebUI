@@ -4,13 +4,14 @@ require_once("config.php");
 require_once("databaseinfo.php");
 
 function do_post_request($found) {
-    $params = array('http' => array(
-            'method' => 'POST',
-            'content' => implode(',', $found)
-            ));
-    if (isset($optional_headers)) {
-        $params['http']['header'] = $optional_headers;
-    }
+	$params = array('http' => array(
+		'method' => 'POST',
+		'content' => implode(',', $found)
+	));
+	$optional_headers = isset($optional_headers) ? $optional_headers : array();
+	$params['http']['header'] = array_merge(array(
+		'Content-type: application/x-www-form-urlencoded'
+	),$optional_headers);
     $ctx = stream_context_create($params);
     $timeout = 3;
     $old = ini_set('default_socket_timeout', $timeout);
