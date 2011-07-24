@@ -300,11 +300,9 @@ ORDER BY
 		$do_post_requested = do_post_request($found);
 		$recieved = json_decode($do_post_requested);
 
-		if(!$recieved){
+		if(!$recieved || !isset($recieved->Verified)){
 			return;
-		}
-
-		if ($recieved->{'Verified'} == "true"){
+		}else if ($recieved->{'Verified'} == "true"){
 			$names = explode(",", $recieved->{'names'});
 			$snapshot = explode(",", $recieved->{'snapshot'});
 			$count = count($names);
