@@ -96,22 +96,24 @@ if($ALLOWREGISTRATION == '1'){
 			}
 		}
 
-		if(isset($_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field'])){
-			$resp = recaptcha_check_answer(
-					RECAPTCHA_PRIVATE_KEY,
-					$_SERVER["REMOTE_ADDR"],
-					$_POST["recaptcha_challenge_field"],
-					$_POST["recaptcha_response_field"]
-			);
-			if(isset($resp, $resp->is_valid) === false || !$resp->is_valid){
-				$error_400[] = 'The reCAPTCHA wasn\'t entered correctly. Please try it again.';
-			}
-		}else{
-			if(isset($_POST['recaptcha_challenge_field']) === false){
-				$error_400[] = 'recaptcha challenge field missing';
-			}
-			if(isset($_POST['recaptcha_response_field']) === false){
-				$error_400[] = 'recaptcha response field missing';
+		if(RECAPTCHA_PUBLIC_KEY !== false && RECAPTCHA_PRIVATE_KEY !== false){
+			if(isset($_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field'])){
+				$resp = recaptcha_check_answer(
+						RECAPTCHA_PRIVATE_KEY,
+						$_SERVER["REMOTE_ADDR"],
+						$_POST["recaptcha_challenge_field"],
+						$_POST["recaptcha_response_field"]
+				);
+				if(isset($resp, $resp->is_valid) === false || !$resp->is_valid){
+					$error_400[] = 'The reCAPTCHA wasn\'t entered correctly. Please try it again.';
+				}
+			}else{
+				if(isset($_POST['recaptcha_challenge_field']) === false){
+					$error_400[] = 'recaptcha challenge field missing';
+				}
+				if(isset($_POST['recaptcha_response_field']) === false){
+					$error_400[] = 'recaptcha response field missing';
+				}
 			}
 		}
 	}
@@ -137,24 +139,26 @@ if($ALLOWREGISTRATION == '1'){
 	$recieved = null;
 	if(empty($error_400) === false){
 		$userLevel = $VERIFYUSERS == 0 ? 0 : -1;
+		$tag   = isset($_POST['tag'  ]) ? $_POST['tag'  ] : '';
+		$monat = isset($_POST['monat']) ? $_POST['monat'] : '';
+		$jahr  = isset($_POST['jahr' ]) ? $_POST['jahr' ] : '';
 		$found = array(json_encode(array(
-				'Method' => 'CreateAccount',
-				'WebPassword' => md5(WIREDUX_PASSWORD),
-				'Name' => cleanQuery($_POST['accountfirst'].' '.$_POST['accountlast']),
-				'Email' => cleanQuery($_POST['email']),
-				'HomeRegion' => cleanQuery($_POST['startregion']),
-				'PasswordHash' => cleanQuery($passneu),
-				'PasswordSalt' => cleanQuery($passwordSalt),
-				'AvatarArchive' => cleanQuery($_POST['AvatarArchive']),
-				'UserLevel' => cleanQuery($userLevel),
-				'RLFisrtName' => cleanQuery($_POST['firstname']),
-				'RLLastName' => cleanQuery($_POST['lastname']),
-				'RLAdress' => cleanQuery($_POST['adress']),
-				'RLCity' => cleanQuery($_POST['city']),
-				'RLZip' => cleanQuery($_POST['zip']),
-				'RLCountry' => cleanQuery($_POST['country']),
-				'RLDOB' => cleanQuery($tag . "/" . $monat . "/" . $jahr),
-				'RLIP' => cleanQuery($userIP)
+				'Method'        => 'CreateAccount',
+				'WebPassword'   => md5(WIREDUX_PASSWORD),
+				'Name'          => cleanQuery($_POST['accountfirst'].' '.$_POST['accountlast']),
+				'Email'         => cleanQuery($_POST['email']),
+				'HomeRegion'    => cleanQuery($_POST['startregion']),
+				'PasswordHash'  => cleanQuery($passneu),
+				'AvatarArchive' => cleanQuery(isset($_POST['AvatarArchive']) ? $_POST['AvatarArchive'] : ''),
+				'UserLevel'     => cleanQuery($userLevel),
+				'RLFisrtName'   => cleanQuery(isset($_POST['firstname'    ]) ? $_POST['firstname'    ] : ''),
+				'RLLastName'    => cleanQuery(isset($_POST['lastname'     ]) ? $_POST['lastname'     ] : ''),
+				'RLAdress'      => cleanQuery(isset($_POST['adress'       ]) ? $_POST['adress'       ] : ''),
+				'RLCity'        => cleanQuery(isset($_POST['city'         ]) ? $_POST['city'         ] : ''),
+				'RLZip'         => cleanQuery(isset($_POST['zip'          ]) ? $_POST['zip'          ] : ''),
+				'RLCountry'     => cleanQuery(isset($_POST['country'      ]) ? $_POST['country'      ] : ''),
+				'RLDOB'         => cleanQuery($tag . "/" . $monat . "/" . $jahr),
+				'RLIP'          => cleanQuery($userIP)
 		)));
 
 		$recieved = json_decode(do_post_request($found));
@@ -439,10 +443,12 @@ ORDER BY
 				<tr>
 					<td class="even"><div class="center">
 <?php
-	echo
-		"<script type=\"text/javascript\">var RecaptchaOptions = {theme : '",$template_captcha_color,"'};</script>",
-		recaptcha_get_html(RECAPTCHA_PUBLIC_KEY) // you got this from the signup page
-	;
+	if(RECAPTCHA_PUBLIC_KEY !== false && RECAPTCHA_PRIVATE_KEY !== false){
+		echo
+			"<script type=\"text/javascript\">var RecaptchaOptions = {theme : '",$template_captcha_color,"'};</script>",
+			recaptcha_get_html(RECAPTCHA_PUBLIC_KEY) // you got this from the signup page
+		;
+	}
 ?>
 					</div></td>
 

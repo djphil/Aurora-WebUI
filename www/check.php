@@ -24,6 +24,13 @@ namespace{
 
 	}
 	}
+
+	if(defined('RECAPTCHA_PUBLIC_KEY') === false){
+		define('RECAPTCHA_PUBLIC_KEY', false);
+	}
+	if(defined('RECAPTCHA_PRIVATE_KEY') === false){
+		define('RECAPTCHA_PRIVATE_KEY', false);
+	}
 }
 
 namespace Aurora\WebUI{
