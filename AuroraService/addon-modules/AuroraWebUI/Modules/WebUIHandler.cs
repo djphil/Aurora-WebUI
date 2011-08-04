@@ -487,6 +487,7 @@ namespace OpenSim.Services
             }
             m_log.TraceFormat("[WebUI] {0} result: {1}", method, resp);
             string xmlString = OSDParser.SerializeJsonString(resp);
+            m_log.TraceFormat("[WebUI] XML String: {0}", xmlString);
             UTF8Encoding encoding = new UTF8Encoding();
             return encoding.GetBytes(xmlString);
         }
