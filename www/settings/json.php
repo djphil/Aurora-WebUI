@@ -4,37 +4,20 @@ require_once("config.php");
 require_once("databaseinfo.php");
 
 function do_post_request($found) {
-	$params = array('http' => array(
-		'method' => 'POST',
-		'content' => implode(',', $found)
+	$ch = curl_init(WIREDUX_SERVICE_URL);
+	curl_setopt_array($ch, array(
+		CURLOPT_HEADER         => false,
+		CURLOPT_POST           => true,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_POSTFIELDS     => implode(',', $found)
 	));
-	$optional_headers = isset($optional_headers) ? $optional_headers : array();
-	$params['http']['header'] = array_merge(array(
-		'Content-type: application/x-www-form-urlencoded'
-	),$optional_headers);
-    $ctx = stream_context_create($params);
-    $timeout = 3;
-    $old = ini_set('default_socket_timeout', $timeout);
-	$fp = false;
-	try{
-		$fp = @fopen(WIREDUX_SERVICE_URL, 'rb', false, $ctx);
-	}catch(ErrorException $e){}
-    ini_set('default_socket_timeout', $old);
-    if ($fp) {
-        stream_set_timeout($fp, $timeout);
-        stream_set_blocking($fp, 3);
-    } else{
-        //throw new Exception("Problem with " . WIREDUX_SERVICE_URL . ", $php_errormsg");
-        return false;
+	$result = curl_exec($ch);
+	curl_close($ch);
+	if(is_string($result) === true){
+		return $result;
+	}else{
+		return false;
 	}
-    $response = @stream_get_contents($fp);
-    if ($response === false) {
-        //throw new Exception("Problem reading data from " . WIREDUX_SERVICE_URL . ", $php_errormsg");
-    }
-	if ($fp) {
-		fclose($fp);
-	}
-    return $response;
 }
 
 function cleanQuery($string)
