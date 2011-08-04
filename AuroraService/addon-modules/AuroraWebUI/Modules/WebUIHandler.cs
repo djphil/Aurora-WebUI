@@ -485,12 +485,9 @@ namespace OpenSim.Services
             if(resp.Count == 0){
                 resp.Add("response", OSD.FromString("Failed"));
             }
-            m_log.TraceFormat("[WebUI] {0} result: {1}", method, resp);
-            string xmlString = OSDParser.SerializeJsonString(resp);
-            m_log.TraceFormat("[WebUI] XML String: {0}", xmlString);
             UTF8Encoding encoding = new UTF8Encoding();
             httpResponse.ContentType = "application/json";
-            return encoding.GetBytes(xmlString);
+            return encoding.GetBytes(OSDParser.SerializeJsonString(resp, true));
         }
 
         private bool VerifyPassword(OSDMap map)
