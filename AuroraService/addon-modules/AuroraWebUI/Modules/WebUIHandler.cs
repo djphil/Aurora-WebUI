@@ -533,7 +533,14 @@ namespace OpenSim.Services
             if (agentInfoService != null && gridService != null)
             {
                 GridRegion r = gridService.GetRegionByName (UUID.Zero, HomeRegion);
-                agentInfoService.SetHomePosition (user.PrincipalID.ToString (), r.RegionID, new Vector3 (r.RegionSizeX / 2, r.RegionSizeY / 2, 20), Vector3.Zero);
+                if (r != null)
+                {
+                    agentInfoService.SetHomePosition(user.PrincipalID.ToString(), r.RegionID, new Vector3(r.RegionSizeX / 2, r.RegionSizeY / 2, 20), Vector3.Zero);
+                }
+                else
+                {
+                    m_log.DebugFormat("[WebUI]: Could not set home position for user {0}, region \"{1}\" did not produce a result from the grid service", user.PrincipalID.ToString(), HomeRegion);
+                }
             }
 
             Verified = user != null;
