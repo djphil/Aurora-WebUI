@@ -28,6 +28,7 @@ function code_gen($cod="") {
 
 if($ALLOWREGISTRATION == '1'){
 	$error_400 = array();
+	$error_500 = array();
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		if(empty($_POST) === true){
 			$error_400[] = 'No POST data';
@@ -201,7 +202,15 @@ if($ALLOWREGISTRATION == '1'){
 				$body .= "\n\n\n";
 				$body .= "Thank you for using " . SYSNAME . "";
 				$header = "From: " . SYSMAIL . "\r\n";
-				$mail_status = mail($sendto, $subject, $body, $header);
+				try{
+					$mail_status = mail($sendto, $subject, $body, $header);
+				}catch(\ErrorException $e){
+					if(strpos($e->getMessage(), 'mail(): Failed to connect to mailserver at') === 0){
+						$error_500[] = 'Could not send activation email, mail server could not be contacted';
+					}else{
+						$error_500[] = 'Could not send activation email.';
+					}
+				}
 			}
 		}
 	}
@@ -209,6 +218,8 @@ if($ALLOWREGISTRATION == '1'){
 
 	if(empty($error_400) === false){
 		header('HTTP/1.0 400 Bad Request');
+	}else if(empty($error_500) === false){
+		header('HTTP/1.0 500 Internal Server Error');
 	}
 		
 	function printLastNames(){
@@ -334,8 +345,8 @@ ORDER BY
 	<div id="register">
 		<form action="index.php?page=register" method="POST" onsubmit="if (!validate(this)) return false;">
 			<table>
-<?php if(empty($error_400) === false){ ?>
-				<tr><td class="error" colspan="2" align="center" id="error_message"><ul><?php foreach($error_400 as $error_msg){ echo '<li>',htmlentities($error_msg),'</li>'; } ?></ul></td></tr>
+<?php if(empty($error_400) === false || empty($error_500) === false){ ?>
+				<tr><td class="error" colspan="2" align="center" id="error_message"><ul><?php foreach($error_500 as $error_msg){ echo '<li>',htmlentities($error_msg),'</li>'; } foreach($error_400 as $error_msg){ echo '<li>',htmlentities($error_msg),'</li>'; }?></ul></td></tr>
 <?php } ?>
 				<tr>
 					<td class="even" width="52%"><span id="accountfirst_label"><?php echo $webui_avatar_first_name ?>*</span></td>
