@@ -160,12 +160,15 @@ if($ALLOWREGISTRATION == '1'){
 			)));
 
 			$recieved = json_decode(do_post_request($found));
+			if(is_object($recieved) && isset($recieved->Verified) && $recieved->Verified === 'true'){
+				$recieved->Verified = true;
+			}
 
 			if($recieved === false){
 				$error_400[] = 'POST request failed';
 			}else if(isset($recieved->Verified) === false){
 				$error_400[] = 'Could not determine verified status';
-			}else if($recieved->Verified !== 'true'){
+			}else if($recieved->Verified !== true){
 				$error_400[] = 'Unknown error. Please try again later.';
 			}else if(isset($recieved->UUID) === false){
 				$error_400[] = 'UUID was absent';
