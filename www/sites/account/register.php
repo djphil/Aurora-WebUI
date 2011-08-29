@@ -175,7 +175,7 @@ if($ALLOWREGISTRATION == '1'){
 			}else{
 				$code = code_gen();
 				$DbLink = new DB;
-				$DbLink->query(sprintf('INSERT INTO %1$s (code,UUID,info,email,time) VALUES("%2$s","%3$s","confirm","%4$s",$5$u)', C_CODES_TBL, cleanQuery($code), $recieved->UUID, cleanQuery($_POST['email']), time()));
+				$DbLink->query(sprintf('INSERT INTO %1$s (code,UUID,info,email,time) VALUES("%2$s","%3$s","confirm","%4$s",%5$u)', C_CODES_TBL, cleanQuery($code), $recieved->UUID, cleanQuery($_POST['email']), time()));
 	?>
 	<div id="content">
 		<h2><?php echo $webui_successfully; ?></h2>
@@ -191,7 +191,7 @@ if($ALLOWREGISTRATION == '1'){
 				$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
 				$sendto = $_POST['email'];
 				$subject = "Account Activation from " . SYSNAME;
-				$body .= "Your account was successfully created at " . SYSNAME . ".\n";
+				$body  = "Your account was successfully created at " . SYSNAME . ".\n";
 				$body .= "Your first name: " . $_POST['accountfirst'] . "\n";
 				$body .= "Your last name:  " . $_POST['accountlast' ] . "\n";
 				$body .= "Your password:  "  . $_POST['wordpass'    ] . "\n\n";
