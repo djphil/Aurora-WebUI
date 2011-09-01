@@ -16,7 +16,7 @@ define("C_DB_NAME","aurora");
 // Your Username from Database here:
 define("C_DB_USER","aurora");
 // Your Database Password here:
-define("C_DB_PASS","zfq4tMUbWPqvrbsD");
+define("C_DB_PASS","changeme");
 
 }
 
@@ -28,5 +28,6 @@ require('pdo.php');
 $PDODB = DB::i();
 $PDODB['Aurora']      = null; // replace with a call to PDOH::PDO()
 $PDODB['AuroraUsers'] = null; // replace with a call to PDOH::PDO()
+$PDODB['AuroraWebUI'] = PDOH::PDO('mysql:host=localhost;dbname=aurora', 'aurora', 'changeme');
 }
 ?>

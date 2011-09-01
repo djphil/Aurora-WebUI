@@ -218,4 +218,7 @@ define("C_ADMINBGCOLORANIM_TBL", "wi_adminbgcoloranim");
 
 //define('RECAPTCHA_PUBLIC_KEY', 'foo');
 //define('RECAPTCHA_PRIVATE_KEY', 'bar');
+
+################ Optional WebUI Features ###############################
+define('EmailAccountActivation',true);
 ?>

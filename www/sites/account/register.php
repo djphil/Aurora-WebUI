@@ -173,11 +173,11 @@ if($ALLOWREGISTRATION == '1'){
 				$error_400[] = 'Unknown error. Please try again later.';
 			}else if(isset($recieved->UUID) === false){
 				$error_400[] = 'UUID was absent';
-			}else{
+			}else if(EmailAccountActivation === true){
 				$code = code_gen();
 				$DbLink = new DB;
 				$DbLink->query(sprintf('INSERT INTO %1$s (code,UUID,info,email,time) VALUES("%2$s","%3$s","confirm","%4$s",%5$u)', C_CODES_TBL, cleanQuery($code), $recieved->UUID, cleanQuery($_POST['email']), time()));
-	?>
+?>
 	<div id="content">
 		<h2><?php echo $webui_successfully; ?></h2>
 		<div id="info">
@@ -187,7 +187,7 @@ if($ALLOWREGISTRATION == '1'){
 			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_email)            ,': <b>',htmlentities(isset($_POST['email'       ]) ? $_POST['email'       ] : ''); ?></b></p><br />
 		</div>
 	</div>
-	<?php
+<?php
 				$date_arr = getdate();
 				$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
 				$sendto = $_POST['email'];
@@ -204,6 +204,7 @@ if($ALLOWREGISTRATION == '1'){
 				$header = "From: " . SYSMAIL . "\r\n";
 				try{
 					$mail_status = mail($sendto, $subject, $body, $header);
+					return;
 				}catch(\ErrorException $e){
 					if(strpos($e->getMessage(), 'mail(): Failed to connect to mailserver at') === 0){
 						$error_500[] = 'Could not send activation email, mail server could not be contacted';
@@ -211,6 +212,19 @@ if($ALLOWREGISTRATION == '1'){
 						$error_500[] = 'Could not send activation email.';
 					}
 				}
+			}else{
+?>
+	<div id="content">
+		<h2><?php echo $webui_successfully; ?></h2>
+		<div id="info">
+			<p><?php echo htmlentities($webui_successfully_info); ?></p><br />
+			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_avatar_first_name),': <b>',htmlentities(isset($_POST['accountfirst']) ? $_POST['accountfirst'] : ''); ?></b></p><br />
+			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_avatar_last_name) ,': <b>',htmlentities(isset($_POST['accountlast' ]) ? $_POST['accountlast' ] : ''); ?></b></p><br />
+			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_email)            ,': <b>',htmlentities(isset($_POST['email'       ]) ? $_POST['email'       ] : ''); ?></b></p><br />
+		</div>
+	</div>
+<?php
+				return;
 			}
 		}
 	}

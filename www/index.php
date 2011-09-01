@@ -103,6 +103,7 @@ if (isset($_POST['Submit']) && $_POST['Submit'] == $webui_admin_login) {
   } // LOGIN END
 }
 
+  $DbLink = new DB;
   $DbLink->query("SELECT id,
                          displayTopPanelSlider, 
                          displayTemplateSelector,
