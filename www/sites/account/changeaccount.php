@@ -1,4 +1,4 @@
-<?
+<?php
 if ($_SESSION['USERID'] == "") {
     echo "<script language='javascript'>
 	<!--
@@ -27,182 +27,184 @@ if ($_SESSION['USERID'] == "") {
     // var_dump($do_post_requested);
     // echo '</pre>';
 
-    if (($REGIOCHECK == "0") or ($REGIOCHECK == "1")) {
-        if ($_POST[Submit1] == $webui_submit) {
-            $startregion = $_POST[region];
+	if($_SERVER['REQUEST_METHOD'] === 'POST'){
+		if (($REGIOCHECK == "0") or ($REGIOCHECK == "1")) {
+			if ($_POST['Submit1'] == $webui_submit) {
+				$startregion = $_POST['region'];
 
-            $DbLink->query("SELECT uuid FROM " . C_REGIONS_TBL . " WHERE regionName='".cleanQuery($startregion)."' ");
-            list($homeid) = $DbLink->next_record();
+				$DbLink->query("SELECT uuid FROM " . C_REGIONS_TBL . " WHERE regionName='".cleanQuery($startregion)."' ");
+				list($homeid) = $DbLink->next_record();
 
-            $DbLink->query("UPDATE " . C_USERINFO_TBL . " SET HomeRegionID ='".cleanQuery($homeid)."' WHERE UserID='".cleanQuery($_SESSION['USERID'])."' ");
-            echo
-            "<script language='javascript'>
-			<!--
-				window.location.href='index.php?page=changeaccount&btn=2';
-			// -->
-			</script>";
-        }
-    }
-
-    if ($_POST[Submit2] == $webui_submit) {
-        if ($_POST[passnew] == $_POST[passvalid]) {
-
-            $found = array();
-            $found[0] = json_encode(array('Method' => 'ChangePassword', 'WebPassword' => md5(WIREDUX_PASSWORD)
-                        , 'UUID' => cleanQuery($_SESSION['USERID'])
-                        , 'Password' => cleanQuery($_POST[passold])
-                        , 'NewPassword' => cleanQuery($_POST[passnew])));
-
-            $do_post_requested = do_post_request($found);
-            $recieved = json_decode($do_post_requested);
-
-            // echo '<pre>';
-            // var_dump($recieved);
-            // var_dump($do_post_requested);
-            // echo '</pre>';
-
-            if ($recieved->{'Verified'} == "true") {
-//-----------------------------------MAIL--------------------------------------
-                $date_arr = getdate();
-                $date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
-                $sendto = $oldemail;
-                $subject = "Password change on " . SYSNAME;
-                $body .= "Your account was successfully changed your password on " . SYSNAME . ".\n";
-                $body .= "\n\n\n";
-                $body .= "Thank you for using " . SYSNAME . "";
-                $header = "From: " . SYSMAIL . "\r\n";
-                $mail_status = mail($sendto, $subject, $body, $header);
-//-----------------------------MAIL END --------------------------------------
-
-
-
-                session_unset();
-                session_destroy();
-                echo "<script language='javascript'>
+				$DbLink->query("UPDATE " . C_USERINFO_TBL . " SET HomeRegionID ='".cleanQuery($homeid)."' WHERE UserID='".cleanQuery($_SESSION['USERID'])."' ");
+				echo
+				"<script language='javascript'>
 				<!--
-					window.location.href='index.php?page=home';
+					window.location.href='index.php?page=changeaccount&btn=2';
 				// -->
 				</script>";
-            } else {
-                $ERRORS = "<font color=white><b>Error saving new password. Please try again later.</b></font>";
-            }
-        } else {
-            $ERRORS = "<font color=white><b>Check new passwords validation Failed</b></font>";
-        }
-    }
+			}
+		}
+
+		if ($_POST['Submit2'] == $webui_submit) {
+			if ($_POST['passnew'] == $_POST['passvalid']) {
+
+				$found = array();
+				$found[0] = json_encode(array('Method' => 'ChangePassword', 'WebPassword' => md5(WIREDUX_PASSWORD)
+							, 'UUID' => cleanQuery($_SESSION['USERID'])
+							, 'Password' => cleanQuery($_POST['passold'])
+							, 'NewPassword' => cleanQuery($_POST['passnew'])));
+
+				$do_post_requested = do_post_request($found);
+				$recieved = json_decode($do_post_requested);
+
+				// echo '<pre>';
+				// var_dump($recieved);
+				// var_dump($do_post_requested);
+				// echo '</pre>';
+
+				if ($recieved->{'Verified'} == "true") {
+	//-----------------------------------MAIL--------------------------------------
+					$date_arr = getdate();
+					$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
+					$sendto = $oldemail;
+					$subject = "Password change on " . SYSNAME;
+					$body .= "Your account was successfully changed your password on " . SYSNAME . ".\n";
+					$body .= "\n\n\n";
+					$body .= "Thank you for using " . SYSNAME . "";
+					$header = "From: " . SYSMAIL . "\r\n";
+					$mail_status = mail($sendto, $subject, $body, $header);
+	//-----------------------------MAIL END --------------------------------------
 
 
 
-    if ($_POST[Submit3] == $webui_submit) {
-        // Check if the new email address isn't empty
-        if ($_POST[emailnew] <> "") {
-
-            // CODE generator
-            function code_gen($cod="") {
-                // ######## CODE LENGTH ########
-                $cod_l = 10;
-                // ######## CODE LENGTH ########
-                $zeichen = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9";
-                $array_b = explode(",", $zeichen);
-                for ($i = 0; $i < $cod_l; $i++) {
-                    srand((double) microtime() * 1000000);
-                    $z = rand(0, 35);
-                    $cod .= "" . $array_b[$z] . "";
-                }
-                return $cod;
-            }
-
-            $code = code_gen();
-            // CODE generator
-
-            $UUID = $_SESSION['USERID'];
-
-            $DbLink->query("INSERT INTO " . C_CODES_TBL . " (code,UUID,info,email,time)VALUES('$code','$UUID','confirm','".cleanQuery($_POST[emailnew])."'," . time() . ")");
-
-            //-----------------------------------MAIL--------------------------------------
-            $date_arr = getdate();
-            $date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
-            $sendto = $_POST[emailnew];
-            $subject = "Email change from " . SYSNAME;
-            $body = "In order to login, you need to confirm your email by clicking this link within 24 hours:";
-            $body .= "\n";
-            $body .= "" . SYSURL . "/index.php?page=activatemail&code=$code";
-            $body .= "\n\n\n";
-            $body .= "Thank you for using " . SYSNAME . "";
-            $header = "From: " . SYSMAIL . "\r\n";
-            $mail_status = mail($sendto, $subject, $body, $header);
-            //-----------------------------MAIL END --------------------------------------
-            $ERRORS2 = "<font color=white><b>An email has been send to confirm the new email</b></font>";
-        } else {
-            $ERRORS2 = "<font color=white><b>Can't have an empty emailaddress</b></font>";
-        }
-    }
-
-    if ($_POST[purge]) {
-        $query = "SELECT COUNT(*) FROM " . C_APPEARANCE_TBL . " WHERE PrincipalID ='" . cleanQuery($_SESSION['USERID']) . "'";
-        $DbLink->query($query);
-        list($numrows) = $DbLink->next_record();
-
-        if ($numrows > 0) {
-            $remove = "DELETE FROM " . C_APPEARANCE_TBL . " WHERE PrincipalID ='" . cleanQuery($_SESSION['USERID']) . "'";
-
-            $DbLink = new DB;
-            $DbLink->query($remove);
-
-            $ERRORS = "Succesfully removed your appearance";
-        } else {
-            $ERRORS = "Could not find a appearance for you";
-        }
-    }
-
-    if ($_POST[Submit4] == $webui_submit) {
-        $found = array();
-        $found[0] = json_encode(array('Method' => 'CheckIfUserExists', 'WebPassword' => md5(WIREDUX_PASSWORD),
-                    'Name' => cleanQuery($_POST[nameNew])));
-        $do_post_requested = do_post_request($found);
-        $recieved = json_decode($do_post_requested);
+					session_unset();
+					session_destroy();
+					echo "<script language='javascript'>
+					<!--
+						window.location.href='index.php?page=home';
+					// -->
+					</script>";
+				} else {
+					$ERRORS = "<font color=white><b>Error saving new password. Please try again later.</b></font>";
+				}
+			} else {
+				$ERRORS = "<font color=white><b>Check new passwords validation Failed</b></font>";
+			}
+		}
 
 
-        if ($recieved->{'Verified'} != "false") {
-            $ERRORS2 = "<font color=white><b>User already Exists</b></font>";
-        } else {
-            $found = array();
-            $found[0] = json_encode(array('Method' => 'ChangeName', 'WebPassword' => md5(WIREDUX_PASSWORD)
-                        , 'UUID' => cleanQuery($_SESSION['USERID'])
-                        , 'Name' => cleanQuery($_POST[nameNew])));
 
-            $do_post_requested = do_post_request($found);
-            $recieved = json_decode($do_post_requested);
+		if ($_POST['Submit3'] == $webui_submit) {
+			// Check if the new email address isn't empty
+			if (empty($_POST['emailnew']) === false) {
 
-            // echo '<pre>';
-            // var_dump($recieved);
-            // var_dump($do_post_requested);
-            // echo '</pre>';
+				// CODE generator
+				function code_gen($cod="") {
+					// ######## CODE LENGTH ########
+					$cod_l = 10;
+					// ######## CODE LENGTH ########
+					$zeichen = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9";
+					$array_b = explode(",", $zeichen);
+					for ($i = 0; $i < $cod_l; $i++) {
+						srand((double) microtime() * 1000000);
+						$z = rand(0, 35);
+						$cod .= "" . $array_b[$z] . "";
+					}
+					return $cod;
+				}
 
-            if ($recieved->{'Verified'} == "true") {
-                //-----------------------------------MAIL--------------------------------------
-                $date_arr = getdate();
-                $date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
-                $sendto = $oldemail;
-                $subject = "Username changed on " . SYSNAME;
-                $body .= "Your account login name as changed from " . $Name . " to " . $_POST[nameNew] . " on " . SYSNAME . ".\n";
-                $body .= "\n\n\n";
-                $body .= "Thank you for using " . SYSNAME . "";
+				$code = code_gen();
+				// CODE generator
+
+				$UUID = $_SESSION['USERID'];
+
+				$DbLink->query("INSERT INTO " . C_CODES_TBL . " (code,UUID,info,email,time)VALUES('$code','$UUID','confirm','".cleanQuery($_POST['emailnew'])."'," . time() . ")");
+
+				//-----------------------------------MAIL--------------------------------------
+				$date_arr = getdate();
+				$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
+				$sendto = $_POST['emailnew'];
+				$subject = "Email change from " . SYSNAME;
+				$body = "In order to login, you need to confirm your email by clicking this link within 24 hours:";
+				$body .= "\n";
+				$body .= "" . SYSURL . "/index.php?page=activatemail&code=$code";
+				$body .= "\n\n\n";
+				$body .= "Thank you for using " . SYSNAME . "";
 				$header = "From: " . SYSMAIL . "\r\n";
-                $mail_status = mail($sendto, $subject, $body, $header);
-                //-----------------------------MAIL END --------------------------------------
+				$mail_status = mail($sendto, $subject, $body, $header);
+				//-----------------------------MAIL END --------------------------------------
+				$ERRORS2 = "<font color=white><b>An email has been send to confirm the new email</b></font>";
+			} else {
+				$ERRORS2 = "<font color=white><b>Can't have an empty emailaddress</b></font>";
+			}
+		}
 
-                session_unset();
-                session_destroy();
+		if ($_POST['purge']) {
+			$query = "SELECT COUNT(*) FROM " . C_APPEARANCE_TBL . " WHERE PrincipalID ='" . cleanQuery($_SESSION['USERID']) . "'";
+			$DbLink->query($query);
+			list($numrows) = $DbLink->next_record();
 
-                echo "<script language='javascript'>
-				<!--
-					window.location.href='index.php?page=home';
-				// -->
-				</script>";
-            }
-        }
-    }
+			if ($numrows > 0) {
+				$remove = "DELETE FROM " . C_APPEARANCE_TBL . " WHERE PrincipalID ='" . cleanQuery($_SESSION['USERID']) . "'";
+
+				$DbLink = new DB;
+				$DbLink->query($remove);
+
+				$ERRORS = "Succesfully removed your appearance";
+			} else {
+				$ERRORS = "Could not find a appearance for you";
+			}
+		}
+
+		if ($_POST['Submit4'] == $webui_submit) {
+			$found = array();
+			$found[0] = json_encode(array('Method' => 'CheckIfUserExists', 'WebPassword' => md5(WIREDUX_PASSWORD),
+						'Name' => cleanQuery($_POST['nameNew'])));
+			$do_post_requested = do_post_request($found);
+			$recieved = json_decode($do_post_requested);
+
+
+			if ($recieved->{'Verified'} != "false") {
+				$ERRORS2 = "<font color=white><b>User already Exists</b></font>";
+			} else {
+				$found = array();
+				$found[0] = json_encode(array('Method' => 'ChangeName', 'WebPassword' => md5(WIREDUX_PASSWORD)
+							, 'UUID' => cleanQuery($_SESSION['USERID'])
+							, 'Name' => cleanQuery($_POST['nameNew'])));
+
+				$do_post_requested = do_post_request($found);
+				$recieved = json_decode($do_post_requested);
+
+				// echo '<pre>';
+				// var_dump($recieved);
+				// var_dump($do_post_requested);
+				// echo '</pre>';
+
+				if ($recieved->{'Verified'} == "true") {
+					//-----------------------------------MAIL--------------------------------------
+					$date_arr = getdate();
+					$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
+					$sendto = $oldemail;
+					$subject = "Username changed on " . SYSNAME;
+					$body .= "Your account login name as changed from " . $Name . " to " . $_POST['nameNew'] . " on " . SYSNAME . ".\n";
+					$body .= "\n\n\n";
+					$body .= "Thank you for using " . SYSNAME . "";
+					$header = "From: " . SYSMAIL . "\r\n";
+					$mail_status = mail($sendto, $subject, $body, $header);
+					//-----------------------------MAIL END --------------------------------------
+
+					session_unset();
+					session_destroy();
+
+					echo "<script language='javascript'>
+					<!--
+						window.location.href='index.php?page=home';
+					// -->
+					</script>";
+				}
+			}
+		}
+	}
 ?>
 
 
@@ -218,7 +220,7 @@ if ($_SESSION['USERID'] == "") {
         
         <!-- Change Start Region -->         
         <table>
-            <? if (($REGIOCHECK == "0") or ($REGIOCHECK == "1")) { ?>
+            <?php if (($REGIOCHECK == "0") or ($REGIOCHECK == "1")) { ?>
             <tr>
                 <td colspan="2">
                     <div align="center">
@@ -230,18 +232,18 @@ if ($_SESSION['USERID'] == "") {
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
                     <td class="odd" width="50%"><?php echo $webui_old_region ?>: </td>
-                    <td class="odd"><?= $oldregionname ?></td>
+                    <td class="odd"><?php echo $oldregionname; ?></td>
                 </tr>
             
                 <tr>
                     <td class="even"><?php echo $webui_home_region ?>:  </td>
                     <td class="even">
                         <select wide="25" name="region">
-                            <?
+                            <?php
                                 $DbLink->query("SELECT regionName FROM " . C_REGIONS_TBL . " ORDER BY regionName ASC ");
                                 while (list($NAMERGN) = $DbLink->next_record()) { ?>        
-                            <option><?= $NAMERGN ?></option>
-                            <? } ?>
+                            <option><?php echo $NAMERGN; ?></option>
+                            <?php } ?>
                         </select>
                     </td>
                 </tr>
@@ -255,7 +257,7 @@ if ($_SESSION['USERID'] == "") {
                 </tr>
             </form>
             
-            <? } ?>
+            <?php } ?>
         </table>
               
         <br />
@@ -270,13 +272,13 @@ if ($_SESSION['USERID'] == "") {
                 </td>
             </tr>
                   
-            <? if ($ERRORS) { ?>
+            <?php if ($ERRORS) { ?>
                   
             <tr>
-                <td colspan="2"><div align="center"><?= $ERRORS ?></div></td>
+                <td colspan="2"><div align="center"><?php $ERRORS; ?></div></td>
             </tr>
                   
-            <? } ?>
+            <?php } ?>
                   
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
@@ -309,18 +311,18 @@ if ($_SESSION['USERID'] == "") {
                 <td colspan="2"><div align="center"><strong><?php echo $webui_change_email; ?></strong></div></td>
             </tr>
                             
-            <? if ($ERRORS2) { ?>
+            <?php if ($ERRORS2) { ?>
                             
             <tr>
-                <td colspan="2"><div align="center"><?= $ERRORS2 ?></div></td>
+                <td colspan="2"><div align="center"><?php echo $ERRORS2; ?></div></td>
             </tr>
                             
-            <? } ?>
+            <?php } ?>
                             
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
                     <td class="odd" width="50%"><?php echo $webui_old_email ?>:</td>
-                    <td class="odd"><input type="text" size="40" value="<?= $oldemail ?>" name="emailold"></td>
+                    <td class="odd"><input type="text" size="40" value="<?php echo $oldemail; ?>" name="emailold"></td>
                 </tr>
                 
                 
@@ -348,13 +350,13 @@ if ($_SESSION['USERID'] == "") {
                 </td>
             </tr>
                             
-            <? if ($ERRORS2) { ?>
+            <?php if ($ERRORS2) { ?>
                             
             <tr>
-                <td colspan="2" valign="top" bgcolor="#666666"><div align="center"><?= $ERRORS2 ?></div></td>
+                <td colspan="2" valign="top" bgcolor="#666666"><div align="center"><?php echo $ERRORS2; ?></div></td>
             </tr>
                             
-            <? } ?>
+            <?php } ?>
                             
             <form name="form1" method="post" action="index.php?page=changeaccount">
                 <tr>
@@ -381,13 +383,13 @@ if ($_SESSION['USERID'] == "") {
                 </td>
             </tr>
                             
-            <? if ($ERRORS) { ?>
+            <?php if ($ERRORS) { ?>
                             
             <tr>
-                <td colspan="2"><div align="center"><?= $ERRORS ?></div></td>
+                <td colspan="2"><div align="center"><?php echo $ERRORS; ?></div></td>
             </tr>
                             
-            <? } ?>
+            <?php } ?>
 
             <form name="form1" method="post" action="index.php?page=accounting">
                 <tr>
@@ -401,4 +403,4 @@ if ($_SESSION['USERID'] == "") {
         </table>
     </div>
 </div>
-<? } ?>
+<?php } ?>
