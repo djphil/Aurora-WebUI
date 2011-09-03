@@ -221,6 +221,15 @@ if($ALLOWREGISTRATION == '1'){
 			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_avatar_first_name),': <b>',htmlentities(isset($_POST['accountfirst']) ? $_POST['accountfirst'] : ''); ?></b></p><br />
 			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_avatar_last_name) ,': <b>',htmlentities(isset($_POST['accountlast' ]) ? $_POST['accountlast' ] : ''); ?></b></p><br />
 			<p><?php echo htmlentities(SYSNAME),' ',htmlentities($webui_email)            ,': <b>',htmlentities(isset($_POST['email'       ]) ? $_POST['email'       ] : ''); ?></b></p><br />
+<?php
+					$found = array();
+					$found[0] = json_encode(array('Method' => 'Authenticated', 'WebPassword' => md5(WIREDUX_PASSWORD), 'UUID' => cleanQuery($recieved->UUID)));
+					$do_post_requested = do_post_request($found);
+					$recieved = json_decode($do_post_requested);
+					if(empty($recieved) || isset($recieved->Verified) === false || $recieved->Verified !== true){
+						?><p>Could not activate account, please contact site administrator</p><?php
+					}
+?>
 		</div>
 	</div>
 <?php
