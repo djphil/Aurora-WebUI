@@ -514,6 +514,15 @@ FROM
 			return $registry[$hash][$hash2];
 		}
 	}
+	class RegionIteratorByNameFromDB extends RegionIteratorFromDB{
+		const sql_get_uuids =
+'SELECT
+RegionUUID
+FROM
+gridregions
+ORDER BY
+RegionName ASC';
+	}
 
 	class abstractUser extends abstractEntity implements typeUser{
 		protected function __construct(){ // here to prevent direct instantiation

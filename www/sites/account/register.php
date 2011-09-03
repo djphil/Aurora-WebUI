@@ -264,20 +264,11 @@ if($ALLOWREGISTRATION == '1'){
 
 	function displayRegions(){
 		$DbLink = new DB;
-		class RegionIterator extends Aurora\WebUI\RegionIteratorFromDB{
-			const sql_get_uuids =
-'SELECT
-	RegionUUID
-FROM
-	gridregions
-ORDER BY
-	RegionName ASC';
-		}
 
 		$PDODB = Aurora\WebUI\DB::i();
-		$regions = RegionIterator::r($PDODB['Aurora']);
+		$regions = Aurora\WebUI\RegionIteratorByNameFromDB::r($PDODB['Aurora']);
 		echo '<div class="roundedinput"><select require="true" label="startregion_label" id="register_input" wide="25" name="startregion">';
-		foreach(RegionIterator::r($PDODB['Aurora']) as $region){
+		foreach($regions as $region){
 			echo '<option value="',$region->RegionUUID(),'">',htmlentities($region->RegionName()),'</option>';
 		}
 		echo "</select></div>";

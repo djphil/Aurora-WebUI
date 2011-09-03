@@ -226,10 +226,11 @@ if ($_SESSION['USERID'] == "") {
                     <td class="even">
                         <select wide="25" name="region">
                             <?php
-                                $DbLink->query("SELECT regionName FROM " . C_REGIONS_TBL . " ORDER BY regionName ASC ");
-                                while (list($NAMERGN) = $DbLink->next_record()) { ?>        
-                            <option><?php echo $NAMERGN; ?></option>
-                            <?php } ?>
+								$regions = Aurora\WebUI\RegionIteratorByNameFromDB::r($PDODB['Aurora']);
+								foreach($regions as $region){
+									echo '<option>',htmlentities($region->RegionName()),'</option>',"\n";
+								}
+							?>
                         </select>
                     </td>
                 </tr>
