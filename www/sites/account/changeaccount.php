@@ -26,7 +26,7 @@ if ($_SESSION['USERID'] == "") {
 
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		if (($REGIOCHECK == "0") or ($REGIOCHECK == "1")) {
-			if ($_POST['Submit1'] == $webui_submit) {
+			if (isset($_POST['Submit1']) && $_POST['Submit1'] == $webui_submit) {
 				$startregion = $_POST['region'];
 
 				$DbLink->query("SELECT uuid FROM " . C_REGIONS_TBL . " WHERE regionName='".cleanQuery($startregion)."' ");
@@ -38,7 +38,7 @@ if ($_SESSION['USERID'] == "") {
 			}
 		}
 
-		if ($_POST['Submit2'] == $webui_submit) {
+		if (isset($_POST['Submit2']) && $_POST['Submit2'] == $webui_submit) {
 			if ($_POST['passnew'] == $_POST['passvalid']) {
 
 				$found = array();
@@ -55,7 +55,7 @@ if ($_SESSION['USERID'] == "") {
 				// var_dump($do_post_requested);
 				// echo '</pre>';
 
-				if ($recieved->{'Verified'} == "true") {
+				if (isset($recieved->Verified) && $recieved->Verified == true) {
 	//-----------------------------------MAIL--------------------------------------
 					$date_arr = getdate();
 					$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
@@ -84,7 +84,7 @@ if ($_SESSION['USERID'] == "") {
 
 
 
-		if ($_POST['Submit3'] == $webui_submit) {
+		if (isset($_POST['Submit3']) && $_POST['Submit3'] == $webui_submit) {
 			// Check if the new email address isn't empty
 			if (empty($_POST['emailnew']) === false) {
 
@@ -129,7 +129,7 @@ if ($_SESSION['USERID'] == "") {
 			}
 		}
 
-		if ($_POST['purge']) {
+		if (isset($_POST['purge'])) {
 			$query = "SELECT COUNT(*) FROM " . C_APPEARANCE_TBL . " WHERE PrincipalID ='" . cleanQuery($_SESSION['USERID']) . "'";
 			$DbLink->query($query);
 			list($numrows) = $DbLink->next_record();
@@ -146,7 +146,7 @@ if ($_SESSION['USERID'] == "") {
 			}
 		}
 
-		if ($_POST['Submit4'] == $webui_submit) {
+		if (isset($_POST['Submit4']) && $_POST['Submit4'] == $webui_submit) {
 			$found = array();
 			$found[0] = json_encode(array('Method' => 'CheckIfUserExists', 'WebPassword' => md5(WIREDUX_PASSWORD),
 						'Name' => cleanQuery($_POST['nameNew'])));
@@ -259,7 +259,7 @@ if ($_SESSION['USERID'] == "") {
                 </td>
             </tr>
                   
-            <?php if ($ERRORS) { ?>
+            <?php if (isset($ERRORS)) { ?>
                   
             <tr>
                 <td colspan="2"><div align="center"><?php $ERRORS; ?></div></td>
@@ -298,7 +298,7 @@ if ($_SESSION['USERID'] == "") {
                 <td colspan="2"><div align="center"><strong><?php echo $webui_change_email; ?></strong></div></td>
             </tr>
                             
-            <?php if ($ERRORS2) { ?>
+            <?php if (isset($ERRORS2)) { ?>
                             
             <tr>
                 <td colspan="2"><div align="center"><?php echo $ERRORS2; ?></div></td>
@@ -337,7 +337,7 @@ if ($_SESSION['USERID'] == "") {
                 </td>
             </tr>
                             
-            <?php if ($ERRORS2) { ?>
+            <?php if (isset($ERRORS2)) { ?>
                             
             <tr>
                 <td colspan="2" valign="top" bgcolor="#666666"><div align="center"><?php echo $ERRORS2; ?></div></td>
@@ -370,7 +370,7 @@ if ($_SESSION['USERID'] == "") {
                 </td>
             </tr>
                             
-            <?php if ($ERRORS) { ?>
+            <?php if (isset($ERRORS)) { ?>
                             
             <tr>
                 <td colspan="2"><div align="center"><?php echo $ERRORS; ?></div></td>
