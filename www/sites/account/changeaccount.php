@@ -1,10 +1,7 @@
 <?php
 if ($_SESSION['USERID'] == "") {
-    echo "<script language='javascript'>
-	<!--
-	window.location.href='index.php?page=home';
-	// -->
-	</script>";
+	header('Location:index.php?page=home');
+	exit;
 } else {
     $DbLink = new DB;
 
@@ -36,12 +33,8 @@ if ($_SESSION['USERID'] == "") {
 				list($homeid) = $DbLink->next_record();
 
 				$DbLink->query("UPDATE " . C_USERINFO_TBL . " SET HomeRegionID ='".cleanQuery($homeid)."' WHERE UserID='".cleanQuery($_SESSION['USERID'])."' ");
-				echo
-				"<script language='javascript'>
-				<!--
-					window.location.href='index.php?page=changeaccount&btn=2';
-				// -->
-				</script>";
+				header('Location:index.php?page=changeaccount&btn=2');
+				exit;
 			}
 		}
 
@@ -79,11 +72,8 @@ if ($_SESSION['USERID'] == "") {
 
 					session_unset();
 					session_destroy();
-					echo "<script language='javascript'>
-					<!--
-						window.location.href='index.php?page=home';
-					// -->
-					</script>";
+					header('Location:index.php?page=home');
+					exit;
 				} else {
 					$ERRORS = "<font color=white><b>Error saving new password. Please try again later.</b></font>";
 				}
@@ -195,12 +185,8 @@ if ($_SESSION['USERID'] == "") {
 
 					session_unset();
 					session_destroy();
-
-					echo "<script language='javascript'>
-					<!--
-						window.location.href='index.php?page=home';
-					// -->
-					</script>";
+					header('Location:index.php?page=home');
+					exit;
 				}
 			}
 		}
