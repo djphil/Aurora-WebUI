@@ -1,4 +1,4 @@
-<?php
+<?
 $GoPage= "index.php?page=regionlist";
 $Link1 = '';
 
@@ -6,12 +6,11 @@ $AnzeigeStart = 0;
 $AStart = isset($_GET['AStart']) ? $_GET['AStart'] : $AnzeigeStart;
 
 $ALimit = 10;
-
 // LINK SELECTOR
 $LinkAusgabe="page=index.php?page=regionlist&";
 
 $PDODB = Aurora\WebUI\DB::i();
-$count = (integer)$PDODB['Aurora']->query('SELECT COUNT(*) FROM ' . C_REGIONS_TBL)->fetchColumn();
+$count = (integer)$PDODB['Aurora']->query('SELECT COUNT(*) FROM ' . C_REGIONS_TBL . ' WHERE !(Flags & 512) && !(Flags & 1024)')->fetchColumn();
 
 $sitemax=ceil($count / 10);
 $sitestart=ceil($AStart / 10)+1;
@@ -113,7 +112,7 @@ if($sitemax == 0){$sitemax=1;}
 									$ORDERBY=" ORDER by locY ASC";
 								}
 							}
-							$query = sprintf('SELECT RegionName, LocX, LocY FROM %1$s %2$s LIMIT :offset,:limit', C_REGIONS_TBL, $ORDERBY);
+							$query = sprintf('SELECT RegionName, LocX, LocY FROM %1$s %2$s WHERE !(Flags & 512) && !(Flags & 1024) LIMIT :offset,:limit', C_REGIONS_TBL, $ORDERBY);
 							$sth = $PDODB['Aurora']->prepare($query);
 							$sth->bindValue(':offset', isset($_GET['AStart']) ? $_GET['AStart'] : 0, PDO::PARAM_INT);
 							$sth->bindValue(':limit',  isset($_GET['ALimit']) ? $_GET['ALimit'] : 10, PDO::PARAM_INT);

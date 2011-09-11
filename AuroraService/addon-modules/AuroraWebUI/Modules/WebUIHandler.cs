@@ -366,6 +366,7 @@ namespace OpenSim.Services
             sr.Close();
             body = body.Trim();
 
+            //m_log.DebugFormat("[XXX]: query String: {0}", body);
             m_log.TraceFormat("[WebUI]: query String: {0}", body);
             string method = string.Empty;
             OSDMap resp = new OSDMap();
@@ -464,9 +465,13 @@ namespace OpenSim.Services
                     {
                         resp = AbuseReportMarkComlete(map);
                     }
-                    else if (method == "SetWebLoginKey")
+                    else if(method == "SetWebLoginKey")
                     {
                         resp = SetWebLoginKey(map);
+                    }
+                    else if(method == "EditUser")
+                    {
+                        resp = EditUser(map);
                     }
                     else
                     {
@@ -515,7 +520,7 @@ namespace OpenSim.Services
             string HomeRegion = map["HomeRegion"].AsString();
             string Email = map["Email"].AsString();
             string AvatarArchive = map["AvatarArchive"].AsString();
-
+            int userLevel = map["UserLevel"].AsInteger();
   
 
             IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
@@ -549,7 +554,7 @@ namespace OpenSim.Services
             if (Verified)
             {
                 userID = user.PrincipalID;
-                user.UserLevel = -1;
+                user.UserLevel = userLevel;
 
                 // could not find a way to save this data here.
                 DateTime RLDOB = map["RLDOB"].AsDate();
@@ -784,7 +789,7 @@ namespace OpenSim.Services
             //Null means it went through without an error
             bool Verified = loginresp == null;
 
-            if ((auths.Authenticate(userID, "UserAccount", Password, 100) != string.Empty) && (Verified))
+            if ((auths.Authenticate(userID, "UserAccount", Util.Md5Hash(Password), 100) != string.Empty) && (Verified))
             {
                 auths.SetPassword (userID, "UserAccount", newPassword);
                 resp["Verified"] = OSD.FromBoolean(Verified);
@@ -858,6 +863,7 @@ namespace OpenSim.Services
                 resp["Error"] = OSD.FromString("No such user.");
             }
 
+
             return resp;
         }
 
@@ -865,13 +871,18 @@ namespace OpenSim.Services
         {
             OSDMap resp = new OSDMap();
             string Name = map["Name"].AsString();
+            UUID userID = map["UUID"].AsUUID();
 
-            UserAccount account = m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, Name);
+            UserAccount account = Name != "" ? 
+                m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, Name) :
+                 m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, userID);
             if (account != null)
             {
                 OSDMap accountMap = new OSDMap();
                 accountMap["Created"] = account.Created;
+                accountMap["Name"] = account.Name;
                 accountMap["PrincipalID"] = account.PrincipalID;
+                accountMap["Email"] = account.Email;
                 TimeSpan diff = DateTime.Now - Util.ToDateTime(account.Created);
                 int years = (int)diff.TotalDays / 356;
                 int days = years > 0 ? (int)diff.TotalDays / years : (int)diff.TotalDays;
@@ -895,10 +906,53 @@ namespace OpenSim.Services
                     else
                         accountMap["Partner"] = "";
                 }
+                IAgentConnector agentConnector = Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector>();
+                IAgentInfo agent = agentConnector.GetAgent(account.PrincipalID);
+                if(agent != null)
+                {
+                    OSDMap agentMap = new OSDMap();
+                    agentMap["RLName"] = agent.OtherAgentInformation["RLName"];
+                    agentMap["RLAddress"] = agent.OtherAgentInformation["RLAddress"];
+                    agentMap["RLZip"] = agent.OtherAgentInformation["RLZip"];
+                    agentMap["RLCity"] = agent.OtherAgentInformation["RLCity"];
+                    agentMap["RLCountry"] = agent.OtherAgentInformation["RLCountry"];
+                    resp["agent"] = agentMap;
+                }
                 resp["account"] = accountMap;
             }
 
             return resp;
+        }
+
+        OSDMap EditUser (OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            UUID principalID = map["UserID"].AsUUID();
+            UserAccount account = m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, principalID);
+            if(account != null)
+            {
+                account.Email = map["Email"];
+                if(m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, map["Name"].AsString()) == null)
+                    account.Name = map["Name"];
+                IAgentConnector agentConnector = Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector>();
+                IAgentInfo agent = agentConnector.GetAgent(account.PrincipalID);
+                if(agent == null)
+                {
+                    agentConnector.CreateNewAgent(account.PrincipalID);
+                    agent = agentConnector.GetAgent(account.PrincipalID);
+                }
+                if(agent != null)
+                {
+                    agent.OtherAgentInformation["RLName"] = map["RLName"];
+                    agent.OtherAgentInformation["RLAddress"] = map["RLAddress"];
+                    agent.OtherAgentInformation["RLZip"] = map["RLZip"];
+                    agent.OtherAgentInformation["RLCity"] = map["RLCity"];
+                    agent.OtherAgentInformation["RLCountry"] = map["RLCountry"];
+                    agentConnector.UpdateAgent(agent);
+                }
+                m_registry.RequestModuleInterface<IUserAccountService>().StoreUserAccount(account);
+            }
+            return respo;
         }
 
         OSDMap GetAvatarArchives(OSDMap map)
@@ -926,6 +980,7 @@ namespace OpenSim.Services
             {
                 resp["Verified"] = OSD.FromBoolean(false);
             }
+
 
             return resp;
         }

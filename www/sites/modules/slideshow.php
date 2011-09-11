@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.cycle.all.2.74.js"></script>
+<script type="text/javascript" src="<?= SYSURL ?>javascripts/jquery/jquery.cycle.all.2.74.js"></script>
 <script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.easing.compatibility.js"></script>
 <!--  initialize the slideshow when the DOM is ready -->
@@ -33,10 +33,10 @@ $(document).ready(function() {
 
 <?php if($displaySlideShow) { ?>
   <div class="slideshow">
-    <img src="<?php echo SYSURL; ?>images/gallery/login1.jpg" title="<?php echo $webui_slideshow_comment01; ?>" alt="" />
-  	<img src="<?php echo SYSURL; ?>images/gallery/login2.jpg" title="<?php echo $webui_slideshow_comment02; ?>" alt="" />
-	 <img src="<?php echo SYSURL; ?>images/gallery/login3.jpg" title="<?php echo $webui_slideshow_comment03; ?>" alt="" />
-  	<img src="<?php echo SYSURL; ?>images/gallery/login4.jpg" title="<?php echo $webui_slideshow_comment04; ?>" alt="" />
-  	<img src="<?php echo SYSURL; ?>images/gallery/login5.jpg" title="<?php echo $webui_slideshow_comment05; ?>" alt="" />
+    <img src="<?php echo SYSURL; ?>images/gallery/image1thumbnail.jpg" title="<?php echo $webui_slideshow_comment01; ?>" alt="" />
+  	<img src="<?php echo SYSURL; ?>images/gallery/image2thumbnail.jpg" title="<?php echo $webui_slideshow_comment02; ?>" alt="" />
+	 <img src="<?php echo SYSURL; ?>images/gallery/image3thumbnail.jpg" title="<?php echo $webui_slideshow_comment03; ?>" alt="" />
+  	<img src="<?php echo SYSURL; ?>images/gallery/image4thumbnail.jpg" title="<?php echo $webui_slideshow_comment04; ?>" alt="" />
+  	<img src="<?php echo SYSURL; ?>images/gallery/image5thumbnail.jpg" title="<?php echo $webui_slideshow_comment05; ?>" alt="" />
   </div>
 <?php } ?>

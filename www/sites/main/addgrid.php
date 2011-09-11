@@ -32,7 +32,7 @@
 				<td width="20%" align="center"><h3><?php echo $webui_addgrid_hippo; ?></h3></td>
 				<td width="20%" align="center"><h3><?php echo $webui_addgrid_imprudence; ?></h3></td>
 				<td width="20%" align="center"><h3><?php echo $webui_addgrid_phoenix; ?></h3></td>
-				<td width="20%" align="center"><h3><?php echo $webui_addgrid_emerald; ?></h3></td>
+				<td width="20%" align="center"><h3><?php echo $webui_addgrid_astra; ?></h3></td>
 				<td width="20%" align="center"><h3><?php echo $webui_addgrid_meerkat; ?></h3></td>
 			</tr>
 
@@ -53,9 +53,9 @@
 					<div class='highslide-caption' id="caption-for-thumb3"><?php echo $webui_addgrid_config_phoenix; ?>"</div>
 				</td>
 				<td width="20%" align="center">
-					<a id="thumb1" href="images/viewers/digigrids_emerald_01.jpg" class="highslide" onclick="return hs.expand(this, {wrapperClassName: 'borderless floating-caption', dimmingOpacity: 0.75, align: 'center'})">
-					<img style="margin-top: 15px" width="120" height="80" src="images/viewers/digigrids_emerald_thumb_01.jpg" alt="Highslide JS" title="<?php echo $webui_addgrid_click_to_enlarge; ?>" /></a>
-					<div class='highslide-caption' id="caption-for-thumb4"><?php echo $webui_addgrid_config_emerald; ?>"</div>
+					<a id="thumb4" href="images/viewers/aurora_astra_01.jpg" class="highslide" onclick="return hs.expand(this, {wrapperClassName: 'borderless floating-caption', dimmingOpacity: 0.75, align: 'center'})">
+					<img style="margin-top: 15px" width="120" height="80" src="images/viewers/aurora_astra_thumb_01.jpg" alt="Highslide JS" title="<?php echo $webui_addgrid_click_to_enlarge; ?>" /></a>
+					<div class='highslide-caption' id="caption-for-thumb4"><?php echo $webui_addgrid_config_astra; ?>"</div>
 				</td>
 				<td width="20%" align="center">
 					<a id="thumb1" href="images/viewers/digigrids_meerkat_01.jpg" class="highslide" onclick="return hs.expand(this, {wrapperClassName: 'borderless floating-caption', dimmingOpacity: 0.75, align: 'center'})">
@@ -127,17 +127,27 @@
 			<p>- <b><?php echo $webui_addgrid_KristenViewer; ?> :</b> Kirstens S20.exe" -loginuri <?php echo AddGrid_KristenURL; ?></p>
 		</div>
 
-		<div id="info"><p><?php echo $webui_addgrid_HyperGrid_info; ?></p></div>
+    <?php if($AddGrid_IWC_Actived) { ?>
+		<div id="info"><p><? echo $webui_addgrid_IWC_info; ?></p></div>
 		<div id="addgrid04">
-			<h3><?php echo $webui_addgrid_HyperGrid_title; ?></h3>
-			<p><?php echo $webui_addgrid_HyperGrid_content; ?></p>
+			<h3><? echo $webui_addgrid_IWC_title; ?></h3>
+			<p><b><? echo $webui_addgrid_IWC_content; ?> :</b> <?=AddGrid_IWC_URL_1 ?> </p>
 		</div>
-
-		<div id="alert"><p><?php echo $webui_addgrid_banned_info; ?></p></div>
+    <?php } ?>
+    
+    <?php if($AddGrid_HG_Actived) { ?>
+		<div id="info"><p><? echo $webui_addgrid_HG_info; ?></p></div>
+		<div id="addgrid04">
+			<h3><? echo $webui_addgrid_HG_title; ?></h3>
+			<p><b><? echo $webui_addgrid_HG_content; ?> :</b> <?=AddGrid_HG_URL_1 ?> </p>
+		</div>
+    <?php } ?>
+		
+    <div id="alert"><p><? echo $webui_addgrid_banned_info; ?></p></div>
 		<div id="addgrid05">
 			<h3><?php echo $webui_addgrid_banned_title; ?></h3>
 			<p><?php echo $webui_addgrid_banned_content; ?></p>
 		</div>
 		<!-- <?php // include("sites/modules/steps123.php"); ?> -->
 	</div>
-</div>
+

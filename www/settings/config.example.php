@@ -27,9 +27,11 @@ $displayMaintenancePage = false;
 ################### Add Grid Page ###################
 define("AddGrid_GridNick","Your Grid Nick");
 define("AddGrid_GridName","Your Grid Full Name");
+// DO NOT PUT YOUR REAL USER NAME AND PASSWORD HERE!!! THIS IS PUBLICALLY SHOWN AND JUST CHANGES HOW IT LOOKS ON THE ADDGRID PAGE!!
 define("AddGrid_AvFirstName","Your Avatar First Name");
 define("AddGrid_AvLastName","Your Avatar Last Name");
 define("AddGrid_AvPassword","Your Avatar Password");
+// END ABOVE WARNING
 define("AddGrid_LoginURL","http://your_webui_server_ip_or_dns:8002/");
 
 define("AddGrid_LoginPage","http://your_webui_server_ip_or_dns/loginscreen");
@@ -44,8 +46,15 @@ define("AddGrid_KokuaURL","http://your_webui_server_ip_or_dns:8002/");
 define("AddGrid_SecondLifeURL","http://your_webui_server_ip_or_dns:8002/");
 define("AddGrid_KristenURL","http://your_webui_server_ip_or_dns:8002/");
 
-// define("HyperGridURL1","secondlife://digigrids.no-ip.org:8002/");
-// define("HyperGridURL1","http://slurll.com/secondlife/digigrids.no-ip.org:8002:digigrids");
+$AddGrid_IWC_Actived = false;
+define("AddGrid_IWC_URL_1","secondlife://your_webui_server_ip_or_dns:8003/");
+
+$AddGrid_HG_Actived = false;
+define("AddGrid_HG_URL_1","secondlife://your_webui_server_ip_or_dns:8003/");
+// define("HG_URL_2","http://slurll.com/secondlife/your_webui_server_ip_or_dns:8003:digigrids");
+
+$AddGrid_Voice_Actived = false;
+$AddGrid_Currency_Actived = false;
 
 ################### Logo Light Effect ###################
 // Should we display the logo 
@@ -116,6 +125,7 @@ $unconfirmed_deltime="24";
 ################### Help support area #####################
 $support_emails_to="noreply@osgrid.org";
 $support_emails_subject="WebUI Support:";
+$support_IRC_channel="aurora-dev";
 
 ################### GridMap Settings  #####################
 // Allowing Zoom on your Map

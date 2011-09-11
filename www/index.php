@@ -1,4 +1,4 @@
-<?php
+<?
 /*
  * Copyright (c) 2007 - 2011 Contributors, http://opensimulator.org/, http://aurora-sim.org/
  * See CONTRIBUTORS for a full list of copyright holders.
@@ -11,9 +11,11 @@
 $start = microtime(true);
 
 //Use gzip if it is supported
-if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
-    ob_start("ob_gzhandler"); else
+if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')){
+    ob_start("ob_gzhandler");
+}else{
     ob_start();
+}
 session_start();
 
 echo "<!doctype html>";
@@ -54,7 +56,6 @@ if ($_POST['Submit'] == $webui_login) {
                                  'Password' => cleanQuery($_POST['logpassword'])));
     $do_post_request = do_post_request($found);
     $recieved = json_decode($do_post_request);
-
     if ($recieved && $recieved->{'Verified'} == "true") {
 		$UUIDC = $recieved->{'UUID'};
         $_SESSION['USERID'] = $UUIDC;
@@ -314,6 +315,7 @@ $('.menu').corner();
 $('#chat').corner();
 $('button, .roundedinput, .forgot_pass_bouton, .adminsettings_bouton').corner("10px");
 $('#roundedcoord').corner("10px");
+
 });
 /* Downlaod Page */
 $('#download1, #download2, #download3, #download1 a, #download2 a, #download3 a').corner();
@@ -464,7 +466,7 @@ $(document).ready(function(){
     $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepAdminSettingBouton1 ?>'}, 800);
   });
   
-	$("#create_news_button, #edit_news_item_button").hover(function() {
+
     $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
     $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
@@ -602,10 +604,14 @@ $(document).ready(function(){
         <div id="headerimages">
             <a href="<?php echo SYSURL ?>"><h1><?php echo SYSNAME; ?></h1></a>
         </div>
-        <!-- <div id="gridstatus"><?php // include("sites/gridstatus.php"); ?></div> -->
-        <div id="home_content_right"><?php include("sites/modules/slideshow.php"); ?></div>		
+        <!-- <div id="gridstatus"><?php //php include("sites/gridstatus.php"); ?></div> -->
+             <div id="home_content_right"><?php include("sites/modules/slideshow.php"); ?></div>
+		<div id="home_content_right"><?php include("sites/modules/slideeffect.php"); ?></div>
+		
+		
     </div><!-- fin de #header -->
 
+    <!-- <div id="menubar"><?php // include("sites/menubar.php"); ?></div> -->
     <?php if($displayMegaMenu) { ?>
       <div id="menubar"><?php include("sites/menus/megamenu/menubar.php"); ?></div>
     <?php } ?>
@@ -633,8 +639,6 @@ if($displayPageLoadTime) {printf ("$this_page_took %f $seconds_to_load.", $total
 </div>
 
 </div>
-<span id="problem">
-	You do not have your Javascript enabled, and this site requires it.
-</span>
+
 </body>
 </html>

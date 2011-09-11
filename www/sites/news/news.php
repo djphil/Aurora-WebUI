@@ -44,10 +44,10 @@ if($querypage*5 + 5 > $count)
                     $query = " where id='".cleanQuery($_GET[scr])."'";
                 }
                 $querypage = $querypage * 5;
-                $DbLink->query("SELECT id,title,message,time from " . C_NEWS_TBL . $query . " ORDER BY time DESC LIMIT $querypage,".($querypage+5));
+                $DbLink->query("SELECT id,title,message,time,user from " . C_NEWS_TBL . $query . " ORDER BY time DESC LIMIT $querypage,".($querypage+5));
                 $count = 0;
 
-                while (list($id, $title, $message, $time) = $DbLink->next_record()) {
+                while (list($id, $title, $message, $time, $user) = $DbLink->next_record()) {
                     $count++;
 
                     if (strlen($title) > 92) {
@@ -58,7 +58,10 @@ if($querypage*5 + 5 > $count)
                 ?>
 
                     <tr>
-                        <td width="100"><div class="news_time"><b><?php echo $TIMES; ?></b></div></td>
+                        <td width="100"><div class="news_time"><b><?php echo $TIMES; ?></b>
+                        <br><br>
+                        <b>By <?php echo $user;?>
+                        </div></td>
                         <td><div class="news_title"><h3> <a href="<?php echo SYSURL; ?>index.php?page=news&scr=<?php echo $id; ?>" ><?php echo $title; ?></a></h3></div></td>
                     </tr>
 

@@ -78,7 +78,7 @@ CREATE TABLE `wi_adminsetting` (
 ) AUTO_INCREMENT=2 ;
 
 INSERT INTO `wi_adminsetting` (`id`, `startregion`, `userdir`, `griddir`, `assetdir`, `lastnames`, `adress`, `region`, `allowRegistrations`, `verifyUsers`, `ForceAge`) VALUES 
-(1, '', '', '', '', '0', '0', '0','1','1',0);
+(1, '', '', '', '', '0', '0', '0','1','0',0);
 
 -- --------------------------------------------------------
 
@@ -508,11 +508,12 @@ CREATE TABLE `wi_startscreen_news` (
   `title` varchar(255) NOT NULL,
   `message` text NOT NULL,
   `time` int(10) unsigned NOT NULL default '0',
+  `user` varchar(255) NOT NULL,
   KEY `id` (`id`)
 ) AUTO_INCREMENT=2 ;
 
-INSERT INTO `wi_startscreen_news` (`id`, `title`, `message`, `time`) VALUES
-(1, '[COMPLETE] The new loginscreen is done and works fine so far', '<p>We built a new loginscreen which will inform you about Grid updates or changes. Also you can now see how many users and regions are online, and more.  Also, you may from time to time see an infowindow, which informs you about important news.  Have Fun !</p>', 1211321439);
+INSERT INTO `wi_startscreen_news` (`id`, `title`, `message`, `time`,`user`) VALUES
+(1, '[COMPLETE] The new loginscreen is done and works fine so far', '<p>We built a new loginscreen which will inform you about Grid updates or changes. Also you can now see how many users and regions are online, and more.  Also, you may from time to time see an infowindow, which informs you about important news.  Have Fun !</p>', 1211321439,'Grid News');
 
 -- --------------------------------------------------------
 
