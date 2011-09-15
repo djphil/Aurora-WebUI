@@ -61,11 +61,15 @@ if ($_SESSION['USERID'] == "") {
 					$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
 					$sendto = $oldemail;
 					$subject = "Password change on " . SYSNAME;
-					$body .= "Your account was successfully changed your password on " . SYSNAME . ".\n";
+					$body = "Your account was successfully changed your password on " . SYSNAME . ".\n";
 					$body .= "\n\n\n";
 					$body .= "Thank you for using " . SYSNAME . "";
 					$header = "From: " . SYSMAIL . "\r\n";
-					$mail_status = mail($sendto, $subject, $body, $header);
+					try{
+						$mail_status = mail($sendto, $subject, $body, $header);
+					}catch(ErrorException $e){
+						$ERRORS = '<b>Error sending email for password change</b>';
+					}
 	//-----------------------------MAIL END --------------------------------------
 
 
