@@ -952,7 +952,7 @@ namespace OpenSim.Services
                 }
                 m_registry.RequestModuleInterface<IUserAccountService>().StoreUserAccount(account);
             }
-            return respo;
+            return resp;
         }
 
         OSDMap GetAvatarArchives(OSDMap map)
