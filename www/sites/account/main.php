@@ -5,7 +5,7 @@
     <div id="searchpeople">
     <div id="info"><p><?php echo $webui_people_search_info; ?></p></div>
 <p>
-<?
+<?php
   $DbLink2 = new DB;
   $DbLink = new DB;
   
@@ -15,12 +15,12 @@
   else
 	$Display = 0;
 
-  if($_SESSION[ADMINID])
+  if(isset($_SESSION['ADMINID']) && $_SESSION['ADMINID'])
 	$AdminDisplay = " or (display='3')";
   
   else
 	$AdminDisplay = "";
-  $DbLink2->query("SELECT id,url,target FROM " . C_PAGE_TBL . " Where parent = '".cleanQuery($_GET[btn])."' and active='1' and ((display='$Display') or (display='2') " . $AdminDisplay . ") ORDER BY rank ASC ");
+  $DbLink2->query("SELECT id,url,target FROM " . C_PAGE_TBL . " Where parent = '".cleanQuery(isset($_GET['btn']) ? $_GET['btn'] : '')."' and active='1' and ((display='$Display') or (display='2') " . $AdminDisplay . ") ORDER BY rank ASC ");
   $a = get_defined_vars();
   
   while (list($siteid, $siteurl, $sitetarget) = $DbLink2->next_record()) 
