@@ -1,4 +1,4 @@
-<?php if($displaySlideEffect) { ?>
+<?php if(isset($displaySlideEffect) === true && $displaySlideEffect) { ?>
 
 <script type="text/javascript">
 $(document).ready(function () {
