@@ -1,4 +1,4 @@
-<?
+<?php
 if ($_SESSION[ADMINID]) {
 ?>
 
@@ -37,7 +37,7 @@ if ($_SESSION[ADMINID]) {
 	</div>
 </div>
 
-  <? } else { ?>
+  <?php } else { ?>
 	<div id="content">  	
     <div id="ContentHeaderLeft"><h5><?php echo SYSNAME; ?></h5></div>
     <div id="ContentHeaderCenter"></div>
@@ -45,12 +45,12 @@ if ($_SESSION[ADMINID]) {
 		<div id="login">        
 			<form action="index.php" method="POST" onsubmit="if (!validate(this)) return false;">
 				<table>
-					<tr><td class="error" colspan="2" align="center" id="error_message"><?=$_SESSION[ERROR];$_SESSION[ERROR]="";?><?=$_GET[ERROR]?></td></tr>
+					<tr><td class="error" colspan="2" align="center" id="error_message"><?php echo $_SESSION[ERROR];$_SESSION[ERROR]="";?><?php echo $_GET[ERROR]; ?></td></tr>
 					<tr>
 						<td class="odd"><span id="logname_label"><?php echo $webui_user_name ?>*</span></td>
 						<td class="odd">
               <div class="roundedinput">
-                <input require="true" label="logname_label" id="login_input" name="logname" type="text" value="<?= $_POST[logname] ?>" />
+                <input require="true" label="logname_label" id="login_input" name="logname" type="text" value="<?php echo $_POST[logname]; ?>" />
               </div>
             </td>
 					</tr>
@@ -70,4 +70,4 @@ if ($_SESSION[ADMINID]) {
 			</form>
 		</div>
 	</div>
-  <? } ?>
+  <?php } ?>
