@@ -112,7 +112,7 @@ if ($_SESSION['USERID'] == "") {
 
 				$UUID = $_SESSION['USERID'];
 
-            $DbLink->query("INSERT INTO " . C_CODES_TBL . " (code,UUID,info,email,time)VALUES('$code','$UUID','emailconfirm','".cleanQuery($_POST[emailnew])."'," . time() . ")");
+            $DbLink->query("INSERT INTO " . C_CODES_TBL . " (code,UUID,info,email,time)VALUES('$code','$UUID','emailconfirm','".cleanQuery($_POST['emailnew'])."'," . time() . ")");
 
 				//-----------------------------------MAIL--------------------------------------
 				$date_arr = getdate();
@@ -125,9 +125,14 @@ if ($_SESSION['USERID'] == "") {
 				$body .= "\n\n\n";
 				$body .= "Thank you for using " . SYSNAME . "";
 				$header = "From: " . SYSMAIL . "\r\n";
-				$mail_status = mail($sendto, $subject, $body, $header);
+				try{
+					$mail_status = mail($sendto, $subject, $body, $header);
 				//-----------------------------MAIL END --------------------------------------
-				$ERRORS2 = "<font color=white><b>An email has been send to confirm the new email</b></font>";
+					$ERRORS2 = "<font color=white><b>An email has been send to confirm the new email</b></font>";
+				}
+				catch(ErrorException $e){
+					$ERRORS2 = "<font color=white><b>The email to confirm the new address could not be sent but the change has been recorded</b></font>";
+				}
 			} else {
 				$ERRORS2 = "<font color=white><b>Can't have an empty emailaddress</b></font>";
 			}
@@ -157,8 +162,7 @@ if ($_SESSION['USERID'] == "") {
 			$do_post_requested = do_post_request($found);
 			$recieved = json_decode($do_post_requested);
 
-
-			if ($recieved->{'Verified'} != "false") {
+			if ($recieved->{'Verified'} != "False") {
 				$ERRORS2 = "<font color=white><b>User already Exists</b></font>";
 			} else {
 				$found = array();
@@ -174,18 +178,21 @@ if ($_SESSION['USERID'] == "") {
 				// var_dump($do_post_requested);
 				// echo '</pre>';
 
-				if ($recieved->{'Verified'} == "true") {
+				if ($recieved->{'Verified'} == "True") {
 					//-----------------------------------MAIL--------------------------------------
 					$date_arr = getdate();
 					$date = "$date_arr[mday].$date_arr[mon].$date_arr[year]";
 					$sendto = $oldemail;
 					$subject = "Username changed on " . SYSNAME;
-					$body .= "Your account login name as changed from " . $Name . " to " . $_POST['nameNew'] . " on " . SYSNAME . ".\n";
+					$body = "Your account login name as changed from " . $Name . " to " . $_POST['nameNew'] . " on " . SYSNAME . ".\n";
 					$body .= "\n\n\n";
 					$body .= "Thank you for using " . SYSNAME . "";
 					$header = "From: " . SYSMAIL . "\r\n";
-					$mail_status = mail($sendto, $subject, $body, $header);
+					try{
+						$mail_status = mail($sendto, $subject, $body, $header);
 					//-----------------------------MAIL END --------------------------------------
+					}catch(ErrorException $e){ // silently failing on email change since no code confirmation is required of the user
+					}
 
 					session_unset();
 					session_destroy();
