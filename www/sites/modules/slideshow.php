@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?= SYSURL ?>javascripts/jquery/jquery.cycle.all.2.74.js"></script>
+<script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.cycle.all.2.74.js"></script>
 <script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="<?php echo SYSURL; ?>javascripts/jquery/jquery.easing.compatibility.js"></script>
 <!--  initialize the slideshow when the DOM is ready -->
