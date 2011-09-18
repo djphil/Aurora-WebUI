@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION[ADMINID]) {
+if ($_SESSION['ADMINID']) {
 ?>
 
 <div id="content">
@@ -22,11 +22,11 @@ if ($_SESSION[ADMINID]) {
 	else
 		$Display = 0;
 
-	if($_SESSION[ADMINID])
+	if($_SESSION['ADMINID'])
 		$AdminDisplay = " or (display='3')";
 	else
 		$AdminDisplay = "";
-	$DbLink2->query("SELECT id,url,target FROM " . C_PAGE_TBL . " Where parent = '".cleanQuery($_GET[btn])."' and active='1' and ((display='$Display') or (display='2') " . $AdminDisplay . ") ORDER BY rank ASC ");
+	$DbLink2->query("SELECT id,url,target FROM " . C_PAGE_TBL . " Where parent = '".cleanQuery($_GET['btn'])."' and active='1' and ((display='$Display') or (display='2') " . $AdminDisplay . ") ORDER BY rank ASC ");
 	$a = get_defined_vars();
 	while (list($siteid, $siteurl, $sitetarget) = $DbLink2->next_record()) 
 	{
@@ -45,12 +45,12 @@ if ($_SESSION[ADMINID]) {
 		<div id="login">        
 			<form action="index.php" method="POST" onsubmit="if (!validate(this)) return false;">
 				<table>
-					<tr><td class="error" colspan="2" align="center" id="error_message"><?php echo $_SESSION[ERROR];$_SESSION[ERROR]="";?><?php echo $_GET[ERROR]; ?></td></tr>
+					<tr><td class="error" colspan="2" align="center" id="error_message"><?php echo $_SESSION['ERROR'];$_SESSION['ERROR']="";?><?php echo $_GET['ERROR']; ?></td></tr>
 					<tr>
 						<td class="odd"><span id="logname_label"><?php echo $webui_user_name ?>*</span></td>
 						<td class="odd">
               <div class="roundedinput">
-                <input require="true" label="logname_label" id="login_input" name="logname" type="text" value="<?php echo $_POST[logname]; ?>" />
+                <input require="true" label="logname_label" id="login_input" name="logname" type="text" value="<?php echo $_POST['logname']; ?>" />
               </div>
             </td>
 					</tr>
