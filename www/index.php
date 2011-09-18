@@ -466,7 +466,7 @@ $(document).ready(function(){
     $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepAdminSettingBouton1 ?>'}, 800);
   });
   
-
+	$("#create_news_button, #edit_news_item_button, #info_loginscreen_button").hover(function() {
     $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorHoverStepLoginBouton1 ?>'}, 800);
   },function() {
     $(this).stop().animate({ backgroundColor: '<?php echo $BackgroundColorEndStepLoginBouton1 ?>'}, 800);
