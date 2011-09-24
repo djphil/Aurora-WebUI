@@ -56,7 +56,7 @@ if ($_POST['Submit'] == $webui_login) {
                                  'Password' => cleanQuery($_POST['logpassword'])));
     $do_post_request = do_post_request($found);
     $recieved = json_decode($do_post_request);
-    if ($recieved && $recieved->{'Verified'} == "true") {
+    if (isset($recieved,$recieved->Verified) && $recieved->{'Verified'} == "true") {
 		$UUIDC = $recieved->{'UUID'};
         $_SESSION['USERID'] = $UUIDC;
         $_SESSION['NAME'] = $_POST['logname'];

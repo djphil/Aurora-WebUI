@@ -102,6 +102,10 @@ namespace Aurora\WebUI{
 				throw new RuntimeException('Cannot prepare query, check ' . get_called_class() . '::sql_get_uuids', 1);
 			}
 
+			if(!($sth instanceof \PDOStatement)){
+				throw new RuntimeException('Could not prepare query');
+			}
+
 			if($this instanceof EntityIteratorBindsValues){
 				try{
 					$this->bindValues($sth);
