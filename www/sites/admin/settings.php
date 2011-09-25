@@ -1,38 +1,38 @@
 <?
-if ($_SESSION[ADMINID]) {
+if ($_SESSION['ADMINID']) {
 ?>
 
 <?
     $DbLink = new DB;
 
-    if ($_POST[Submitreg] == "$webui_admin_settings_save_bouton") {
-	    $DbLink->query("UPDATE " . C_ADM_TBL . " SET startregion='".cleanQuery($_POST[region])."'");
-        $DbLink->query("UPDATE " . C_ADM_TBL . " SET adress='".cleanQuery($_POST[adressset])."',region='".cleanQuery($_POST[regtyp])."',startregion='".cleanQuery($_POST[region])."'");
+    if ($_POST['Submitreg'] == "$webui_admin_settings_save_bouton") {
+	    $DbLink->query("UPDATE " . C_ADM_TBL . " SET startregion='".cleanQuery($_POST['region'])."'");
+        $DbLink->query("UPDATE " . C_ADM_TBL . " SET adress='".cleanQuery($_POST['adressset'])."',region='".cleanQuery($_POST['regtyp'])."',startregion='".cleanQuery($_POST['region'])."'");
     }
 
     if ($_POST[Submit2] == "$webui_admin_settings_save_bouton") {
-        if ($_POST[lastname] != "") {
-            $DbLink->query("SELECT name FROM " . C_NAMES_TBL . " Where name='".cleanQuery($_POST[lastname])."'");
+        if ($_POST['lastname'] != "") {
+            $DbLink->query("SELECT name FROM " . C_NAMES_TBL . " Where name='".cleanQuery($_POST['lastname'])."'");
             list($checkname) = $DbLink->next_record();
 
             if ($checkname) {
                 
             } else {
-                $DbLink->query("INSERT INTO " . C_NAMES_TBL . " (name,active)VALUES('".cleanQuery($_POST[lastname])."','1')");
+                $DbLink->query("INSERT INTO " . C_NAMES_TBL . " (name,active)VALUES('".cleanQuery($_POST['lastname'])."','1')");
             }
         }
     }
 
     if ($_POST[Submit3] == "$webui_admin_settings_save_bouton") {
-        $DbLink->query("UPDATE " . C_NAMES_TBL . " SET active='0' WHERE name='".cleanQuery($_POST[deactivelast])."'");
+        $DbLink->query("UPDATE " . C_NAMES_TBL . " SET active='0' WHERE name='".cleanQuery($_POST['deactivelast'])."'");
     }
 
     if ($_POST[Submit4] == "$webui_admin_settings_save_bouton") {
-        $DbLink->query("UPDATE " . C_NAMES_TBL . " SET active='1' WHERE name='".cleanQuery($_POST[activatelast])."'");
+        $DbLink->query("UPDATE " . C_NAMES_TBL . " SET active='1' WHERE name='".cleanQuery($_POST['activatelast'])."'");
     }
 
     if ($_POST[Submit5] == "$webui_admin_settings_save_bouton") {
-        $DbLink->query("DELETE FROM " . C_NAMES_TBL . " WHERE name='".cleanQuery($_POST[delname])."'");
+        $DbLink->query("DELETE FROM " . C_NAMES_TBL . " WHERE name='".cleanQuery($_POST['delname'])."'");
     }
 
     if ($_POST[Submitnam2] == "$webui_admin_settings_activate_bouton") {
@@ -43,27 +43,27 @@ if ($_SESSION[ADMINID]) {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET lastnames='0'");
     }
 
-    if ($_POST[allowRegistrationSubmit] == "$webui_admin_settings_activate_bouton") {
+    if ($_POST['allowRegistrationSubmit'] == "$webui_admin_settings_activate_bouton") {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET allowRegistrations='1'");
     }
 
-    if ($_POST[allowRegistrationSubmit] == "$webui_admin_settings_desactivate_bouton") {
+    if ($_POST['allowRegistrationSubmit'] == "$webui_admin_settings_desactivate_bouton") {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET allowRegistrations='0'");
     }
 
-    if ($_POST[verifyusersSubmit] == "$webui_admin_settings_activate_bouton") {
+    if ($_POST['verifyusersSubmit'] == "$webui_admin_settings_activate_bouton") {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET verifyUsers='1'");
     }
 
-    if ($_POST[verifyusersSubmit] == "$webui_admin_settings_desactivate_bouton") {
+    if ($_POST['verifyusersSubmit'] == "$webui_admin_settings_desactivate_bouton") {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET verifyUsers='0'");
     }
 	
-	if ($_POST[Submitage] == "Activate") {
+	if ($_POST['Submitage'] == "Activate") {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET ForceAge='1'");
     }
 
-    if ($_POST[Submitage] == "Deactivate") {
+    if ($_POST['Submitage'] == "Deactivate") {
         $DbLink->query("UPDATE " . C_ADM_TBL . " SET ForceAge='0'");
     }
 
