@@ -5,173 +5,173 @@ return;
   $DbLink = new DB;
 
   // For Top Panel Slider
-  if ($_POST[displayTopPanelSlider] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayTopPanelSlider'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayTopPanelSlider = '1' ");
   }
   
-  if ($_POST[displayTopPanelSlider] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayTopPanelSlider'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayTopPanelSlider = '0' ");
   }
 
   // For Template Selector
-  if ($_POST[displayTemplateSelector] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayTemplateSelector'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayTemplateSelector = '1' ");
   }
   
-  if ($_POST[displayTemplateSelector] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayTemplateSelector'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayTemplateSelector = '0' ");
   }
 
   // For Style Switcher
-  if ($_POST[displayStyleSwitcher] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayStyleSwitcher'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayStyleSwitcher = '1' ");
   }
   
-  if ($_POST[displayStyleSwitcher] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayStyleSwitcher'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayStyleSwitcher = '0' ");
   }
 
   // For Style Sizer
-  if ($_POST[displayStyleSizer] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayStyleSizer'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayStyleSizer = '1' ");
   }
   
-  if ($_POST[displayStyleSizer] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayStyleSizer'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayStyleSizer = '0' ");
   }
 
   // For Font Sizer
-  if ($_POST[displayFontSizer] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayFontSizer'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayFontSizer = '1' ");
   }
   
-  if ($_POST[displayFontSizer] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayFontSizer'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayFontSizer = '0' ");
   }
 
   // For Language Selector
-  if ($_POST[displayLanguageSelector] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayLanguageSelector'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayLanguageSelector = '1' ");
   }
   
-  if ($_POST[displayLanguageSelector] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayLanguageSelector'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayLanguageSelector = '0' ");
   }
 
   // For Scrolling Text
-  if ($_POST[displayScrollingText] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayScrollingText'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayScrollingText = '1' ");
   }
   
-  if ($_POST[displayScrollingText] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayScrollingText'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayScrollingText = '0' ");
   }
   
   // For Welcome Message
-  if ($_POST[displayWelcomeMessage] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayWelcomeMessage'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayWelcomeMessage = '1' ");
   }
   
-  if ($_POST[displayWelcomeMessage] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayWelcomeMessage'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayWelcomeMessage = '0' ");
   }
 
   // For Logo
-  if ($_POST[displayLogo] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayLogo'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayLogo = '1' ");
   }
   
-  if ($_POST[displayLogo] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayLogo'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayLogo = '0' ");
   }
   
   // For Logo Effect
-  if ($_POST[displayLogoEffect] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayLogoEffect'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayLogoEffect = '1' ");
   }
   
-  if ($_POST[displayLogoEffect] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayLogoEffect'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayLogoEffect = '0' ");
   }
   
   // For Slide Show
-  if ($_POST[displaySlideShow] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displaySlideShow'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displaySlideShow = '1' ");
   }
   
-  if ($_POST[displaySlideShow] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displaySlideShow'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displaySlideShow = '0' ");
   }
   
   // For Mega Menu
-  if ($_POST[displayMegaMenu] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayMegaMenu'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayMegaMenu = '1' ");
   }
   
-  if ($_POST[displayMegaMenu] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayMegaMenu'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayMegaMenu = '0' ");
   }
   
   // For Date
-  if ($_POST[displayDate] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayDate'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayDate = '1' ");
   }
   
-  if ($_POST[displayDate] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayDate'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayDate = '0' ");
   }
   
   // For Time
-  if ($_POST[displayTime] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayTime'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayTime = '1' ");
   }
   
-  if ($_POST[displayTime] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayTime'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayTime = '0' ");
   }
   
   // For Rounded Corner
-  if ($_POST[displayRoundedCorner] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayRoundedCorner'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayRoundedCorner = '1' ");
   }
   
-  if ($_POST[displayRoundedCorner] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayRoundedCorner'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayRoundedCorner = '0' ");
   }
   
   // For Background Color Animation
-  if ($_POST[displayBackgroundColorAnimation] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayBackgroundColorAnimation'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayBackgroundColorAnimation = '1' ");
   }
   
-  if ($_POST[displayBackgroundColorAnimation] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayBackgroundColorAnimation'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayBackgroundColorAnimation = '0' ");
   }
 
   // For Page Load Time
-  if ($_POST[displayPageLoadTime] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayPageLoadTime'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayPageLoadTime = '1' ");
   }
   
-  if ($_POST[displayPageLoadTime] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayPageLoadTime'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayPageLoadTime = '0' ");
   }
 
   // For W3c
-  if ($_POST[displayW3c] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayW3c'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayW3c = '1' ");
   }
   
-  if ($_POST[displayW3c] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayW3c'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayW3c = '0' ");
   }
   
   // For Rss
-  if ($_POST[displayRss] == "$webui_admin_settings_activate_bouton") {
+  if ($_POST['displayRss'] == "$webui_admin_settings_activate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayRss = '1' ");
   }
   
-  if ($_POST[displayRss] == "$webui_admin_settings_desactivate_bouton") {
+  if ($_POST['displayRss'] == "$webui_admin_settings_desactivate_bouton") {
     $DbLink->query("UPDATE " . C_ADMINMODULES_TBL . " SET displayRss = '0' ");
   }
 
