@@ -1,5 +1,5 @@
 <?php
-if (!isset($_SESSION['ADMINID'])) {
+if (!isset($_SESSION['ADMINID']) || !$_SESSION['ADMINID']) {
 return;
 }
 $DbLink = new DB;

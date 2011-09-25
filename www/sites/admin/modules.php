@@ -1,6 +1,7 @@
-<? if ($_SESSION[ADMINID]) { ?>
-
 <?php
+if (!isset($_SESSION['ADMINID']) || !$_SESSION['ADMINID']) {
+return;
+}
   $DbLink = new DB;
 
   // For Top Panel Slider
