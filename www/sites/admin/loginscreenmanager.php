@@ -1,25 +1,19 @@
 <?php
 // Admin
-if ($_SESSION[ADMINID]) {
+if (!isset($_SESSION['ADMINID']) || !$_SESSION['ADMINID']) {
+	header('Location:index.php?page=home');
+	exit;
+}
   $DbLink = new DB;
 
-  if ($_GET[delete] == 1) {
+  if (isset($_GET['delete'], $_GET['id']) && $_GET['delete'] == 1) {
     $DbLink->query("DELETE from " . C_NEWS_TBL . " WHERE (id = '" . cleanQuery($_GET['id']) . "')");
   }
 
-  if ($_POST[infobox] == "save") {
+  if (isset($_POST['infobox']) && $_POST['infobox'] == "save") {
     $message = $_POST['infomessage'];
-    $DbLink->query("UPDATE " . C_INFOWINDOW_TBL . " SET gridstatus='" . cleanQuery($_POST['gridstatus']) . "',active='" . cleanQuery($_POST['boxstatus']) . "',color='" . cleanQuery($_POST['boxcolor']) . "',title='" . cleanQuery($_POST['infotitle']) . "',message='" . cleanQuery($message) . "'");
+    $DbLink->query("UPDATE " . C_INFOWINDOW_TBL . " SET gridstatus='" . cleanQuery(isset($_POST['gridstatus']) ? $_POST['gridstatus'] : '') . "',active='" . cleanQuery(isset($_POST['boxstatus']) ? $_POST['boxstatus'] : '') . "',color='" . cleanQuery(isset($_POST['boxcolor']) ? $_POST['boxcolor'] : '') . "',title='" . cleanQuery(isset($_POST['infotitle']) ? $_POST['infotitle'] : '') . "',message='" . cleanQuery(isset($message) ? $message : '') . "'");
   }
-} 
-
-else {
-  echo "<script language=\"javascript\">
-  <!--
-  window.location.href=\"index.php?page=home\";
-  // -->
-</script>";
-}
 
 $DbLink->query("SELECT gridstatus,active,color,title,message  FROM " . C_INFOWINDOW_TBL . " ");
 list($gridstatus, $boxstatus, $boxcolor, $infotitle, $infomessage) = $DbLink->next_record();
