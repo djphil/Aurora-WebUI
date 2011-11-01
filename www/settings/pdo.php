@@ -39,9 +39,11 @@ namespace Aurora\WebUI{
 				throw new InvalidArgumentException('key must be a string'                     , 2);
 			}else if(ctype_graph($offset) === false){
 				throw new InvalidArgumentException('key can only contain printable characters', 3);
-			}else if(($value instanceof PDO) === false){
+			}
+			$this->lastKey = $offset; // doing this to aid debugging and user-friendly error reporting.
+			if(($value instanceof PDO) === false){
 				throw new InvalidArgumentException('Value must be an instance of PDO'         , 4);
-			}else if(isset($this[$offset]) === true){
+			}else if(isset($this[$offset]) === true && $this[$offset] !== $value){ // if it's the same object then this will have little or no effect.
 				throw new InvalidArgumentException('Cannot overwrite previously defined entry', 5);
 			}
 			$this->PDO[$offset] = $value;
@@ -49,6 +51,11 @@ namespace Aurora\WebUI{
 
 		public function offsetUnset($offset){
 			throw new RuntimeException('DB::offsetUnset() is disabled');
+		}
+
+		protected $lastKey;
+		public function lastKey(){
+			return $this->lastKey;
 		}
 	}
 }

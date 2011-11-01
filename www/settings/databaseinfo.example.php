@@ -21,13 +21,31 @@ define("C_DB_PASS","changeme");
 }
 
 namespace Aurora\WebUI{
+	use InvalidArgumentException;
+
 	use Aurora\WebUI\PDO\helper as PDOH;
 
 ##################### PDO #############################
-require('pdo.php');
-$PDODB = DB::i();
-$PDODB['Aurora']      = null; // replace with a call to PDOH::PDO()
-$PDODB['AuroraUsers'] = null; // replace with a call to PDOH::PDO()
-$PDODB['AuroraWebUI'] = PDOH::PDO('mysql:host=localhost;dbname=aurora', 'aurora', 'changeme');
+	require('pdo.php');
+	$PDODB = DB::i();
+	try{
+		$PDODB['Aurora']      = null; // replace with a call to PDOH::PDO()
+		$PDODB['AuroraUsers'] = null; // replace with a call to PDOH::PDO()
+		$PDODB['AuroraWebUI'] = PDOH::PDO('mysql:host=localhost;dbname=aurora', 'aurora', 'changeme'); // this is an example of how to use PDOH::PDO()
+	}catch(InvalidArgumentException $e){
+		switch($e->getCode()){
+			case 4:
+				header('HTTP/1.1 500 Internal Server Error',true,500);
+				die('You forgot to setup the call for the \'' . $PDODB->lastKey() . '\' tables!');
+			break;
+			case 5:
+				header('HTTP/1.1 500 Internal Server Error',true,500);
+				die('You already configured the \'' . $PDODB->lastKey() . '\' tables, did you accidentally duplicate a line?');
+			break;
+			default:
+				throw $e;
+			break;
+		}
+	}
 }
 ?>
