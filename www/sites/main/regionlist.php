@@ -1,4 +1,4 @@
-<?
+<?php
 $GoPage= "index.php?page=regionlist";
 $Link1 = '';
 
@@ -81,13 +81,13 @@ if($sitemax == 0){$sitemax=1;}
 		<thead>
 			<tr>
 				<td width="55%">
-					<a href="index.php?page=regionlist&order=name" title="<?php echo $webui_pagination_tooltips_sortn; ?>"><p><?php echo $webui_region_name; ?></p></a>
+					<p><?php echo $webui_region_name; ?></p>
 				</td>
 				<td width="15%">
-					<a href="index.php?page=regionlist&order=x" title="<?php echo $webui_pagination_tooltips_sortx; ?>"><p><?php echo $webui_location; ?>: X</p></a>
+					<p><?php echo $webui_location; ?>: X</p>
 				</td>
 				<td width="15%">
-					<a href="index.php?page=regionlist&order=y" title="<?php echo $webui_pagination_tooltips_sorty; ?>"><p><?php echo $webui_location; ?>: Y</p></a>
+					<p><?php echo $webui_location; ?>: Y</p>
 				</td>
 				<td width="15%">
 					<p><?php echo $webui_info ?></p>
@@ -100,45 +100,35 @@ if($sitemax == 0){$sitemax=1;}
 					<table>
 						<tbody>
 						<?php
+							$regionIterator = Aurora\WebUI\RegionIteratorByNameFromDB::r($PDODB['Aurora']);
+							$regionIterator->seek(isset($_GET['AStart']) ? $_GET['AStart'] : 0);
 							$w=0;
-							$ORDERBY=" ORDER by RegionName ASC";
-							if(isset($_GET['order'])){
-								if($_GET['order']=="name"){
-									$query = 
-									$ORDERBY=" ORDER by regionName ASC";
-								}else if($_GET['order']=="x"){
-									$ORDERBY=" ORDER by locX ASC";
-								}else if($_GET['order']=="y"){
-									$ORDERBY=" ORDER by locY ASC";
-								}
-							}
-							$query = sprintf('SELECT RegionName, LocX, LocY FROM %1$s %2$s WHERE !(Flags & 512) && !(Flags & 1024) LIMIT :offset,:limit', C_REGIONS_TBL, $ORDERBY);
-							$sth = $PDODB['Aurora']->prepare($query);
-							$sth->bindValue(':offset', isset($_GET['AStart']) ? $_GET['AStart'] : 0, PDO::PARAM_INT);
-							$sth->bindValue(':limit',  isset($_GET['ALimit']) ? $_GET['ALimit'] : 10, PDO::PARAM_INT);
-							$sth->execute();
-							while(list($RegionName,$locX,$locY) = $sth->fetch(PDO::FETCH_NUM)){
+							while($regionIterator->valid()){
 							$w++;
+								$region = $regionIterator->current();
 						?>
 							<tr class="<?php echo ($odd = $w%2 )? "even":"odd"; ?>" >
 								<td width="55%">
-									<div><p><?php echo $RegionName; ?></p></div>
+									<div><p><?php echo $region->RegionName(); ?></p></div>
 								</td>
 								<td width="15%">
-									<div><p><?php echo $locX/256; ?></p></div>
+									<div><p><?php echo $region->LocX()/256; ?></p></div>
 								</td>
 								<td width="15%">
-									<div><p><?php echo $locY/256; ?></p></div>
+									<div><p><?php echo $region->LocY()/256; ?></p></div>
 								</td>
 								<td width="15%">
 									<div>
-										<a onClick="window.open('<?php echo SYSURL,'app/region/?x=',$locX,'&y=',$locY;?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=400')">
+										<a onClick="window.open('<?php echo SYSURL,'app/region/?x=',$region->LocX(),'&y=',$region->locY();?>','mywindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=400')">
 											<p><?php echo $webui_more_info ?></p>
 										</a>
 									</div>
 								</td>
 							</tr>
-						<?php } ?>
+						<?php
+								$regionIterator->next();
+							}
+						?>
 						</tbody>
 					</table>
 				</td>
