@@ -72,6 +72,8 @@ namespace OpenSim.Services
             get { return GetType().Name; }
         }
 
+        #region IService
+
         public void Initialize(IConfigSource config, IRegistryCore registry)
         {
         }
@@ -119,6 +121,10 @@ namespace OpenSim.Services
         public void FinishedStartup()
         {
         }
+
+        #endregion
+
+        #region textures
 
         public Hashtable OnHTTPGetTextureImage(Hashtable keysvals)
         {
@@ -331,9 +337,13 @@ namespace OpenSim.Services
             return null;
         }
 
+        #endregion
+
+        #region Console Commands
+
         private void PromoteUser (string[] cmd)
         {
-            string name = MainConsole.Instance.CmdPrompt ("Name of user");
+            string name = MainConsole.Instance.Prompt ("Name of user");
             UserAccount acc = m_registry.RequestModuleInterface<IUserAccountService> ().GetUserAccount (UUID.Zero, name);
             if (acc == null)
             {
@@ -348,7 +358,7 @@ namespace OpenSim.Services
 
         private void DemoteUser (string[] cmd)
         {
-            string name = MainConsole.Instance.CmdPrompt ("Name of user");
+            string name = MainConsole.Instance.Prompt ("Name of user");
             UserAccount acc = m_registry.RequestModuleInterface<IUserAccountService> ().GetUserAccount (UUID.Zero, name);
             if (acc == null)
             {
@@ -360,6 +370,8 @@ namespace OpenSim.Services
             Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector> ().UpdateAgent (agent);
             m_log.Warn ("Admin removed");
         }
+
+        #endregion
     }
 
     public class WireduxHTTPHandler : BaseStreamHandler
@@ -370,6 +382,7 @@ namespace OpenSim.Services
         protected IRegistryCore m_registry;
         protected OSDMap GridInfo;
         private UUID AdminAgentID;
+        private Dictionary<string, MethodInfo> APIMethods = new Dictionary<string, MethodInfo>();
 
         public WireduxHTTPHandler(string pass, IRegistryCore reg, OSDMap gridInfo, UUID adminAgentID) :
             base("POST", "/WIREDUX")
@@ -378,7 +391,17 @@ namespace OpenSim.Services
             m_password = Util.Md5Hash(pass);
             GridInfo = gridInfo;
             AdminAgentID = adminAgentID;
+            MethodInfo[] methods = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            for (uint i = 0; i < methods.Length; ++i)
+            {
+                if (methods[i].IsPrivate && methods[i].ReturnType == typeof(OSDMap) && methods[i].GetParameters().Length == 1 && methods[i].GetParameters()[0].ParameterType == typeof(OSDMap))
+                {
+                    APIMethods[methods[i].Name] = methods[i];
+                }
+            }
         }
+
+        #region BaseStreamHandler
 
         public override byte[] Handle(string path, Stream requestData,
                 OSHttpRequest httpRequest, OSHttpResponse httpResponse)
@@ -388,7 +411,6 @@ namespace OpenSim.Services
             sr.Close();
             body = body.Trim();
 
-            //m_log.DebugFormat("[XXX]: query String: {0}", body);
             m_log.TraceFormat("[WebUI]: query String: {0}", body);
             string method = string.Empty;
             OSDMap resp = new OSDMap();
@@ -396,141 +418,21 @@ namespace OpenSim.Services
             {
                 OSDMap map = (OSDMap)OSDParser.DeserializeJson(body);
                 //Make sure that the person who is calling can access the web service
-                if (VerifyPassword(map))
+                if (map.ContainsKey("WebPassword") && (map["WebPassword"] == m_password))
                 {
                     method = map["Method"].AsString();
                     if (method == "Login")
                     {
-                        resp = ProcessLogin(map,false);
+                        resp = Login(map,false);
                     }
                     else if (method == "AdminLogin")
                     {
-                        resp = ProcessLogin(map,true);
+                        resp = Login(map,true);
                     }
-                    else if (method == "CreateAccount")
+                    else if (APIMethods.ContainsKey(method))
                     {
-                        resp = ProcessCreateAccount(map);
-                    }
-                    else if (method == "OnlineStatus")
-                    {
-                        resp = ProcessOnlineStatus(map);
-                    }
-                    else if (method == "Authenticated")
-                    {
-                        resp = Authenticated(map);
-                    }
-                    else if (method == "ActivateAccount")
-                    {
-                        resp = ActivateAccount(map);
-                    }
-                    else if (method == "GetGridUserInfo")
-                    {
-                        resp = GetGridUserInfo(map);
-                    }
-                    else if (method == "ChangePassword")
-                    {
-                        resp = ChangePassword(map);
-                    }
-                    else if (method == "CheckIfUserExists")
-                    {
-                        resp = CheckIfUserExists(map);
-                    }
-                    else if (method == "SaveEmail")
-                    {
-                        resp = SaveEmail(map);
-                    }
-                    else if (method == "ChangeName")
-                    {
-                        resp = ChangeName(map);
-                    }
-                    else if (method == "ConfirmUserEmailName")
-                    {
-                        resp = ConfirmUserEmailName(map);
-                    }
-                    else if (method == "ForgotPassword")
-                    {
-                        resp = ForgotPassword(map);
-                    }
-                    else if (method == "GetProfile")
-                    {
-                        resp = GetProfile(map);
-                    }
-                    else if (method == "GetAvatarArchives")
-                    {
-                        resp = GetAvatarArchives(map);
-                    }
-                    else if (method == "DeleteUser")
-                    {
-                        resp = DeleteUser(map);
-                    }
-                    else if (method == "BanUser")
-                    {
-                        resp = BanUser(map);
-                    }
-                    else if (method == "TempBanUser")
-                    {
-                        resp = TempBanUser(map);
-                    }
-                    else if (method == "UnBanUser")
-                    {
-                        resp = UnBanUser(map);
-                    }
-                    else if (method == "FindUsers")
-                    {
-                        resp = FindUsers(map);
-                    }
-                    else if (method == "GetAbuseReports")
-                    {
-                        resp = GetAbuseReports(map);
-                    }
-                    else if (method == "AbuseReportSaveNotes")
-                    {
-                        resp = AbuseReportSaveNotes(map);
-                    }
-                    else if (method == "AbuseReportMarkComplete")
-                    {
-                        resp = AbuseReportMarkComplete(map);
-                    }
-                    else if (method == "SetWebLoginKey")
-                    {
-                        resp = SetWebLoginKey(map);
-                    }
-                    else if (method == "EditUser")
-                    {
-                        resp = EditUser(map);
-                    }
-                    else if (method == "GetRegions")
-                    {
-                        resp = GetRegions(map);
-                    }
-                    else if (method == "get_grid_info")
-                    {
-                        resp = new OSDMap();
-                        resp["GridInfo"] = GridInfo;
-                    }
-                    else if (method == "GetFriends")
-                    {
-                        resp = GetFriends(map);
-                    }
-                    else if (method == "GetGroups")
-                    {
-                        resp = GetGroups(map);
-                    }
-                    else if (method == "GetGroup")
-                    {
-                        resp = GetGroup(map);
-                    }
-                    else if (method == "GroupAsNewsSource")
-                    {
-                        resp = GroupAsNewsSource(map);
-                    }
-                    else if (method == "GroupNotices")
-                    {
-                        resp = GroupNotices(map);
-                    }
-                    else if (method == "NewsFromGroupNotices")
-                    {
-                        resp = NewsFromGroupNotices(map);
+                        object[] args = new object[1]{map};
+                        resp = (OSDMap)APIMethods[method].Invoke(this, args);
                     }
                     else
                     {
@@ -554,10 +456,36 @@ namespace OpenSim.Services
             return encoding.GetBytes(OSDParser.SerializeJsonString(resp, true));
         }
 
-        private bool VerifyPassword(OSDMap map)
+        #endregion
+
+        #region WebUI API methods
+
+        #region Grid
+
+        private OSDMap OnlineStatus(OSDMap map)
         {
-            return map.ContainsKey("WebPassword") && (map["WebPassword"] == m_password);
+            ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
+            bool LoginEnabled = loginService.MinLoginLevel == 0;
+
+            OSDMap resp = new OSDMap();
+            resp["Online"] = OSD.FromBoolean(true);
+            resp["LoginEnabled"] = OSD.FromBoolean(LoginEnabled);
+
+            return resp;
         }
+
+        private OSDMap get_grid_info(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            resp["GridInfo"] = GridInfo;
+            return resp;
+        }
+
+        #endregion
+
+        #region Account
+
+        #region Registration
 
         private OSDMap CheckIfUserExists(OSDMap map)
         {
@@ -571,7 +499,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        private OSDMap ProcessCreateAccount(OSDMap map)
+        private OSDMap CreateAccount(OSDMap map)
         {
             bool Verified = false;
             string Name = map["Name"].AsString();
@@ -671,54 +599,25 @@ namespace OpenSim.Services
             return resp;
         }
 
-        private OSDMap ProcessLogin(OSDMap map, bool asAdmin)
+        private OSDMap GetAvatarArchives(OSDMap map)
         {
-            bool Verified = false;
-            string Name = map["Name"].AsString();
-            string Password = map["Password"].AsString();
-
-            ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
-            UUID secureSessionID;
-            UserAccount account = null;
-            OSDMap resp = new OSDMap ();
-            resp["Verified"] = OSD.FromBoolean(false);
-
-            if(CheckIfUserExists(map)["Verified"] != true){
-                return resp;
-            }
-
-            LoginResponse loginresp = loginService.VerifyClient(Name, "UserAccount", Password, UUID.Zero, false, "", "", "", out secureSessionID);
-            //Null means it went through without an error
-            Verified = loginresp == null;
-            if (Verified)
-            {
-                account = m_registry.RequestModuleInterface<IUserAccountService> ().GetUserAccount (UUID.Zero, Name);
-                if (asAdmin)
-                {
-                    IAgentInfo agent = Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector>().GetAgent(account.PrincipalID);
-                    if (agent.OtherAgentInformation["WebUIEnabled"].AsBoolean() == false)
-                    {
-                        return resp;
-                    }
-                }
-                resp["UUID"] = OSD.FromUUID (account.PrincipalID);
-                resp["FirstName"] = OSD.FromString (account.FirstName);
-                resp["LastName"] = OSD.FromString (account.LastName);
-            }
-
-            resp["Verified"] = OSD.FromBoolean (Verified);
-
-            return resp;
-        }
-
-        private OSDMap ProcessOnlineStatus(OSDMap map)
-        {
-            ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
-            bool LoginEnabled = loginService.MinLoginLevel == 0;
-
             OSDMap resp = new OSDMap();
-            resp["Online"] = OSD.FromBoolean(true);
-            resp["LoginEnabled"] = OSD.FromBoolean(LoginEnabled);
+
+            List<AvatarArchive> temp = DataManager.RequestPlugin<IAvatarArchiverConnector>().GetAvatarArchives(true);
+
+            OSDArray names = new OSDArray();
+            OSDArray snapshot = new OSDArray();
+
+            m_log.DebugFormat("[WebUI] {0} avatar archives found", temp.Count);
+
+            foreach (AvatarArchive a in temp)
+            {
+                names.Add(OSD.FromString(a.Name));
+                snapshot.Add(OSD.FromUUID(UUID.Parse(a.Snapshot)));
+            }
+
+            resp["names"] = names;
+            resp["snapshot"] = snapshot;
 
             return resp;
         }
@@ -788,53 +687,78 @@ namespace OpenSim.Services
             return resp;
         }
 
-        /// <summary>
-        /// Gets user information for change user info page on site
-        /// </summary>
-        /// <param name="map">UUID</param>
-        /// <returns>Verified, HomeName, HomeUUID, Online, Email, FirstName, LastName</returns>
-        OSDMap GetGridUserInfo(OSDMap map)
+        #endregion
+
+        #region Login
+
+        private OSDMap Login(OSDMap map, bool asAdmin)
         {
-            string uuid = String.Empty;
-            uuid = map["UUID"].AsString();
+            bool Verified = false;
+            string Name = map["Name"].AsString();
+            string Password = map["Password"].AsString();
 
-            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
-            UserAccount user = accountService.GetUserAccount(UUID.Zero, map["UUID"].AsUUID());
-            IAgentInfoService agentService = m_registry.RequestModuleInterface<IAgentInfoService>();
+            ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
+            UUID secureSessionID;
+            UserAccount account = null;
+            OSDMap resp = new OSDMap ();
+            resp["Verified"] = OSD.FromBoolean(false);
 
-            UserInfo userinfo;
-            OSDMap resp = new OSDMap();
-            bool verified = user != null;
-            resp["Verified"] = OSD.FromBoolean(verified);
-            if (verified)
-            {
-                userinfo = agentService.GetUserInfo(uuid);
-                IGridService gs = m_registry.RequestModuleInterface<IGridService>();
-                Services.Interfaces.GridRegion gr = null;
-                if (userinfo != null)
-                {
-                    gr = gs.GetRegionByUUID(UUID.Zero, userinfo.HomeRegionID);
-                }
-
-                resp["UUID"] = OSD.FromUUID(user.PrincipalID);
-                resp["HomeUUID"] = OSD.FromUUID((userinfo == null) ? UUID.Zero : userinfo.HomeRegionID);
-                resp["HomeName"] = OSD.FromString((userinfo == null) ? "" : gr.RegionName);
-                resp["Online"] = OSD.FromBoolean((userinfo == null) ? false : userinfo.IsOnline);
-                resp["Email"] = OSD.FromString(user.Email);
-                resp["Name"] = OSD.FromString(user.Name);
-                resp["FirstName"] = OSD.FromString(user.FirstName);
-                resp["LastName"] = OSD.FromString(user.LastName);
+            if(CheckIfUserExists(map)["Verified"] != true){
+                return resp;
             }
+
+            LoginResponse loginresp = loginService.VerifyClient(Name, "UserAccount", Password, UUID.Zero, false, "", "", "", out secureSessionID);
+            //Null means it went through without an error
+            Verified = loginresp == null;
+            if (Verified)
+            {
+                account = m_registry.RequestModuleInterface<IUserAccountService> ().GetUserAccount (UUID.Zero, Name);
+                if (asAdmin)
+                {
+                    IAgentInfo agent = Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector>().GetAgent(account.PrincipalID);
+                    if (agent.OtherAgentInformation["WebUIEnabled"].AsBoolean() == false)
+                    {
+                        return resp;
+                    }
+                }
+                resp["UUID"] = OSD.FromUUID (account.PrincipalID);
+                resp["FirstName"] = OSD.FromString (account.FirstName);
+                resp["LastName"] = OSD.FromString (account.LastName);
+            }
+
+            resp["Verified"] = OSD.FromBoolean (Verified);
 
             return resp;
         }
+
+        private OSDMap SetWebLoginKey(OSDMap map)
+        {
+            OSDMap resp = new OSDMap ();
+            UUID principalID = map["PrincipalID"].AsUUID();
+            UUID webLoginKey = UUID.Random();
+            IAuthenticationService authService = m_registry.RequestModuleInterface<IAuthenticationService> ();
+            if (authService != null)
+            {
+                //Remove the old
+                Aurora.DataManager.DataManager.RequestPlugin<IAuthenticationData> ().Delete (principalID, "WebLoginKey");
+                authService.SetPlainPassword(principalID, "WebLoginKey", webLoginKey.ToString());
+                resp["WebLoginKey"] = webLoginKey;
+            }
+            resp["Failed"] = OSD.FromString(String.Format("No auth service, cannot set WebLoginKey for user {0}.", map["PrincipalID"].AsUUID().ToString()));
+
+            return resp;
+        }
+
+        #endregion
+
+        #region Email
 
         /// <summary>
         /// After conformation the email is saved
         /// </summary>
         /// <param name="map">UUID, Email</param>
         /// <returns>Verified</returns>
-        OSDMap SaveEmail(OSDMap map)
+        private OSDMap SaveEmail(OSDMap map)
         {
             string email = map["Email"].AsString();
 
@@ -853,84 +777,8 @@ namespace OpenSim.Services
             return resp;
         }
 
-        /// <summary>
-        /// Changes user name
-        /// </summary>
-        /// <param name="map">UUID, FirstName, LastName</param>
-        /// <returns>Verified</returns>
-        OSDMap ChangeName(OSDMap map)
-        {
-            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
-            UserAccount user = accountService.GetUserAccount(UUID.Zero, map["UUID"].AsUUID());
-            OSDMap resp = new OSDMap();
 
-            bool verified = user != null;
-            resp["Verified"] = OSD.FromBoolean(verified);
-            if (verified)
-            {
-                user.Name = map["Name"].AsString();
-                resp["Stored" ] = OSD.FromBoolean(accountService.StoreUserAccount(user));
-            }
-
-            return resp;
-        }
-
-        OSDMap ChangePassword(OSDMap map)
-        {
-            string Password = map["Password"].AsString();
-            string newPassword = map["NewPassword"].AsString();
-
-            ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
-            UUID secureSessionID;
-            UUID userID = map["UUID"].AsUUID();
-
-
-            IAuthenticationService auths = m_registry.RequestModuleInterface<IAuthenticationService>();
-
-            LoginResponse loginresp = loginService.VerifyClient (userID, "UserAccount", Password, UUID.Zero, false, "", "", "", out secureSessionID);
-            OSDMap resp = new OSDMap();
-            //Null means it went through without an error
-            bool Verified = loginresp == null;
-            resp["Verified"] = OSD.FromBoolean(Verified);
-
-            if ((auths.Authenticate(userID, "UserAccount", Util.Md5Hash(Password), 100) != string.Empty) && (Verified))
-            {
-                auths.SetPassword (userID, "UserAccount", newPassword);
-            }
-
-            return resp;
-        }
-
-        OSDMap ForgotPassword(OSDMap map)
-        {
-            UUID UUDI = map["UUID"].AsUUID();
-            string Password = map["Password"].AsString();
-
-            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
-            UserAccount user = accountService.GetUserAccount(UUID.Zero, UUDI);
-
-            OSDMap resp = new OSDMap();
-            bool verified = user != null;
-            resp["Verified"] = OSD.FromBoolean(verified);
-            resp["UserLevel"] = OSD.FromInteger(0);
-            if (verified)
-            {
-                resp["UserLevel"] = OSD.FromInteger(user.UserLevel);
-                if (user.UserLevel >= 0)
-                {
-                    IAuthenticationService auths = m_registry.RequestModuleInterface<IAuthenticationService>();
-                    auths.SetPassword (user.PrincipalID, "UserAccount", Password);
-                }
-                else
-                {
-                    resp["Verified"] = OSD.FromBoolean(false);
-                }
-            }
-
-            return resp;
-        }
-
-        OSDMap ConfirmUserEmailName(OSDMap map)
+        private OSDMap ConfirmUserEmailName(OSDMap map)
         {
             string Name = map["Name"].AsString();
             string Email = map["Email"].AsString();
@@ -969,7 +817,176 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap GetProfile(OSDMap map)
+        #endregion
+
+        #region password
+
+        private OSDMap ChangePassword(OSDMap map)
+        {
+            string Password = map["Password"].AsString();
+            string newPassword = map["NewPassword"].AsString();
+
+            ILoginService loginService = m_registry.RequestModuleInterface<ILoginService>();
+            UUID secureSessionID;
+            UUID userID = map["UUID"].AsUUID();
+
+
+            IAuthenticationService auths = m_registry.RequestModuleInterface<IAuthenticationService>();
+
+            LoginResponse loginresp = loginService.VerifyClient (userID, "UserAccount", Password, UUID.Zero, false, "", "", "", out secureSessionID);
+            OSDMap resp = new OSDMap();
+            //Null means it went through without an error
+            bool Verified = loginresp == null;
+            resp["Verified"] = OSD.FromBoolean(Verified);
+
+            if ((auths.Authenticate(userID, "UserAccount", Util.Md5Hash(Password), 100) != string.Empty) && (Verified))
+            {
+                auths.SetPassword (userID, "UserAccount", newPassword);
+            }
+
+            return resp;
+        }
+
+        private OSDMap ForgotPassword(OSDMap map)
+        {
+            UUID UUDI = map["UUID"].AsUUID();
+            string Password = map["Password"].AsString();
+
+            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
+            UserAccount user = accountService.GetUserAccount(UUID.Zero, UUDI);
+
+            OSDMap resp = new OSDMap();
+            bool verified = user != null;
+            resp["Verified"] = OSD.FromBoolean(verified);
+            resp["UserLevel"] = OSD.FromInteger(0);
+            if (verified)
+            {
+                resp["UserLevel"] = OSD.FromInteger(user.UserLevel);
+                if (user.UserLevel >= 0)
+                {
+                    IAuthenticationService auths = m_registry.RequestModuleInterface<IAuthenticationService>();
+                    auths.SetPassword (user.PrincipalID, "UserAccount", Password);
+                }
+                else
+                {
+                    resp["Verified"] = OSD.FromBoolean(false);
+                }
+            }
+
+            return resp;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Changes user name
+        /// </summary>
+        /// <param name="map">UUID, FirstName, LastName</param>
+        /// <returns>Verified</returns>
+        private OSDMap ChangeName(OSDMap map)
+        {
+            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
+            UserAccount user = accountService.GetUserAccount(UUID.Zero, map["UUID"].AsUUID());
+            OSDMap resp = new OSDMap();
+
+            bool verified = user != null;
+            resp["Verified"] = OSD.FromBoolean(verified);
+            if (verified)
+            {
+                user.Name = map["Name"].AsString();
+                resp["Stored" ] = OSD.FromBoolean(accountService.StoreUserAccount(user));
+            }
+
+            return resp;
+        }
+
+        private OSDMap EditUser(OSDMap map)
+        {
+            bool editRLInfo = (map.ContainsKey("RLName") && map.ContainsKey("RLAddress") && map.ContainsKey("RLZip") && map.ContainsKey("RLCity") && map.ContainsKey("RLCountry"));
+            OSDMap resp = new OSDMap();
+            resp["agent"] = OSD.FromBoolean(!editRLInfo); // if we have no RLInfo, editing account is assumed to be successful.
+            resp["account"] = OSD.FromBoolean(false);
+            UUID principalID = map["UserID"].AsUUID();
+            UserAccount account = m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, principalID);
+            if(account != null)
+            {
+                account.Email = map["Email"];
+                if (m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, map["Name"].AsString()) == null)
+                {
+                    account.Name = map["Name"];
+                }
+
+                if (editRLInfo)
+                {
+                    IAgentConnector agentConnector = Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector>();
+                    IAgentInfo agent = agentConnector.GetAgent(account.PrincipalID);
+                    if (agent == null)
+                    {
+                        agentConnector.CreateNewAgent(account.PrincipalID);
+                        agent = agentConnector.GetAgent(account.PrincipalID);
+                    }
+                    if (agent != null)
+                    {
+                        agent.OtherAgentInformation["RLName"] = map["RLName"];
+                        agent.OtherAgentInformation["RLAddress"] = map["RLAddress"];
+                        agent.OtherAgentInformation["RLZip"] = map["RLZip"];
+                        agent.OtherAgentInformation["RLCity"] = map["RLCity"];
+                        agent.OtherAgentInformation["RLCountry"] = map["RLCountry"];
+                        agentConnector.UpdateAgent(agent);
+                        resp["agent"] = OSD.FromBoolean(true);
+                    }
+                }
+                resp["account"] = OSD.FromBoolean(m_registry.RequestModuleInterface<IUserAccountService>().StoreUserAccount(account));
+            }
+            return resp;
+        }
+
+        #endregion
+
+        #region Users
+
+        /// <summary>
+        /// Gets user information for change user info page on site
+        /// </summary>
+        /// <param name="map">UUID</param>
+        /// <returns>Verified, HomeName, HomeUUID, Online, Email, FirstName, LastName</returns>
+        private OSDMap GetGridUserInfo(OSDMap map)
+        {
+            string uuid = String.Empty;
+            uuid = map["UUID"].AsString();
+
+            IUserAccountService accountService = m_registry.RequestModuleInterface<IUserAccountService>();
+            UserAccount user = accountService.GetUserAccount(UUID.Zero, map["UUID"].AsUUID());
+            IAgentInfoService agentService = m_registry.RequestModuleInterface<IAgentInfoService>();
+
+            UserInfo userinfo;
+            OSDMap resp = new OSDMap();
+            bool verified = user != null;
+            resp["Verified"] = OSD.FromBoolean(verified);
+            if (verified)
+            {
+                userinfo = agentService.GetUserInfo(uuid);
+                IGridService gs = m_registry.RequestModuleInterface<IGridService>();
+                Services.Interfaces.GridRegion gr = null;
+                if (userinfo != null)
+                {
+                    gr = gs.GetRegionByUUID(UUID.Zero, userinfo.HomeRegionID);
+                }
+
+                resp["UUID"] = OSD.FromUUID(user.PrincipalID);
+                resp["HomeUUID"] = OSD.FromUUID((userinfo == null) ? UUID.Zero : userinfo.HomeRegionID);
+                resp["HomeName"] = OSD.FromString((userinfo == null) ? "" : gr.RegionName);
+                resp["Online"] = OSD.FromBoolean((userinfo == null) ? false : userinfo.IsOnline);
+                resp["Email"] = OSD.FromString(user.Email);
+                resp["Name"] = OSD.FromString(user.Name);
+                resp["FirstName"] = OSD.FromString(user.FirstName);
+                resp["LastName"] = OSD.FromString(user.LastName);
+            }
+
+            return resp;
+        }
+
+        private OSDMap GetProfile(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             string Name = map["Name"].AsString();
@@ -1037,71 +1054,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap EditUser (OSDMap map)
-        {
-            bool editRLInfo = (map.ContainsKey("RLName") && map.ContainsKey("RLAddress") && map.ContainsKey("RLZip") && map.ContainsKey("RLCity") && map.ContainsKey("RLCountry"));
-            OSDMap resp = new OSDMap();
-            resp["agent"] = OSD.FromBoolean(!editRLInfo); // if we have no RLInfo, editing account is assumed to be successful.
-            resp["account"] = OSD.FromBoolean(false);
-            UUID principalID = map["UserID"].AsUUID();
-            UserAccount account = m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, principalID);
-            if(account != null)
-            {
-                account.Email = map["Email"];
-                if (m_registry.RequestModuleInterface<IUserAccountService>().GetUserAccount(UUID.Zero, map["Name"].AsString()) == null)
-                {
-                    account.Name = map["Name"];
-                }
-
-                if (editRLInfo)
-                {
-                    IAgentConnector agentConnector = Aurora.DataManager.DataManager.RequestPlugin<IAgentConnector>();
-                    IAgentInfo agent = agentConnector.GetAgent(account.PrincipalID);
-                    if (agent == null)
-                    {
-                        agentConnector.CreateNewAgent(account.PrincipalID);
-                        agent = agentConnector.GetAgent(account.PrincipalID);
-                    }
-                    if (agent != null)
-                    {
-                        agent.OtherAgentInformation["RLName"] = map["RLName"];
-                        agent.OtherAgentInformation["RLAddress"] = map["RLAddress"];
-                        agent.OtherAgentInformation["RLZip"] = map["RLZip"];
-                        agent.OtherAgentInformation["RLCity"] = map["RLCity"];
-                        agent.OtherAgentInformation["RLCountry"] = map["RLCountry"];
-                        agentConnector.UpdateAgent(agent);
-                        resp["agent"] = OSD.FromBoolean(true);
-                    }
-                }
-                resp["account"] = OSD.FromBoolean(m_registry.RequestModuleInterface<IUserAccountService>().StoreUserAccount(account));
-            }
-            return resp;
-        }
-
-        OSDMap GetAvatarArchives(OSDMap map)
-        {
-            OSDMap resp = new OSDMap();
-
-            List<AvatarArchive> temp = DataManager.RequestPlugin<IAvatarArchiverConnector>().GetAvatarArchives(true);
-
-            OSDArray names = new OSDArray();
-            OSDArray snapshot = new OSDArray();
-
-            m_log.DebugFormat("[WebUI] {0} avatar archives found", temp.Count);
-
-            foreach (AvatarArchive a in temp)
-            {
-                names.Add(OSD.FromString(a.Name));
-                snapshot.Add(OSD.FromUUID(UUID.Parse(a.Snapshot)));
-            }
-
-            resp["names"] = names;
-            resp["snapshot"] = snapshot;
-
-            return resp;
-        }
-
-        OSDMap DeleteUser(OSDMap map)
+        private OSDMap DeleteUser(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["Finished"] = OSD.FromBoolean(true);
@@ -1117,6 +1070,8 @@ namespace OpenSim.Services
             return resp;
         }
 
+        #region banning
+
         private void doBan(UUID agentID, DateTime? until){
             IAgentInfo GetAgent = DataManager.RequestPlugin<IAgentConnector>().GetAgent(agentID);
             if (GetAgent != null)
@@ -1131,7 +1086,7 @@ namespace OpenSim.Services
             }
         }
 
-        OSDMap BanUser(OSDMap map)
+        private OSDMap BanUser(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["Finished"] = OSD.FromBoolean(true);
@@ -1141,7 +1096,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap TempBanUser(OSDMap map)
+        private OSDMap TempBanUser(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["Finished"] = OSD.FromBoolean(true);
@@ -1152,7 +1107,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap UnBanUser(OSDMap map)
+        private OSDMap UnBanUser(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["Finished"] = OSD.FromBoolean(true);
@@ -1174,7 +1129,9 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap FindUsers(OSDMap map)
+        #endregion
+
+        private OSDMap FindUsers(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             int start = map["Start"].AsInteger();
@@ -1203,151 +1160,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap GetAbuseReports(OSDMap map)
-        {
-            OSDMap resp = new OSDMap();
-            IAbuseReports ar = m_registry.RequestModuleInterface<IAbuseReports>();
-
-            int start = map["Start"].AsInteger();
-            int count = map["Count"].AsInteger();
-            bool active = map["Active"].AsBoolean();
-
-            List<AbuseReport> lar = ar.GetAbuseReports(start, count, active ? "Active='1'" : "Active='0'");
-            OSDArray AbuseReports = new OSDArray();
-            foreach (AbuseReport tar in lar)
-            {
-                AbuseReports.Add(tar.ToOSD());
-            }
-
-            resp["AbuseReports"] = AbuseReports;
-            resp["Start"] = OSD.FromInteger(start);
-            resp["Count"] = OSD.FromInteger(count); // we're not using the AbuseReports.Count because client implementations of the WebUI API can check the count themselves. This is just for showing the input.
-            resp["Active"] = OSD.FromBoolean(active);
-
-            return resp;
-        }
-
-        OSDMap AbuseReportMarkComplete(OSDMap map)
-        {
-            OSDMap resp = new OSDMap();
-            IAbuseReports ar = m_registry.RequestModuleInterface<IAbuseReports>();
-            AbuseReport tar = ar.GetAbuseReport(map["Number"].AsInteger(), map["WebPassword"].AsString());
-            if (tar != null)
-            {
-                tar.Active = false;
-                ar.UpdateAbuseReport(tar, map["WebPassword"].AsString());
-                resp["Finished"] = OSD.FromBoolean(true);
-            }
-            else
-            {
-                resp["Finished"] = OSD.FromBoolean(false);
-                resp["Failed"] = OSD.FromString(String.Format("No abuse report found with specified number {0}", map["Number"].AsInteger()));
-            }
-
-            return resp;
-        }
-
-        OSDMap AbuseReportSaveNotes(OSDMap map)
-        {
-            OSDMap resp = new OSDMap();
-            IAbuseReports ar = m_registry.RequestModuleInterface<IAbuseReports>();
-            AbuseReport tar = ar.GetAbuseReport(map["Number"].AsInteger(), map["WebPassword"].AsString());
-            if (tar != null)
-            {
-                tar.Notes = map["Notes"].ToString();
-                ar.UpdateAbuseReport(tar, map["WebPassword"].AsString());
-                resp["Finished"] = OSD.FromBoolean(true);
-            }
-            else
-            {
-                resp["Finished"] = OSD.FromBoolean(false);
-                resp["Failed"] = OSD.FromString(String.Format("No abuse report found with specified number {0}", map["Number"].AsInteger()));
-            }
-
-            return resp;
-        }
-
-        OSDMap SetWebLoginKey(OSDMap map)
-        {
-            OSDMap resp = new OSDMap ();
-            UUID principalID = map["PrincipalID"].AsUUID();
-            UUID webLoginKey = UUID.Random();
-            IAuthenticationService authService = m_registry.RequestModuleInterface<IAuthenticationService> ();
-            if (authService != null)
-            {
-                //Remove the old
-                Aurora.DataManager.DataManager.RequestPlugin<IAuthenticationData> ().Delete (principalID, "WebLoginKey");
-                authService.SetPlainPassword(principalID, "WebLoginKey", webLoginKey.ToString());
-                resp["WebLoginKey"] = webLoginKey;
-            }
-            resp["Failed"] = OSD.FromString(String.Format("No auth service, cannot set WebLoginKey for user {0}.", map["PrincipalID"].AsUUID().ToString()));
-
-            return resp;
-        }
-
-        OSDMap GetRegions(OSDMap map)
-        {
-            OSDMap resp = new OSDMap();
-            RegionFlags type = map.Keys.Contains("RegionFlags") ? (RegionFlags)map["RegionFlags"].AsInteger() : RegionFlags.RegionOnline;
-            int start = map.Keys.Contains("Start") ? map["Start"].AsInteger() : 0;
-            if(start < 0){
-                start = 0;
-            }
-            int count = map.Keys.Contains("Count") ? map["Count"].AsInteger() : 10;
-            if(count < 0){
-                count = 1;
-            }
-
-            IRegionData regiondata = Aurora.DataManager.DataManager.RequestPlugin<IRegionData>();
-            List<GridRegion> regions = regiondata.Get(type,
-                map.ContainsKey("SortRegionName") ? map["SortRegionName"].AsBoolean() : new Nullable<bool>(),
-                map.ContainsKey("SortLocX") ? map["SortLocX"].AsBoolean() : new Nullable<bool>(),
-                map.ContainsKey("SortLocY") ? map["SortLocY"].AsBoolean() : new Nullable<bool>()
-            );
-            OSDArray Regions = new OSDArray();
-            if (start < regions.Count)
-            {
-                int i = 0;
-                int j = regions.Count <= (start + count) ? regions.Count : (start + count);
-                for (i = start; i < j; ++i)
-                {
-                    GridRegion region = regions[i];
-                    OSDMap kvpairs = new OSDMap();
-                    kvpairs["uuid"] = OSD.FromUUID(region.RegionID);
-                    kvpairs["locX"] = OSD.FromInteger(region.RegionLocX);
-                    kvpairs["locY"] = OSD.FromInteger(region.RegionLocY);
-                    kvpairs["locZ"] = OSD.FromInteger(region.RegionLocZ);
-                    kvpairs["regionName"] = OSD.FromString(region.RegionName);
-                    kvpairs["regionType"] = OSD.FromString(region.RegionType);
-                    kvpairs["serverIP"] = OSD.FromString(region.ExternalHostName);
-                    kvpairs["serverHttpPort"] = OSD.FromInteger(region.HttpPort);
-                    kvpairs["serverURI"] = OSD.FromString(region.ServerURI);
-                    if (region.InternalEndPoint != null)
-                    {
-                        kvpairs["serverPort"] = region.InternalEndPoint.Port;
-                    }
-                    kvpairs["regionMapTexture"] = OSD.FromUUID(region.TerrainImage);
-                    kvpairs["regionTerrainTexture"] = OSD.FromUUID(region.TerrainMapImage);
-                    kvpairs["access"] = OSD.FromInteger(region.Access);
-                    kvpairs["owner_uuid"] = OSD.FromUUID(region.EstateOwner);
-                    kvpairs["Token"] = OSD.FromString(region.AuthToken);
-                    kvpairs["sizeX"] = OSD.FromInteger(region.RegionSizeX);
-                    kvpairs["sizeY"] = OSD.FromInteger(region.RegionSizeY);
-                    kvpairs["sizeZ"] = OSD.FromInteger(region.RegionSizeZ);
-                    kvpairs["Flags"] = OSD.FromInteger(region.Flags);
-                    kvpairs["SessionID"] = OSD.FromUUID(region.SessionID);
-                    kvpairs["EstateOwner"] = OSD.FromUUID(region.EstateOwner);
-                    Regions.Add(kvpairs);
-                }
-            }
-            resp["Start"] = OSD.FromInteger(start);
-            resp["Count"] = OSD.FromInteger(count);
-            resp["Total"] = OSD.FromInteger(regions.Count);
-            resp["Regions"] = Regions;
-            return resp;
-        }
-
-        OSDMap GetFriends(OSDMap map)
+        private OSDMap GetFriends(OSDMap map)
         {
             OSDMap resp = new OSDMap();
 
@@ -1383,7 +1196,225 @@ namespace OpenSim.Services
             return resp;
         }
 
-        private OSDMap GroupRecord2OSDMap(GroupRecord group)
+        #endregion
+
+        #region IAbuseReports
+
+        private OSDMap GetAbuseReports(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            IAbuseReports ar = m_registry.RequestModuleInterface<IAbuseReports>();
+
+            int start = map["Start"].AsInteger();
+            int count = map["Count"].AsInteger();
+            bool active = map["Active"].AsBoolean();
+
+            List<AbuseReport> lar = ar.GetAbuseReports(start, count, active ? "Active='1'" : "Active='0'");
+            OSDArray AbuseReports = new OSDArray();
+            foreach (AbuseReport tar in lar)
+            {
+                AbuseReports.Add(tar.ToOSD());
+            }
+
+            resp["AbuseReports"] = AbuseReports;
+            resp["Start"] = OSD.FromInteger(start);
+            resp["Count"] = OSD.FromInteger(count); // we're not using the AbuseReports.Count because client implementations of the WebUI API can check the count themselves. This is just for showing the input.
+            resp["Active"] = OSD.FromBoolean(active);
+
+            return resp;
+        }
+
+        private OSDMap AbuseReportMarkComplete(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            IAbuseReports ar = m_registry.RequestModuleInterface<IAbuseReports>();
+            AbuseReport tar = ar.GetAbuseReport(map["Number"].AsInteger(), map["WebPassword"].AsString());
+            if (tar != null)
+            {
+                tar.Active = false;
+                ar.UpdateAbuseReport(tar, map["WebPassword"].AsString());
+                resp["Finished"] = OSD.FromBoolean(true);
+            }
+            else
+            {
+                resp["Finished"] = OSD.FromBoolean(false);
+                resp["Failed"] = OSD.FromString(String.Format("No abuse report found with specified number {0}", map["Number"].AsInteger()));
+            }
+
+            return resp;
+        }
+
+        private OSDMap AbuseReportSaveNotes(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            IAbuseReports ar = m_registry.RequestModuleInterface<IAbuseReports>();
+            AbuseReport tar = ar.GetAbuseReport(map["Number"].AsInteger(), map["WebPassword"].AsString());
+            if (tar != null)
+            {
+                tar.Notes = map["Notes"].ToString();
+                ar.UpdateAbuseReport(tar, map["WebPassword"].AsString());
+                resp["Finished"] = OSD.FromBoolean(true);
+            }
+            else
+            {
+                resp["Finished"] = OSD.FromBoolean(false);
+                resp["Failed"] = OSD.FromString(String.Format("No abuse report found with specified number {0}", map["Number"].AsInteger()));
+            }
+
+            return resp;
+        }
+
+        #endregion
+
+        #region Places
+
+        #region Regions
+
+        private OSDMap GetRegions(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            RegionFlags type = map.Keys.Contains("RegionFlags") ? (RegionFlags)map["RegionFlags"].AsInteger() : RegionFlags.RegionOnline;
+            int start = map.Keys.Contains("Start") ? map["Start"].AsInteger() : 0;
+            if(start < 0){
+                start = 0;
+            }
+            int count = map.Keys.Contains("Count") ? map["Count"].AsInteger() : 10;
+            if(count < 0){
+                count = 1;
+            }
+
+            IRegionData regiondata = Aurora.DataManager.DataManager.RequestPlugin<IRegionData>();
+            List<GridRegion> regions = regiondata.Get(type,
+                map.ContainsKey("SortRegionName") ? map["SortRegionName"].AsBoolean() : new Nullable<bool>(),
+                map.ContainsKey("SortLocX") ? map["SortLocX"].AsBoolean() : new Nullable<bool>(),
+                map.ContainsKey("SortLocY") ? map["SortLocY"].AsBoolean() : new Nullable<bool>()
+            );
+            OSDArray Regions = new OSDArray();
+            if (start < regions.Count)
+            {
+                int i = 0;
+                int j = regions.Count <= (start + count) ? regions.Count : (start + count);
+                for (i = start; i < j; ++i)
+                {
+                    Regions.Add(regions[i].ToOSD());
+                }
+            }
+            resp["Start"] = OSD.FromInteger(start);
+            resp["Count"] = OSD.FromInteger(count);
+            resp["Total"] = OSD.FromInteger(regions.Count);
+            resp["Regions"] = Regions;
+            return resp;
+        }
+
+        private OSDMap GetRegion(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            IRegionData regiondata = Aurora.DataManager.DataManager.RequestPlugin<IRegionData>();
+            if (regiondata != null && (map.ContainsKey("RegionID") || map.ContainsKey("Region")))
+            {
+                string regionName = map.ContainsKey("Region") ? map["Region"].ToString().Trim() : "";
+                UUID regionID = map.ContainsKey("RegionID") ? UUID.Parse(map["RegionID"].ToString()) : UUID.Zero;
+                UUID scopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
+                GridRegion region=null;
+                if (regionID != UUID.Zero)
+                {
+                    region = regiondata.Get(regionID, scopeID);
+                }else if(regionName != string.Empty){
+                    region = regiondata.Get(regionName, scopeID)[0];
+                }
+                if (region != null)
+                {
+                    resp["Region"] = region.ToOSD();
+                }
+            }
+            return resp;
+        }
+
+        #endregion
+
+        #region Parcels
+
+        private static OSDMap LandData2WebOSD(LandData parcel){
+            OSDMap parcelOSD = parcel.ToOSD();
+            parcelOSD["GenericData"] = parcelOSD.ContainsKey("GenericData") ? (parcelOSD["GenericData"].Type == OSDType.Map ? parcelOSD["GenericData"] : (OSDMap)OSDParser.DeserializeLLSDXml(parcelOSD["GenericData"].ToString())) : new OSDMap();
+            parcelOSD["Bitmap"] = OSD.FromBinary(parcelOSD["Bitmap"]).ToString();
+            return parcelOSD;
+        }
+
+        private OSDMap GetParcelsByRegion(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+            resp["Parcels"] = new OSDArray();
+            resp["Total"] = OSD.FromInteger(0);
+
+            IDirectoryServiceConnector directory = DataManager.RequestPlugin<IDirectoryServiceConnector>();
+
+            if (directory != null && map.ContainsKey("Region") == true)
+            {
+                UUID RegionID = UUID.Parse(map["Region"]);
+                UUID ScopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
+                UUID owner = map.ContainsKey("Owner") ? UUID.Parse(map["Owner"].ToString()) : UUID.Zero;
+                uint start = map.ContainsKey("Start") ? uint.Parse(map["Start"].ToString()) : 0;
+                uint count = map.ContainsKey("Count") ? uint.Parse(map["Count"].ToString()) : 10;
+                ParcelFlags flags = map.ContainsKey("Flags") ? (ParcelFlags)int.Parse(map["Flags"].ToString()) : ParcelFlags.None;
+                ParcelCategory category = map.ContainsKey("Category") ? (ParcelCategory)uint.Parse(map["Flags"].ToString()) : ParcelCategory.Any;
+                uint total = directory.GetNumberOfParcelsByRegion(RegionID, ScopeID, owner, flags, category);
+                if (total > 0)
+                {
+                    resp["Total"] = OSD.FromInteger((int)total);
+                    if(count == 0){
+                        return resp;
+                    }
+                    List<LandData> parcels = directory.GetParcelsByRegion(start, count, RegionID, ScopeID, owner, flags, category);
+                    OSDArray Parcels = new OSDArray(parcels.Count);
+                    parcels.ForEach(delegate(LandData parcel)
+                    {
+                        Parcels.Add(LandData2WebOSD(parcel));
+                    });
+                    resp["Parcels"] = Parcels;
+                }
+            }
+
+            return resp;
+        }
+
+        private OSDMap GetParcel(OSDMap map)
+        {
+            OSDMap resp = new OSDMap();
+
+            UUID regionID = map.ContainsKey("RegionID") ? UUID.Parse(map["RegionID"].ToString()) : UUID.Zero;
+            UUID scopeID = map.ContainsKey("ScopeID") ? UUID.Parse(map["ScopeID"].ToString()) : UUID.Zero;
+            UUID parcelID = map.ContainsKey("ParcelInfoUUID") ? UUID.Parse(map["ParcelInfoUUID"].ToString()) : UUID.Zero;
+            string parcelName = map.ContainsKey("Parcel") ? map["Parcel"].ToString().Trim() : string.Empty;
+
+            IDirectoryServiceConnector directory = DataManager.RequestPlugin<IDirectoryServiceConnector>();
+
+            if (directory != null && (parcelID != UUID.Zero || (regionID != UUID.Zero && parcelName != string.Empty)))
+            {
+                LandData parcel = null;
+
+                if(parcelID != UUID.Zero){
+                    parcel = directory.GetParcelInfo(parcelID);
+                }else if(regionID != UUID.Zero && parcelName != string.Empty){
+                    parcel = directory.GetParcelInfo(regionID, scopeID, parcelName);
+                }
+
+                if (parcel != null)
+                {
+                    resp["Parcel"] = LandData2WebOSD(parcel);
+                }
+            }
+
+            return resp;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region GroupRecord
+
+        private static OSDMap GroupRecord2OSDMap(GroupRecord group)
         {
             OSDMap resp = new OSDMap();
             resp["GroupID"] = group.GroupID;
@@ -1400,7 +1431,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap GetGroups(OSDMap map)
+        private OSDMap GetGroups(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             uint start = map.ContainsKey("Start") ? map["Start"].AsUInteger() : 0;
@@ -1451,7 +1482,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap GetGroup(OSDMap map)
+        private OSDMap GetGroup(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             IGroupsServiceConnector groups = DataManager.RequestPlugin<IGroupsServiceConnector>();
@@ -1469,7 +1500,9 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap GroupAsNewsSource(OSDMap map)
+        #region GroupNoticeData
+
+        private OSDMap GroupAsNewsSource(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["Verified"] = OSD.FromBoolean(false);
@@ -1492,7 +1525,7 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap GroupNotices(OSDMap map)
+        private OSDMap GroupNotices(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["GroupNotices"] = new OSDArray();
@@ -1541,13 +1574,14 @@ namespace OpenSim.Services
             return resp;
         }
 
-        OSDMap NewsFromGroupNotices(OSDMap map)
+        private OSDMap NewsFromGroupNotices(OSDMap map)
         {
             OSDMap resp = new OSDMap();
             resp["GroupNotices"] = new OSDArray();
             resp["Total"] = 0;
             IGenericsConnector generics = DataManager.RequestPlugin<IGenericsConnector>();
-            if (generics == null)
+            IGroupsServiceConnector groups = DataManager.RequestPlugin<IGroupsServiceConnector>();
+            if (generics == null || groups == null)
             {
                 return resp;
             }
@@ -1557,6 +1591,14 @@ namespace OpenSim.Services
             if (GroupIDs.Count <= 0)
             {
                 return resp;
+            }
+            foreach (UUID groupID in GroupIDs)
+            {
+                GroupRecord group = groups.GetGroupRecord(AdminAgentID, groupID, "");
+                if (!group.ShowInList)
+                {
+                    GroupIDs.Remove(groupID);
+                }
             }
 
             uint start = map.ContainsKey("Start") ? uint.Parse(map["Start"].ToString()) : 0;
@@ -1569,5 +1611,11 @@ namespace OpenSim.Services
 
             return GroupNotices(args);
         }
+
+        #endregion
+
+        #endregion
+
+        #endregion
     }
 }
